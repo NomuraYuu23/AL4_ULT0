@@ -1,0 +1,95 @@
+#pragma once
+#include "../3D/WorldTransform.h"
+#include "../3D/ViewProjection.h"
+#include "../3D/Model.h"
+#include "../3D/Material.h"
+#include "../Collider/Collider.h"
+#include "../Collider/ColliderShape.h"
+#include <memory>
+#include <map>
+#include "BoneData.h"
+
+/// <summary>
+/// ボーン
+/// </summary>
+class IBone
+{
+public: // メンバ関数
+
+	/// <summary>
+	///  デストラクタ
+	/// </summary>
+	~IBone() = default;
+
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	/// <param name="model"></param>
+	virtual void Initialize(Model* model);
+
+	/// <summary>
+	/// 更新
+	/// </summary>
+	virtual void Update(uint32_t frameCount);
+
+	/// <summary>
+	/// 描画
+	/// </summary>
+	virtual void Draw(const ViewProjection& viewProjection);
+
+	/// <summary>
+	/// 描画
+	/// </summary>
+	virtual void Draw(const ViewProjection& viewProjection, Material* material);
+
+public:
+
+	void SetWorldTransform(WorldTransform worldTransform) { worldTransform_ = worldTransform; }
+
+	WorldTransform GetWorldTransform() { return worldTransform_; }
+
+	ColliderShape* GetCollider() { return collider_.get(); };
+
+protected: // 
+
+	// モデル
+	Model* model_;
+
+	// ワールドトランスフォーム
+	WorldTransform worldTransform_;
+
+	// コライダー
+	std::unique_ptr<ColliderShape> collider_;
+
+public: //アニメーション関数
+
+	/// <summary>
+	/// アニメーション
+	/// </summary>
+	void Animation(uint32_t frameCount);
+
+	/// <summary>
+	/// animationTransforms_の変更
+	/// </summary>
+	void animationTransformChange(const std::string& key);
+
+protected: // アニメーション変数
+
+	// アニメーションのフレーム
+	// アニメーションのトランスフォーム
+	std::vector<BoneData> animationTransforms_;
+
+	// マップ
+	std::map<std::string, std::vector<BoneData>> animationTransformDatas_;
+
+	// フレームカウント
+	uint32_t frameCount_ = 0u;
+
+	// エンドフレームカウント
+	uint32_t frameEnd_ = 0u;
+
+	// アニメーション変更する状態か
+	bool isAnimationChange_ = false;
+
+};
+
