@@ -398,6 +398,9 @@ float Ease::SetEaseT(Ease::EaseName name, float t)
 	case Ease::EaseName::EaseInOutBounce:
 		return EaseInOutBounce(t);
 		break;
+	case Ease::EaseName::Lerp:
+		return t;
+		break;
 	default:
 		break;
 	}

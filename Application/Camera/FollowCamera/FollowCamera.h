@@ -1,5 +1,4 @@
 #pragma once
-#include "../../../Engine/3D/ViewProjection.h"
 #include "../../../Engine/3D/WorldTransform.h"
 #include "../../../Engine/Camera/BaseCamera.h"
 

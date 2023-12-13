@@ -23,17 +23,17 @@ void IBone::Update(uint32_t frameCount)
 
 }
 
-void IBone::Draw(const ViewProjection& viewProjection)
+void IBone::Draw(BaseCamera& camera)
 {
 
-	model_->Draw(worldTransform_, viewProjection);
+	model_->Draw(worldTransform_, camera);
 
 }
 
-void IBone::Draw(const ViewProjection& viewProjection, Material* material)
+void IBone::Draw(BaseCamera& camera, Material* material)
 {
 
-	model_->Draw(worldTransform_, viewProjection, material);
+	model_->Draw(worldTransform_, camera, material);
 
 }
 

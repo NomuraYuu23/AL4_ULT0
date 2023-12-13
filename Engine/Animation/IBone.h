@@ -1,6 +1,6 @@
 #pragma once
 #include "../3D/WorldTransform.h"
-#include "../3D/ViewProjection.h"
+#include "../Camera/BaseCamera.h"
 #include "../3D/Model.h"
 #include "../3D/Material.h"
 #include "../Collider/Collider.h"
@@ -35,12 +35,12 @@ public: // メンバ関数
 	/// <summary>
 	/// 描画
 	/// </summary>
-	virtual void Draw(const ViewProjection& viewProjection);
+	virtual void Draw(BaseCamera& camera);
 
 	/// <summary>
 	/// 描画
 	/// </summary>
-	virtual void Draw(const ViewProjection& viewProjection, Material* material);
+	virtual void Draw(BaseCamera& camera, Material* material);
 
 public:
 

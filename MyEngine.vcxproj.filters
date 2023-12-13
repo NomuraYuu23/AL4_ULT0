@@ -91,6 +91,12 @@
     <Filter Include="Engine\Line">
       <UniqueIdentifier>{6558aabd-3cbd-4ea1-bcdb-5f63ade457ba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Animation">
+      <UniqueIdentifier>{030dff88-0155-4376-83a4-21dc768b1c78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Camera">
+      <UniqueIdentifier>{917d93a3-cc2d-4af7-a605-023f6d42245f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="externals\imgui\imgui.cpp">
@@ -273,6 +279,12 @@
     </ClCompile>
     <ClCompile Include="Engine\Math\ShortestDistance.cpp">
       <Filter>Engine\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Animation\IBone.cpp">
+      <Filter>Engine\Animation</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Camera\FollowCamera\FollowCamera.cpp">
+      <Filter>Application\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -509,6 +521,15 @@
     </ClInclude>
     <ClInclude Include="Engine\Camera\CameraForGPU.h">
       <Filter>Engine\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Animation\BoneData.h">
+      <Filter>Engine\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Animation\IBone.h">
+      <Filter>Engine\Animation</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Camera\FollowCamera\FollowCamera.h">
+      <Filter>Application\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

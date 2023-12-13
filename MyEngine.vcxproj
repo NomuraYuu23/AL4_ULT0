@@ -100,9 +100,11 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application\Camera\FollowCamera\FollowCamera.cpp" />
     <ClCompile Include="Application\Scene\SelectScene\SelectScene.cpp" />
     <ClCompile Include="Application\Scene\TitleScene\TitleScene.cpp" />
     <ClCompile Include="Engine\2D\ImGuiManager.cpp" />
+    <ClCompile Include="Engine\Animation\IBone.cpp" />
     <ClCompile Include="Engine\Collider\Capsule\Capsule.cpp" />
     <ClCompile Include="Engine\Line\Line.cpp" />
     <ClCompile Include="Engine\Line\Segment.cpp" />
@@ -163,10 +165,13 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\3D\WorldTransform.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Application\Camera\FollowCamera\FollowCamera.h" />
     <ClInclude Include="Application\Scene\SceneName.h" />
     <ClInclude Include="Application\Scene\SelectScene\SelectScene.h" />
     <ClInclude Include="Application\Scene\TitleScene\TitleScene.h" />
     <ClInclude Include="Engine\2D\ImGuiManager.h" />
+    <ClInclude Include="Engine\Animation\BoneData.h" />
+    <ClInclude Include="Engine\Animation\IBone.h" />
     <ClInclude Include="Engine\Camera\CameraForGPU.h" />
     <ClInclude Include="Engine\Collider\Capsule\Capsule.h" />
     <ClInclude Include="Engine\Line\Line.h" />
