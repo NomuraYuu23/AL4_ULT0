@@ -76,7 +76,7 @@ void IParticle::UpdateMatrix(const Matrix4x4& billBoardMatrix)
 	}
 }
 
-ParticleForGPU IParticle::Map(const ViewProjection& viewProjection)
+ParticleForGPU IParticle::Map(const Matrix4x4& viewProjectionMatrix)
 {
 
 	Matrix4x4Calc* matrix4x4Calc = Matrix4x4Calc::GetInstance();
@@ -84,7 +84,7 @@ ParticleForGPU IParticle::Map(const ViewProjection& viewProjection)
 
 	ParticleForGPU particleForGPU;
 	particleForGPU.World = worldMatrix_;
-	particleForGPU.WVP = matrix4x4Calc->Multiply(worldMatrix_, viewProjection.viewProjectionMatrix_);
+	particleForGPU.WVP = matrix4x4Calc->Multiply(worldMatrix_, viewProjectionMatrix);
 	particleForGPU.color = color_;
 
 	return particleForGPU;

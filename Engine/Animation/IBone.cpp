@@ -1,5 +1,7 @@
 #include "IBone.h"
 #include "../Math/Ease.h"
+#include "../../externals/nlohmann/json.hpp"
+#include <fstream>
 
 void IBone::Initialize(Model* model)
 {
@@ -70,6 +72,56 @@ void IBone::Animation(uint32_t frameCount)
 
 }
 
+//void IBone::RegistrationOfAnimation(const std::string& fileName, const std::string& groupName)
+//{
+//
+//	// ファイルネームがオブジェクト 	
+//	// キーがモーション名
+//
+//	// 読み込むJSONファイルのフルパスを合成する
+//	std::string filePath = fileName + ".json";
+//	// 読み込み用ファイルストリーム
+//	std::ifstream ifs;
+//	// ファイルを読み込み用に聞く
+//	ifs.open(filePath);
+//
+//	// ファイルオープン失敗?
+//	if (ifs.fail()) {
+//		std::string message = "Failed open data file for write.";
+//		MessageBoxA(nullptr, message.c_str(), "BoneAnimation", 0);
+//		assert(0);
+//		return;
+//	}
+//
+//	nlohmann::json root;
+//
+//	// json文字列からjsonのデータ構造に展開
+//	ifs >> root;
+//	// ファイルを閉じる
+//	ifs.close();
+//
+//	// グループを検索
+//	nlohmann::json::iterator itGroup = root.find(groupName);
+//
+//	// 未登録チェック
+//	assert(itGroup != root.end());
+//
+//	// 各アイテムについて
+//	for (nlohmann::json::iterator itItem = itGroup->begin(); itItem != itGroup->end(); ++itItem) {
+//
+//		// アイテム名を取得
+//		const std::string& itemName = itItem.key();
+//		// float型のjson配列登録
+//		Vector3 value = { itItem->at(0), itItem->at(1), itItem->at(2) };
+//		//SetValue(groupName, itemName, value);
+//
+//		animationTransformDatas_[itemName];
+//
+//		animationTransformDatas_[itemName] = itItem.value();
+//	
+//	}
+//}
+
 void IBone::animationTransformChange(const std::string& key)
 {
 
@@ -81,6 +133,7 @@ void IBone::animationTransformChange(const std::string& key)
 		if (key == dataKey) {
 			// グループの参照を取得
 			animationTransforms_.clear();
+			animationTransforms_.shrink_to_fit();
 			animationTransforms_ = itData->second;
 		}
 	}

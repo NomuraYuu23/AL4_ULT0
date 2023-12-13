@@ -44,6 +44,14 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IntDir>$(SolutionDir)..\MyEngineOutput\Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)..\MyEngineOutput\Generated\Outputs\$(Configuration)\</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IntDir>$(SolutionDir)..\MyEngineOutput\Generated\Obj\$(ProjectName)\$(Configuration)\</IntDir>
+    <OutDir>$(SolutionDir)..\MyEngineOutput\Generated\Outputs\$(Configuration)\</OutDir>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -92,12 +100,13 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Application\Boss\IBossParts\IBossParts.cpp" />
-    <ClCompile Include="Application\Camera\FollowCamera\FollowCamera.cpp" />
     <ClCompile Include="Application\Scene\SelectScene\SelectScene.cpp" />
     <ClCompile Include="Application\Scene\TitleScene\TitleScene.cpp" />
     <ClCompile Include="Engine\2D\ImGuiManager.cpp" />
-    <ClCompile Include="Engine\Animation\IBone.cpp" />
+    <ClCompile Include="Engine\Collider\Capsule\Capsule.cpp" />
+    <ClCompile Include="Engine\Line\Line.cpp" />
+    <ClCompile Include="Engine\Line\Segment.cpp" />
+    <ClCompile Include="Engine\Math\ShortestDistance.cpp" />
     <ClCompile Include="Engine\Particle\IEmitter.cpp" />
     <ClCompile Include="Engine\Particle\IParticle.cpp" />
     <ClCompile Include="Engine\Particle\ParticleManager.cpp" />
@@ -150,19 +159,19 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Engine\2D\Sprite.cpp" />
     <ClCompile Include="Engine\base\TextureManager.cpp" />
     <ClCompile Include="Engine\Math\Vector3.cpp" />
-    <ClCompile Include="Engine\3D\ViewProjection.cpp" />
     <ClCompile Include="Engine\base\WinApp.cpp" />
     <ClCompile Include="Engine\3D\WorldTransform.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Application\Boss\IBossParts\IBossParts.h" />
-    <ClInclude Include="Application\Camera\FollowCamera\FollowCamera.h" />
     <ClInclude Include="Application\Scene\SceneName.h" />
     <ClInclude Include="Application\Scene\SelectScene\SelectScene.h" />
     <ClInclude Include="Application\Scene\TitleScene\TitleScene.h" />
     <ClInclude Include="Engine\2D\ImGuiManager.h" />
-    <ClInclude Include="Engine\Animation\IBone.h" />
-    <ClInclude Include="Engine\Collider\ColliderShape.h" />
+    <ClInclude Include="Engine\Camera\CameraForGPU.h" />
+    <ClInclude Include="Engine\Collider\Capsule\Capsule.h" />
+    <ClInclude Include="Engine\Line\Line.h" />
+    <ClInclude Include="Engine\Line\Segment.h" />
+    <ClInclude Include="Engine\Math\ShortestDistance.h" />
     <ClInclude Include="Engine\Particle\IEmitter.h" />
     <ClInclude Include="Engine\Particle\IParticle.h" />
     <ClInclude Include="Engine\Particle\ParticleForGPU.h" />
@@ -229,7 +238,6 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Engine\Math\Vector2.h" />
     <ClInclude Include="Engine\Math\Vector3.h" />
     <ClInclude Include="Engine\Math\Vector4.h" />
-    <ClInclude Include="Engine\3D\ViewProjection.h" />
     <ClInclude Include="Engine\base\WinApp.h" />
     <ClInclude Include="Engine\3D\VertexData.h" />
     <ClInclude Include="Engine\3D\WorldTransform.h" />

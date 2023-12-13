@@ -14,7 +14,7 @@ void ColliderDebugDraw::Initialize(const std::vector<Model*> models, Material* m
 	{0.0f,0.0f,0.0f},
 	};
 	Vector4 color = { 1.0f, 1.0f, 1.0f, 0.5f };
-	material_->Update(uvTransform, color, None);
+	material_->Update(uvTransform, color, None, 0.0f);
 
 	spheres_.clear();
 
@@ -54,7 +54,7 @@ void ColliderDebugDraw::Update()
 
 }
 
-void ColliderDebugDraw::Draw(const ViewProjection& viewProjection)
+void ColliderDebugDraw::Draw(BaseCamera& camera)
 {
 
 	if (!isDraw_) {
@@ -65,16 +65,16 @@ void ColliderDebugDraw::Draw(const ViewProjection& viewProjection)
 
 	// 球
 	for (Sphere* sphere : spheres_) {
-		models_[static_cast<size_t>(ModelNo::kSphere)]->Draw(sphere->worldTransform_, viewProjection, material_);
+		models_[static_cast<size_t>(ModelNo::kSphere)]->Draw(sphere->worldTransform_, camera, material_);
 	}
 
 	// AABB
 	for (AABB* aabb : aabbs_) {
-		models_[static_cast<size_t>(ModelNo::kAABB)]->Draw(aabb->worldTransform_, viewProjection, material_);
+		models_[static_cast<size_t>(ModelNo::kAABB)]->Draw(aabb->worldTransform_, camera, material_);
 	}
 	// OBB
 	for (OBB* obb : obbs_) {
-		models_[static_cast<size_t>(ModelNo::kOBB)]->Draw(obb->worldTransform_, viewProjection, material_);
+		models_[static_cast<size_t>(ModelNo::kOBB)]->Draw(obb->worldTransform_, camera, material_);
 	}
 
 }

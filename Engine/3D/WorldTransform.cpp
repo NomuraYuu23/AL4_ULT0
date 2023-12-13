@@ -92,12 +92,12 @@ Vector3 WorldTransform::GetWorldPosition()
 
 }
 
-void WorldTransform::Map(const ViewProjection& viewProjection)
+void WorldTransform::Map(const Matrix4x4& viewProjectionMatrix)
 {
 
 	Matrix4x4Calc* matrix4x4Calc = Matrix4x4Calc::GetInstance();
 
 	transformationMatrixMap_->World = worldMatrix_;
-	transformationMatrixMap_->WVP = matrix4x4Calc->Multiply(worldMatrix_, viewProjection.viewProjectionMatrix_);
+	transformationMatrixMap_->WVP = matrix4x4Calc->Multiply(worldMatrix_, viewProjectionMatrix);
 
 }

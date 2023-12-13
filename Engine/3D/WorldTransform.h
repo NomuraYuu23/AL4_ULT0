@@ -5,7 +5,6 @@
 #include "TransformationMatrix.h"
 #include <wrl.h>
 #include <d3d12.h>
-#include "ViewProjection.h"
 
 struct WorldTransform
 {
@@ -42,7 +41,7 @@ struct WorldTransform
 
 	void UpdateMatrix();
 
-	void Map(const ViewProjection& viewProjection);
+	void Map(const Matrix4x4& viewProjectionMatrix);
 
 	void MapSprite();
 

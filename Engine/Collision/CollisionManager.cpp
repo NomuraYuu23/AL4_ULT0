@@ -4,9 +4,6 @@
 void CollisionManager::Initialize()
 {
 
-	v3Calc = Vector3Calc::GetInstance();
-	m4Calc = Matrix4x4Calc::GetInstance();
-
 	ListClear();
 
 }
@@ -49,99 +46,20 @@ void CollisionManager::CheakAllCollision()
 void CollisionManager::CheckCollisionPair(ColliderShape colliderA, ColliderShape colliderB)
 {
 
-	// 球と球
-	if (std::holds_alternative<Sphere*>(colliderA) && std::holds_alternative<Sphere*>(colliderB)) {
-		if (Filtering(std::get<Sphere*>(colliderA), std::get<Sphere*>(colliderB))) {
-			return;
+	std::visit([](const auto& a, const auto& b) {
+		// 衝突フィルタリング
+		if (!(a->GetCollisionAttribute() & b->GetCollisionMask()) ||
+			!(b->GetCollisionAttribute() & a->GetCollisionMask())) {
+			return ;
 		}
-		if (Collision::IsCollision(*std::get<Sphere*>(colliderA), *std::get<Sphere*>(colliderB))) {
+		Vector3 p1 = {};
+		Vector3 p2 = {};
+		float t1 = 0.0f;
+		float t2 = 0.0f;
+		float pushBackDist = 0.0f;
+		if (Collision::IsCollision(*a, *b, p1, p2, t1, t2, pushBackDist)) {
 			// 衝突処理
 		}
-	}
-	// 球と平面
-	else if (std::holds_alternative<Sphere*>(colliderA) && std::holds_alternative<Plane*>(colliderB)) {
-		if (Filtering(std::get<Sphere*>(colliderA), std::get<Plane*>(colliderB))) {
-			return;
-		}
-		if (Collision::IsCollision(*std::get<Sphere*>(colliderA), *std::get<Plane*>(colliderB))) {
-			// 衝突処理
-		}
-	}
-	// 平面と球
-	else if (std::holds_alternative<Plane*>(colliderA) && std::holds_alternative<Sphere*>(colliderB)) {
-		if (Filtering(std::get<Plane*>(colliderA), std::get<Sphere*>(colliderB))) {
-			return;
-		}
-		if (Collision::IsCollision(*std::get<Sphere*>(colliderB), *std::get<Plane*>(colliderA))) {
-			// 衝突処理
-		}
-	}
-	// AABBとAABB
-	else if (std::holds_alternative<AABB*>(colliderA) && std::holds_alternative<AABB*>(colliderB)) {
-		if (Filtering(std::get<AABB*>(colliderA), std::get<AABB*>(colliderB))) {
-			return;
-		}
-		if (Collision::IsCollision(*std::get<AABB*>(colliderA), *std::get<AABB*>(colliderB))) {
-			// 衝突処理
-		}
-	}
-	// AABBと球
-	else if (std::holds_alternative<AABB*>(colliderA) && std::holds_alternative<Sphere*>(colliderB)) {
-		if (Filtering(std::get<AABB*>(colliderA), std::get<Sphere*>(colliderB))) {
-			return;
-		}
-		if (Collision::IsCollision(*std::get<AABB*>(colliderA), *std::get<Sphere*>(colliderB))) {
-			// 衝突処理
-		}
-	}
-	// 球とAABB
-	else if (std::holds_alternative<Sphere*>(colliderA) && std::holds_alternative<AABB*>(colliderB)) {
-		if (Filtering(std::get<Sphere*>(colliderA), std::get<AABB*>(colliderB))) {
-			return;
-		}
-		if (Collision::IsCollision(*std::get<AABB*>(colliderB), *std::get<Sphere*>(colliderA))) {
-			// 衝突処理
-		}
-	}
-	// OBBと球
-	else if (std::holds_alternative<OBB*>(colliderA) && std::holds_alternative<Sphere*>(colliderB)) {
-		if (Filtering(std::get<OBB*>(colliderA), std::get<Sphere*>(colliderB))) {
-			return;
-		}
-		if (Collision::IsCollision(*std::get<OBB*>(colliderA), *std::get<Sphere*>(colliderB))) {
-			// 衝突処理
-		}
-	}
-	// 球とOBB
-	else if (std::holds_alternative<Sphere*>(colliderA) && std::holds_alternative<OBB*>(colliderB)) {
-		if (Filtering(std::get<Sphere*>(colliderA), std::get<OBB*>(colliderB))) {
-			return;
-		}
-		if (Collision::IsCollision(*std::get<OBB*>(colliderB), *std::get<Sphere*>(colliderA))) {
-			// 衝突処理
-		}
-	}
-	// OBBとOBB
-	else if (std::holds_alternative<OBB*>(colliderA) && std::holds_alternative<OBB*>(colliderB)) {
-		if (Filtering(std::get<OBB*>(colliderA), std::get<OBB*>(colliderB))) {
-			return;
-		}
-		if (Collision::IsCollision(*std::get<OBB*>(colliderA), *std::get<OBB*>(colliderB))) {
-			// 衝突処理
-		}
-	}
-
-}
-
-bool CollisionManager::Filtering(Collider* colliderA, Collider* colliderB)
-{
-
-	// 衝突フィルタリング
-	if (!(colliderA->GetCollisionAttribute() & colliderB->GetCollisionMask()) ||
-		!(colliderB->GetCollisionAttribute() & colliderA->GetCollisionMask())) {
-		return true;
-	}
-
-	return false;
+		}, colliderA, colliderB);
 
 }

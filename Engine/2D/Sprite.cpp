@@ -168,7 +168,7 @@ Sprite::Sprite(
 	color_ = color;
 	enableLighting_ = EnableLighting::None;
 
-	material_->Update(uvTransform_, color_, enableLighting_);
+	material_->Update(uvTransform_, color_, enableLighting_, 0.0f);
 
 }
 
@@ -275,7 +275,7 @@ void Sprite::SetTextureRange()
 	uvTransform_.scale.x = textureSize_.x / textureInitSize_.x;
 	uvTransform_.scale.y = textureSize_.y / textureInitSize_.y;
 
-	material_->Update(uvTransform_, color_, enableLighting_);
+	material_->Update(uvTransform_, color_, enableLighting_, 0.0f);
 }
 
 void Sprite::SetPosition(const Vector2& position)
@@ -388,7 +388,7 @@ void Sprite::SetUvTransform(const TransformStructure& uvTransform)
 
 	uvTransform_ = uvTransform;
 
-	material_->Update(uvTransform_, color_, enableLighting_);
+	material_->Update(uvTransform_, color_, enableLighting_, 0.0f);
 
 }
 
@@ -399,7 +399,7 @@ void Sprite::SetUvTransform(const Vector3& scale, const Vector3& rotate, const V
 	uvTransform_.rotate = rotate;
 	uvTransform_.translate = translate;
 
-	material_->Update(uvTransform_, color_, enableLighting_);
+	material_->Update(uvTransform_, color_, enableLighting_, 0.0f);
 
 }
 
@@ -408,7 +408,7 @@ void Sprite::SetColor(const Vector4& color)
 
 	color_ = color;
 
-	material_->Update(uvTransform_, color_, enableLighting_);
+	material_->Update(uvTransform_, color_, enableLighting_, 0.0f);
 
 }
 
@@ -417,6 +417,6 @@ void Sprite::SetEnableLighting(int enableLighting)
 
 	enableLighting_ = enableLighting;
 
-	material_->Update(uvTransform_, color_, enableLighting_);
+	material_->Update(uvTransform_, color_, enableLighting_, 0.0f);
 
 }

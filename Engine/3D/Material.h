@@ -48,7 +48,7 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update(const TransformStructure& transform, const Vector4& color, int enableLighting);
+	void Update(const TransformStructure& transform, const Vector4& color, int enableLighting, float shininess);
 
 public: //アクセッサ
 

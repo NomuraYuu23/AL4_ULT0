@@ -38,8 +38,8 @@ public: // サブクラス
 		EaseInOutElastic,
 		EaseInBounce,
 		EaseOutBounce,
-		EaseInOutBounce,
-		Lerp
+		EaseInOutBounce
+
 	};
 
 private: //easeTがかえってくる

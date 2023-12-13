@@ -8,7 +8,7 @@ enum EnableLighting {
 	None = 0,
 	Lambert = 1,
 	HalfLambert = 2,
-
+	PhongReflection = 3,
 };
 
 struct MaterialData {
@@ -16,4 +16,5 @@ struct MaterialData {
 	int32_t enableLighting;
 	float padding[3];
 	Matrix4x4 uvTransform;
+	float shininess;
 };

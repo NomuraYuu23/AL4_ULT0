@@ -1,5 +1,4 @@
 #include "BaseCharacter.h"
-#include "../../Engine/3D/ViewProjection.h"
 
 void BaseCharacter::Initialize(const std::vector<Model*>& models,
 	const std::vector<Material*>& materials)
@@ -22,11 +21,11 @@ void BaseCharacter::Update()
 
 }
 
-void BaseCharacter::Draw(const ViewProjection& viewProjection){
+void BaseCharacter::Draw(BaseCamera& camera){
 
 	//モデル描画
 	for (Model* model : models_) {
-		model->Draw(worldTransform_, viewProjection);
+		model->Draw(worldTransform_, camera);
 	}
 
 }

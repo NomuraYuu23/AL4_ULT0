@@ -5,7 +5,6 @@
 #include "../3D/TransformationMatrix.h"
 #include <wrl.h>
 #include <d3d12.h>
-#include "../3D/ViewProjection.h"
 #include "../Math/Vector4.h"
 #include "ParticleForGPU.h"
 #include "../../Application/Particle/ParticleName.h"
@@ -44,7 +43,7 @@ public:
 	/// マッピング
 	/// </summary>
 	/// <param name="viewProjection"></param>
-	ParticleForGPU Map(const ViewProjection& viewProjection);
+	ParticleForGPU Map(const Matrix4x4& viewProjectionMatrix);
 
 	/// <summary>
 	/// 時間経過

@@ -21,11 +21,7 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	virtual void Update() override;
-
-public:
-
-	virtual void animationTransformChange();
+	virtual void Update(uint32_t frameCount) override;
 
 protected: // アニメーション関数
 

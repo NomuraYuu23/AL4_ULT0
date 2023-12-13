@@ -5,7 +5,7 @@
 #include "../../Camera/DebugCamera.h"//デバッグカメラ
 
 #include "../../3D/WorldTransform.h"
-#include "../../3D/ViewProjection.h"
+#include "../../Camera/BaseCamera.h"
 #include "../../2D/Sprite.h"
 #include "../../3D/Model.h"
 #include "../../3D/Material.h"
@@ -32,7 +32,7 @@ protected: // 静的メンバ変数
 	static Audio* audio_;
 
 	//ビュープロジェクション
-	static ViewProjection viewProjection_;
+	static BaseCamera camera_;
 
 	//デバッグカメラ
 	static std::unique_ptr<DebugCamera> debugCamera_;

@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "../Sphere/Sphere.h"
 #include "../Plane/Plane.h"
 #include "../Triangle/Triangle.h"
@@ -9,7 +9,6 @@
 #include <vector>
 #include "../../3D/Model.h"
 #include "../../3D/Material.h"
-#include "../../3D/ViewProjection.h"
 
 /// <summary>
 /// コライダーの描画関数デバッグ用
@@ -46,7 +45,7 @@ public:
 	/// 描画
 	/// </summary>
 	/// <param name="viewProjection"></param>
-	void Draw(const ViewProjection& viewProjection);
+	void Draw(BaseCamera& camera);
 
 	/// <summary>
 	/// コライダー追加

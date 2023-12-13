@@ -74,7 +74,7 @@ public: // メンバ関数
 	/// マッピング
 	/// </summary>
 	/// <param name="viewProjection"></param>
-	void Map(const ViewProjection& viewProjection);
+	void Map(const Matrix4x4& viewProjectionMatrix);
 
 	/// <summary>
 	/// 後処理

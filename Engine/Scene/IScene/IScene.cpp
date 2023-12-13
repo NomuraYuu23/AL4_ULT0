@@ -9,7 +9,7 @@ Input* IScene::input_ = nullptr;
 Audio* IScene::audio_ = nullptr;
 
 //ビュープロジェクション
-ViewProjection IScene::viewProjection_;
+BaseCamera IScene::camera_;
 
 //デバッグカメラ
 std::unique_ptr<DebugCamera> IScene::debugCamera_;
@@ -27,7 +27,7 @@ void IScene::StaticInitialize()
 	audio_ = Audio::GetInstance();
 
 	//ビュープロジェクション
-	viewProjection_.Initialize();
+	camera_.Initialize();
 
 	//デバッグカメラ
 	debugCamera_ = std::make_unique<DebugCamera>();

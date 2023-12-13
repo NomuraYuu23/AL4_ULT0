@@ -61,12 +61,19 @@ protected: //
 	// コライダー
 	std::unique_ptr<ColliderShape> collider_;
 
-public: //アニメーション関数
+protected: //アニメーション関数
 
 	/// <summary>
 	/// アニメーション
 	/// </summary>
 	void Animation(uint32_t frameCount);
+
+	/// <summary>
+	/// アニメーションの登録
+	/// </summary>
+	//void RegistrationOfAnimation(const std::string& fileName);
+
+public: //アニメーション関数
 
 	/// <summary>
 	/// animationTransforms_の変更
@@ -81,15 +88,6 @@ protected: // アニメーション変数
 
 	// マップ
 	std::map<std::string, std::vector<BoneData>> animationTransformDatas_;
-
-	// フレームカウント
-	uint32_t frameCount_ = 0u;
-
-	// エンドフレームカウント
-	uint32_t frameEnd_ = 0u;
-
-	// アニメーション変更する状態か
-	bool isAnimationChange_ = false;
 
 };
 

@@ -22,7 +22,7 @@ public:
 	/// 描画
 	/// </summary>
 	/// <param name="viewProjection">ビュープロジェクション</param>
-	void Draw(const ViewProjection& viewProjection);
+	void Draw(BaseCamera& camera);
 
 private:
 

@@ -7,6 +7,7 @@ struct Material {
 	float32_t4 color;
 	int32_t enableLighting;
 	float32_t4x4 uvTransform;
+	float32_t shininess;
 };
 
 struct DirectionalLight {
@@ -43,7 +44,7 @@ PixelShaderOutput main(VertexShaderOutput input) {
 		output.color = gMaterial.color * textureColor;
 	}
 
-	// texture‚©output.color‚Ìƒ¿’l‚ª0‚Ì‚ÉPixel‚ğŠü‹p
+	// textureã‹output.colorã®Î±å€¤ãŒ0ã®æ™‚ã«Pixelã‚’æ£„å´
 	if (textureColor.a == 0.0 || output.color.a == 0.0) {
 		discard;
 	}

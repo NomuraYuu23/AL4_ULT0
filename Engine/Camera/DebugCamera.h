@@ -1,5 +1,4 @@
 #pragma once
-#include "../../Engine/3D/ViewProjection.h"
 #include "BaseCamera.h"
 
 class DebugCamera : public BaseCamera
