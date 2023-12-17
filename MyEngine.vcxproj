@@ -104,6 +104,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Scene\SelectScene\SelectScene.cpp" />
     <ClCompile Include="Application\Scene\TitleScene\TitleScene.cpp" />
     <ClCompile Include="Engine\2D\ImGuiManager.cpp" />
+    <ClCompile Include="Engine\Animation\AnimationFile.cpp" />
     <ClCompile Include="Engine\Animation\IBone.cpp" />
     <ClCompile Include="Engine\Collider\Capsule\Capsule.cpp" />
     <ClCompile Include="Engine\Line\Line.cpp" />
@@ -170,6 +171,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Scene\SelectScene\SelectScene.h" />
     <ClInclude Include="Application\Scene\TitleScene\TitleScene.h" />
     <ClInclude Include="Engine\2D\ImGuiManager.h" />
+    <ClInclude Include="Engine\Animation\AnimationFile.h" />
     <ClInclude Include="Engine\Animation\BoneData.h" />
     <ClInclude Include="Engine\Animation\IBone.h" />
     <ClInclude Include="Engine\Camera\CameraForGPU.h" />

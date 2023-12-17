@@ -286,6 +286,9 @@
     <ClCompile Include="Application\Camera\FollowCamera\FollowCamera.cpp">
       <Filter>Application\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Animation\AnimationFile.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imgui.h">
@@ -530,6 +533,9 @@
     </ClInclude>
     <ClInclude Include="Application\Camera\FollowCamera\FollowCamera.h">
       <Filter>Application\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Animation\AnimationFile.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

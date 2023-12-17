@@ -42,6 +42,9 @@
 // パーティクル
 #include "../Particle/ParticleManager.h"
 
+// アニメーション
+#include "../Animation/AnimationFile.h"
+
 class MyFramework
 {
 
