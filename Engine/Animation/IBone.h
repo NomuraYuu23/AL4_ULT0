@@ -8,6 +8,7 @@
 #include <memory>
 #include <map>
 #include "BoneData.h"
+#include "AnimationFile.h"
 
 /// <summary>
 /// ボーン

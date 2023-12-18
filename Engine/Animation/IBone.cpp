@@ -2,7 +2,6 @@
 #include "../Math/Ease.h"
 #include "../../externals/nlohmann/json.hpp"
 #include <fstream>
-#include "AnimationFile.h"
 
 AnimationFile* IBone::animationFile_ = AnimationFile::GetInstance();
 
