@@ -14,6 +14,12 @@
 /// </summary>
 class IBone
 {
+
+private:
+
+	// アニメーションファイル
+	static AnimationFile* animationFile_;
+
 public: // メンバ関数
 
 	/// <summary>
@@ -25,7 +31,7 @@ public: // メンバ関数
 	/// 初期化
 	/// </summary>
 	/// <param name="model"></param>
-	virtual void Initialize(Model* model);
+	virtual void Initialize(Model* model, const std::string& objectName, const std::string& partName);
 
 	/// <summary>
 	/// 更新
@@ -68,10 +74,14 @@ protected: //アニメーション関数
 	/// </summary>
 	void Animation(uint32_t frameCount);
 
-	/// <summary>
-	/// アニメーションの登録
-	/// </summary>
-	//void RegistrationOfAnimation(const std::string& fileName);
+	// AnimationFile登録
+	virtual void PreRegistrationAnimationFile();
+
+	// AnimationFile登録
+	virtual void RegistrationAnimationFile(std::map<std::string, std::vector<BoneData>>& animationMap);
+
+	// AnimationFile適用
+	virtual void ApplyAnimationFile(const std::string& motionName);
 
 public: //アニメーション関数
 
@@ -82,12 +92,17 @@ public: //アニメーション関数
 
 protected: // アニメーション変数
 
-	// アニメーションのフレーム
-	// アニメーションのトランスフォーム
+	// ボーンのアニメーションデータ
 	std::vector<BoneData> animationTransforms_;
 
 	// マップ
 	std::map<std::string, std::vector<BoneData>> animationTransformDatas_;
+
+	// オブジェクト名
+	std::string objectName_;
+
+	// パーツ名
+	std::string partName_;;
 
 };
 

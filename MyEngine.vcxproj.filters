@@ -537,6 +537,9 @@
     <ClInclude Include="Engine\Animation\AnimationFile.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Collider\ColliderShape.h">
+      <Filter>Engine\Collider</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="externals\imgui\LICENSE.txt">

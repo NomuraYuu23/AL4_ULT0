@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "../../externals/nlohmann/json.hpp"
 
 //3次元ベクトル
 struct Vector3
@@ -9,6 +10,17 @@ struct Vector3
 	float z;
 
 };
+
+//inline void to_json(nlohmann::json& json, const Vector3& value) {
+//	json = nlohmann::json::array({ value.x, value.y, value.z });
+//}
+//
+//inline void from_json(const nlohmann::json& json, Vector3& value) {
+//	if (json.is_array() && json.size() == 3) {
+//		// float型のjson配列登録
+//		value = { json.at(0), json.at(1), json.at(2) };
+//	}
+//}
 
 class Vector3Calc
 {

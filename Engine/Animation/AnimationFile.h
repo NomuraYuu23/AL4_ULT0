@@ -82,7 +82,7 @@ public:
 	/// <param name="partName">パーツ名</param>
 	/// <param name="motionName">モーション名</param>
 	/// <returns>値</returns>
-	std::vector<BoneData> GetValue(const std::string& objectName, const std::string& partName, const std::string& motionNam);
+	std::vector<BoneData> GetValue(const std::string& objectName, const std::string& partName, const std::string& motionName);
 
 private:
 	AnimationFile() = default;

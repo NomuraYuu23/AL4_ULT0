@@ -2,11 +2,18 @@
 #include "../Math/Ease.h"
 #include "../../externals/nlohmann/json.hpp"
 #include <fstream>
+#include "AnimationFile.h"
 
-void IBone::Initialize(Model* model)
+AnimationFile* IBone::animationFile_ = AnimationFile::GetInstance();
+
+void IBone::Initialize(Model* model, const std::string& objectName, const std::string& partName)
 {
 
 	model_ = model;
+
+	objectName_ = objectName;
+
+	partName_ = partName;
 
 	worldTransform_.Initialize();
 
@@ -72,55 +79,31 @@ void IBone::Animation(uint32_t frameCount)
 
 }
 
-//void IBone::RegistrationOfAnimation(const std::string& fileName, const std::string& groupName)
-//{
-//
-//	// ファイルネームがオブジェクト 	
-//	// キーがモーション名
-//
-//	// 読み込むJSONファイルのフルパスを合成する
-//	std::string filePath = fileName + ".json";
-//	// 読み込み用ファイルストリーム
-//	std::ifstream ifs;
-//	// ファイルを読み込み用に聞く
-//	ifs.open(filePath);
-//
-//	// ファイルオープン失敗?
-//	if (ifs.fail()) {
-//		std::string message = "Failed open data file for write.";
-//		MessageBoxA(nullptr, message.c_str(), "BoneAnimation", 0);
-//		assert(0);
-//		return;
-//	}
-//
-//	nlohmann::json root;
-//
-//	// json文字列からjsonのデータ構造に展開
-//	ifs >> root;
-//	// ファイルを閉じる
-//	ifs.close();
-//
-//	// グループを検索
-//	nlohmann::json::iterator itGroup = root.find(groupName);
-//
-//	// 未登録チェック
-//	assert(itGroup != root.end());
-//
-//	// 各アイテムについて
-//	for (nlohmann::json::iterator itItem = itGroup->begin(); itItem != itGroup->end(); ++itItem) {
-//
-//		// アイテム名を取得
-//		const std::string& itemName = itItem.key();
-//		// float型のjson配列登録
-//		Vector3 value = { itItem->at(0), itItem->at(1), itItem->at(2) };
-//		//SetValue(groupName, itemName, value);
-//
-//		animationTransformDatas_[itemName];
-//
-//		animationTransformDatas_[itemName] = itItem.value();
-//	
-//	}
-//}
+void IBone::PreRegistrationAnimationFile()
+{
+
+	//グループを追加
+	animationFile_->CreatePart(objectName_, partName_);
+
+}
+
+void IBone::RegistrationAnimationFile(std::map<std::string, std::vector<BoneData>>& animationMap)
+{
+
+	for (std::map<std::string, std::vector<BoneData>>::iterator itAnimationMap = animationMap.begin(); itAnimationMap != animationMap.end(); ++itAnimationMap) {
+		const std::string motionName = itAnimationMap->first;
+		std::vector<BoneData>& motionData = itAnimationMap->second;
+		animationFile_->AddMotion(objectName_, partName_, motionName, motionData);
+	}
+
+}
+
+void IBone::ApplyAnimationFile(const std::string& motionName)
+{
+
+	animationTransformDatas_[motionName] = animationFile_->GetValue(objectName_, partName_, motionName);
+
+}
 
 void IBone::animationTransformChange(const std::string& key)
 {
