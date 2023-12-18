@@ -315,12 +315,6 @@ void AnimationFile::LoadFile(const std::string& directoryPath, const std::string
 	// ファイルを閉じる
 	ifs.close();
 
-	//// グループを検索
-	//nlohmann::json::iterator itPart = root.begin();;
-
-	//// 未登録チェック
-	//assert(itPart != root.end());
-
 	// 登録用データ
 	uint32_t boneDataSize = (sizeof(BoneData) + 0xff) & ~0xff;
 
