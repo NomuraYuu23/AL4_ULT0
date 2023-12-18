@@ -97,6 +97,9 @@
     <Filter Include="Application\Camera">
       <UniqueIdentifier>{917d93a3-cc2d-4af7-a605-023f6d42245f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\SampleBone">
+      <UniqueIdentifier>{30279646-9ac2-492a-b0e5-485a6c89ff7e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="externals\imgui\imgui.cpp">
@@ -287,6 +290,9 @@
       <Filter>Application\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Animation\AnimationFile.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\SampleBone\SampleBone.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -539,6 +545,9 @@
     </ClInclude>
     <ClInclude Include="Engine\Collider\ColliderShape.h">
       <Filter>Engine\Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\SampleBone\SampleBone.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -35,10 +35,6 @@ void GameScene::Initialize() {
 	particleModel[ParticleModelIndex::kUvChecker] = particleUvcheckerModel_.get();
 	particleModel[ParticleModelIndex::kCircle] = particleCircleModel_.get();
 	particleManager_->ModelCreate(particleModel);
-	TransformStructure emitter = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{-3.0f,0.0f,0.0f} };
-	particleManager_->MakeEmitter(emitter, 1000, 0.5f, 300.0f, ParticleModelIndex::kUvChecker, 0, 0);
-	emitter.translate.x = 3.0f;
-	particleManager_->MakeEmitter(emitter, 1000, 0.5f, 300.0f, ParticleModelIndex::kCircle, 0, 0);
 
 	isDebugCameraActive_ = true;
 
@@ -54,6 +50,9 @@ void GameScene::Initialize() {
 	material_->Update(uvTransform, color, PhongReflection, 100.0f);
 
 	worldTransform_.Initialize();
+
+	sampleBone_ = std::make_unique<SampleBone>();
+	sampleBone_->Initialize(model_.get());
 
 }
 
@@ -86,6 +85,9 @@ void GameScene::Update(){
 	// タイトルへ行く
 	GoToTheTitle();
 
+	//
+	sampleBone_->Update();
+
 }
 
 /// <summary>
@@ -114,6 +116,7 @@ void GameScene::Draw() {
 	//3Dオブジェクトはここ
 
 	model_->Draw(worldTransform_, camera_, material_.get());
+	sampleBone_->Draw(camera_);
 
 #ifdef _DEBUG
 

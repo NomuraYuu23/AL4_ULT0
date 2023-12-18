@@ -3,8 +3,6 @@
 #include "../Camera/BaseCamera.h"
 #include "../3D/Model.h"
 #include "../3D/Material.h"
-#include "../Collider/Collider.h"
-#include "../Collider/ColliderShape.h"
 #include <memory>
 #include <map>
 #include "BoneData.h"
@@ -32,12 +30,17 @@ public: // メンバ関数
 	/// 初期化
 	/// </summary>
 	/// <param name="model"></param>
-	virtual void Initialize(Model* model, const std::string& objectName, const std::string& partName);
+	virtual void Initialize(Model* model, const std::string& objectName, const std::string& partName, const std::vector<std::string>& motionNames);
 
 	/// <summary>
 	/// 更新
 	/// </summary>
 	virtual void Update(uint32_t frameCount);
+
+	/// <summary>
+	/// 更新
+	/// </summary>
+	virtual void Update(uint32_t frameCount, const std::vector<std::string>& motionNames);
 
 	/// <summary>
 	/// 描画
@@ -55,8 +58,6 @@ public:
 
 	WorldTransform GetWorldTransform() { return worldTransform_; }
 
-	ColliderShape* GetCollider() { return collider_.get(); };
-
 protected: // 
 
 	// モデル
@@ -64,9 +65,6 @@ protected: //
 
 	// ワールドトランスフォーム
 	WorldTransform worldTransform_;
-
-	// コライダー
-	std::unique_ptr<ColliderShape> collider_;
 
 protected: //アニメーション関数
 
@@ -79,10 +77,10 @@ protected: //アニメーション関数
 	virtual void PreRegistrationAnimationFile();
 
 	// AnimationFile登録
-	virtual void RegistrationAnimationFile(std::map<std::string, std::vector<BoneData>>& animationMap);
+	virtual void RegistrationAnimationFile();
 
 	// AnimationFile適用
-	virtual void ApplyAnimationFile(const std::string& motionName);
+	virtual void ApplyAnimationFile(const std::vector<std::string>& motionNames);
 
 public: //アニメーション関数
 

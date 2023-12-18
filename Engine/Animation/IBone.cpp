@@ -5,7 +5,7 @@
 
 AnimationFile* IBone::animationFile_ = AnimationFile::GetInstance();
 
-void IBone::Initialize(Model* model, const std::string& objectName, const std::string& partName)
+void IBone::Initialize(Model* model, const std::string& objectName, const std::string& partName, const std::vector<std::string>& motionNames)
 {
 
 	model_ = model;
@@ -16,7 +16,11 @@ void IBone::Initialize(Model* model, const std::string& objectName, const std::s
 
 	worldTransform_.Initialize();
 
-	collider_ = std::make_unique<ColliderShape>();
+	PreRegistrationAnimationFile();
+
+	RegistrationAnimationFile();
+
+	//ApplyAnimationFile(motionNames);
 
 }
 
@@ -26,6 +30,22 @@ void IBone::Update(uint32_t frameCount)
 	Animation(frameCount);
 
 	worldTransform_.UpdateMatrix();
+
+}
+
+void IBone::Update(uint32_t frameCount, const std::vector<std::string>& motionNames)
+{
+
+
+	Animation(frameCount);
+
+	worldTransform_.UpdateMatrix();
+
+#ifdef _DEBUG
+
+	//ApplyAnimationFile(motionNames);
+
+#endif // _DEBUG
 
 }
 
@@ -86,10 +106,10 @@ void IBone::PreRegistrationAnimationFile()
 
 }
 
-void IBone::RegistrationAnimationFile(std::map<std::string, std::vector<BoneData>>& animationMap)
+void IBone::RegistrationAnimationFile()
 {
 
-	for (std::map<std::string, std::vector<BoneData>>::iterator itAnimationMap = animationMap.begin(); itAnimationMap != animationMap.end(); ++itAnimationMap) {
+	for (std::map<std::string, std::vector<BoneData>>::iterator itAnimationMap = animationTransformDatas_.begin(); itAnimationMap != animationTransformDatas_.end(); ++itAnimationMap) {
 		const std::string motionName = itAnimationMap->first;
 		std::vector<BoneData>& motionData = itAnimationMap->second;
 		animationFile_->AddMotion(objectName_, partName_, motionName, motionData);
@@ -97,10 +117,13 @@ void IBone::RegistrationAnimationFile(std::map<std::string, std::vector<BoneData
 
 }
 
-void IBone::ApplyAnimationFile(const std::string& motionName)
+void IBone::ApplyAnimationFile(const std::vector<std::string>& motionNames)
 {
 
-	animationTransformDatas_[motionName] = animationFile_->GetValue(objectName_, partName_, motionName);
+	for (size_t i = 0; i < motionNames.size(); i++)
+	{
+		animationTransformDatas_[motionNames[i]] = animationFile_->GetValue(objectName_, partName_, motionNames[i]);
+	}
 
 }
 

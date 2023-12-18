@@ -66,14 +66,13 @@ public:
 	void LoadFile(const std::string& directoryPath, const std::string& partName);
 
 	/// <summary>
-	/// 項目の追加
+	/// モーションの追加
 	/// </summary>
 	/// <param name="objectName">オブジェクト名</param>
 	/// <param name="partName">パーツ名</param>
 	/// <param name="motionName">モーション名</param>
 	/// <param name="value">値</param>
 	void AddMotion(const std::string& objectName, const std::string& partName, const std::string& motionName, std::vector<BoneData> value);
-
 
 	// <summary>
 	/// 値の取得
@@ -83,6 +82,14 @@ public:
 	/// <param name="motionName">モーション名</param>
 	/// <returns>値</returns>
 	std::vector<BoneData> GetValue(const std::string& objectName, const std::string& partName, const std::string& motionName);
+
+	/// <summary>
+	/// アニメーションファイルの作成
+	/// </summary>
+	/// <param name="root">jsonファイル</param>
+	/// <param name="objectName">オブジェクト名</param>
+	/// <param name="partName">パーツ名</param>
+	void CreateAnimationFile(const nlohmann::json& root, const std::string& objectName, const std::string& partName);
 
 private:
 	AnimationFile() = default;
@@ -100,6 +107,10 @@ private:
 
 	// グローバル変数の保存先ファイルパス
 	const std::string kDirectoryPath = "Resources/AnimationFile/";
+
+	// 新しいモーション名
+	// 新しいモーション名
+	std::string newMotionName = "";
 
 };
 

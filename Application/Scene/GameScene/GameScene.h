@@ -4,6 +4,7 @@
 #include "../../../Engine/Collider/ColliderDebugDraw/ColliderDebugDraw.h"// コライダーデバッグ描画
 #include"../../../Engine/Collision/CollisionManager.h"
 #include "../../Pause/Pause.h"
+#include "../../SampleBone/SampleBone.h"
 
 class GameScene : public IScene
 {
@@ -83,5 +84,8 @@ private:
 	WorldTransform worldTransform_;
 	Vector3 direction = { 1.0f, -1.0f, 0.0f};
 	float intencity = 1.0f;
+
+	// サンプルボーン
+	std::unique_ptr<SampleBone> sampleBone_;
 
 };

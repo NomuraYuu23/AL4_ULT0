@@ -22,7 +22,7 @@ void AnimationFile::CreatePart(const std::string& objectName, const std::string&
 	std::map<std::string, Object>::iterator itObject = datas_.find(objectName);
 
 	//未登録チェック
-	if (itObject != datas_.end()) {
+	if (itObject == datas_.end()) {
 		CreateObject(objectName);
 	}
 
@@ -36,14 +36,14 @@ void AnimationFile::CreateMotion(const std::string& objectName, const std::strin
 	std::map<std::string, Object>::iterator itObject = datas_.find(objectName);
 
 	//未登録チェック
-	if (itObject != datas_.end()) {
+	if (itObject == datas_.end()) {
 		CreateObject(objectName);
 	}
 
 	std::map<std::string, Part>::iterator itPart = datas_.find(objectName)->second.find(partName);
 
 	//未登録チェック
-	if (itPart != datas_.find(objectName)->second.end()) {
+	if (itPart == datas_.find(objectName)->second.end()) {
 		CreatePart(objectName, partName);
 	}
 
@@ -70,66 +70,39 @@ void AnimationFile::SaveFile(const std::string& objectName, const std::string& p
 
 	root = nlohmann::json::object();
 
-	// jsonオブジェクト登録
-	root[partName] = nlohmann::json::object();
-
 	//各項目について
 	for (std::map<std::string, Motion>::iterator itMotion = itPart->second.begin();
 		itMotion != itPart->second.end(); ++itMotion) {
-
 		//項目名を取得
 		const std::string& motionName = itMotion->first;
 		//項目の参照を取得
 		Motion& motion = itMotion->second;
 
-		root[partName][motionName] = nlohmann::json::array();
+		// jsonオブジェクト登録
+		root[motionName] = nlohmann::json::object();
 
 		for (size_t i = 0; i < motion.size(); i++)
 		{
 
-			root[partName][motionName].emplace_back(static_cast<float>(motion[i].endFrame_));
-			root[partName][motionName].emplace_back(motion[i].transform_.scale.x);
-			root[partName][motionName].emplace_back(motion[i].transform_.scale.y);
-			root[partName][motionName].emplace_back(motion[i].transform_.scale.z);
-			root[partName][motionName].emplace_back(motion[i].transform_.rotate.x);
-			root[partName][motionName].emplace_back(motion[i].transform_.rotate.y);
-			root[partName][motionName].emplace_back(motion[i].transform_.rotate.z);
-			root[partName][motionName].emplace_back(motion[i].transform_.translate.x);
-			root[partName][motionName].emplace_back(motion[i].transform_.translate.y);
-			root[partName][motionName].emplace_back(motion[i].transform_.translate.z);
-			root[partName][motionName].emplace_back(static_cast<float>(motion[i].easeType_));
+			const std::string& keyFrame = std::to_string(i);
+
+			root[motionName][keyFrame] = nlohmann::json::array();
+
+			root[motionName][keyFrame].emplace_back(static_cast<float>(motion[i].endFrame_));
+			root[motionName][keyFrame].emplace_back(motion[i].transform_.scale.x);
+			root[motionName][keyFrame].emplace_back(motion[i].transform_.scale.y);
+			root[motionName][keyFrame].emplace_back(motion[i].transform_.scale.z);
+			root[motionName][keyFrame].emplace_back(motion[i].transform_.rotate.x);
+			root[motionName][keyFrame].emplace_back(motion[i].transform_.rotate.y);
+			root[motionName][keyFrame].emplace_back(motion[i].transform_.rotate.z);
+			root[motionName][keyFrame].emplace_back(motion[i].transform_.translate.x);
+			root[motionName][keyFrame].emplace_back(motion[i].transform_.translate.y);
+			root[motionName][keyFrame].emplace_back(motion[i].transform_.translate.z);
+			root[motionName][keyFrame].emplace_back(static_cast<float>(motion[i].easeType_));
 
 		}
 
-		//ディレクトリがなければ作成する
-		std::filesystem::path objectDir_it(kDirectoryPath);
-		if (!std::filesystem::exists(objectDir_it)) {
-			std::filesystem::create_directory(objectDir_it);
-		}
-		//ディレクトリがなければ作成する
-		std::filesystem::path dir(kDirectoryPath + objectName + "/");
-		if (!std::filesystem::exists(dir)) {
-			std::filesystem::create_directory(dir);
-		}
-
-		// 書き込むJSONファイルのフルパスを合成する
-		std::string filePath = kDirectoryPath + objectName + "/" + partName + ".json";
-		// 書き込む用ファイルストリーム
-		std::ofstream ofs;
-		// ファイルを書き込み用に開く
-		ofs.open(filePath);
-		// ファイルオープン失敗
-		if (ofs.fail()) {
-			std::string message = "Failed open data file for write.";
-			MessageBoxA(nullptr, message.c_str(), "AnimationFile", 0);
-			assert(0);
-			return;
-		}
-
-		// ファイルにjson文字列を書き込む(インデント幅4)
-		ofs << std::setw(4) << root << std::endl;
-		// ファイルを閉じる
-		ofs.close();
+		CreateAnimationFile(root, objectName, partName);
 
 	}
 
@@ -243,11 +216,26 @@ void AnimationFile::Update()
 				}
 				// 最後のフレームを消す
 				if (ImGui::Button("DeleteLastFrame")) {
-					motion.pop_back();
+					if (motion.size() != 0) {
+						motion.pop_back();
+					}
 				}
 
 				ImGui::EndMenu();
 
+			}
+
+			//改行
+			ImGui::Text("\n");
+
+
+			if (newMotionName.size() < 16u) {
+				newMotionName.resize(16u);
+			}
+
+			ImGui::InputText("newMotionName", newMotionName.data(), 16);
+			if (ImGui::Button("AddNewMotionName")) {
+				CreateMotion(objectName, partName, newMotionName);
 			}
 
 			//改行
@@ -303,7 +291,7 @@ void AnimationFile::LoadFiles()
 
 			// ファイル読み込み
 			LoadFile(objectEntry.path().string(), filePath.stem().string());
-		
+
 		}
 
 	}
@@ -355,8 +343,8 @@ void AnimationFile::LoadFile(const std::string& directoryPath, const std::string
 
 		// float型のjson配列登録
 		std::vector<BoneData> boneDatas;
-		for (size_t i = 0; i < itMotion->size(); i++){
-			BoneData boneData = { 
+		for (size_t i = 0; i < itMotion->size(); i++) {
+			BoneData boneData = {
 			itMotion->at(i * boneDataSize),
 			itMotion->at(i * boneDataSize + 1), itMotion->at(i * boneDataSize + 2), itMotion->at(i * boneDataSize + 3),
 			itMotion->at(i * boneDataSize + 4), itMotion->at(i * boneDataSize + 5), itMotion->at(i * boneDataSize + 6),
@@ -392,4 +380,39 @@ std::vector<BoneData> AnimationFile::GetValue(const std::string& objectName, con
 	assert(part.find(motionName) != part.end());
 
 	return part[motionName];
+}
+
+void AnimationFile::CreateAnimationFile(const nlohmann::json& root, const std::string& objectName, const std::string& partName)
+{
+
+	//ディレクトリがなければ作成する
+	std::filesystem::path objectDir_it(kDirectoryPath);
+	if (!std::filesystem::exists(objectDir_it)) {
+		std::filesystem::create_directory(objectDir_it);
+	}
+	//ディレクトリがなければ作成する
+	std::filesystem::path dir(kDirectoryPath + objectName + "/");
+	if (!std::filesystem::exists(dir)) {
+		std::filesystem::create_directory(dir);
+	}
+
+	// 書き込むJSONファイルのフルパスを合成する
+	std::string filePath = kDirectoryPath + objectName + "/" + partName + ".json";
+	// 書き込む用ファイルストリーム
+	std::ofstream ofs;
+	// ファイルを書き込み用に開く
+	ofs.open(filePath);
+	// ファイルオープン失敗
+	if (ofs.fail()) {
+		std::string message = "Failed open data file for write.";
+		MessageBoxA(nullptr, message.c_str(), "AnimationFile", 0);
+		assert(0);
+		return;
+	}
+
+	// ファイルにjson文字列を書き込む(インデント幅4)
+	ofs << std::setw(4) << root << std::endl;
+	// ファイルを閉じる
+	ofs.close();
+
 }
