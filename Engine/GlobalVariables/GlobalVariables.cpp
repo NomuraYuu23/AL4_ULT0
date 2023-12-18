@@ -1,4 +1,4 @@
-﻿#include "GlobalVariables.h"
+#include "GlobalVariables.h"
 #include "../2D/ImGuiManager.h"
 #include "../../externals/nlohmann/json.hpp"
 #include <fstream>
@@ -67,8 +67,7 @@ void GlobalVariables::SaveFile(const std::string& groupName) {
 		// Vector3型の値を保持していれば
 		else if (std::holds_alternative<Vector3>(item)) {
 			// float型の値を登録
-			Vector3 value = std::get<Vector3>(item);
-			root[groupName][itemName] = nlohmann::json::array({ value.x, value.y, value.z });
+			root[groupName][itemName] = std::get<Vector3>(item);
 		}
 
 		//ディレクトリがなければ作成する
@@ -321,7 +320,7 @@ void GlobalVariables::LoadFile(const std::string& groupName) {
 		// 要素数3の配列であれば
 		else if (itItem->is_array() && itItem->size() == 3) {
 			// float型のjson配列登録
-			Vector3 value = { itItem->at(0), itItem->at(1), itItem->at(2) };
+			Vector3 value = itItem->get<Vector3>();
 			SetValue(groupName, itemName, value);
 		}
 

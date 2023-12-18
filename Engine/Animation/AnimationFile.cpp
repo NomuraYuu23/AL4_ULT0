@@ -88,17 +88,7 @@ void AnimationFile::SaveFile(const std::string& objectName, const std::string& p
 
 			root[motionName][keyFrame] = nlohmann::json::array();
 
-			root[motionName][keyFrame].emplace_back(static_cast<float>(motion[i].endFrame_));
-			root[motionName][keyFrame].emplace_back(motion[i].transform_.scale.x);
-			root[motionName][keyFrame].emplace_back(motion[i].transform_.scale.y);
-			root[motionName][keyFrame].emplace_back(motion[i].transform_.scale.z);
-			root[motionName][keyFrame].emplace_back(motion[i].transform_.rotate.x);
-			root[motionName][keyFrame].emplace_back(motion[i].transform_.rotate.y);
-			root[motionName][keyFrame].emplace_back(motion[i].transform_.rotate.z);
-			root[motionName][keyFrame].emplace_back(motion[i].transform_.translate.x);
-			root[motionName][keyFrame].emplace_back(motion[i].transform_.translate.y);
-			root[motionName][keyFrame].emplace_back(motion[i].transform_.translate.z);
-			root[motionName][keyFrame].emplace_back(static_cast<float>(motion[i].easeType_));
+			root[motionName][keyFrame] = motion[i];
 
 		}
 
@@ -228,7 +218,6 @@ void AnimationFile::Update()
 			//改行
 			ImGui::Text("\n");
 
-
 			if (newMotionName.size() < 16u) {
 				newMotionName.resize(16u);
 			}
@@ -326,31 +315,26 @@ void AnimationFile::LoadFile(const std::string& directoryPath, const std::string
 	// ファイルを閉じる
 	ifs.close();
 
-	// グループを検索
-	nlohmann::json::iterator itPart = root.find(partName);
+	//// グループを検索
+	//nlohmann::json::iterator itPart = root.begin();;
 
-	// 未登録チェック
-	assert(itPart != root.end());
+	//// 未登録チェック
+	//assert(itPart != root.end());
 
 	// 登録用データ
 	uint32_t boneDataSize = (sizeof(BoneData) + 0xff) & ~0xff;
 
 	// 各アイテムについて
-	for (nlohmann::json::iterator itMotion = itPart->begin(); itMotion != itPart->end(); ++itMotion) {
+	for (nlohmann::json::iterator itMotion = root.begin(); itMotion != root.end(); ++itMotion) {
 
 		// アイテム名を取得
 		const std::string& motionName = itMotion.key();
 
 		// float型のjson配列登録
 		std::vector<BoneData> boneDatas;
-		for (size_t i = 0; i < itMotion->size(); i++) {
-			BoneData boneData = {
-			itMotion->at(i * boneDataSize),
-			itMotion->at(i * boneDataSize + 1), itMotion->at(i * boneDataSize + 2), itMotion->at(i * boneDataSize + 3),
-			itMotion->at(i * boneDataSize + 4), itMotion->at(i * boneDataSize + 5), itMotion->at(i * boneDataSize + 6),
-			itMotion->at(i * boneDataSize + 7), itMotion->at(i * boneDataSize + 8), itMotion->at(i * boneDataSize + 9),
-			itMotion->at(i * boneDataSize + 10) };
 
+		for (nlohmann::json::iterator itFrameIndex = itMotion->begin(); itFrameIndex != itMotion->end(); ++itFrameIndex) {
+			BoneData boneData = itFrameIndex->get<BoneData>();
 			boneDatas.push_back(boneData);
 		}
 
