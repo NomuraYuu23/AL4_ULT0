@@ -9,6 +9,7 @@
 /// </summary>
 void GameScene::Initialize() {
 
+	IScene::Initialize();
 
 	ModelCreate();
 	MaterialCreate();
@@ -35,10 +36,14 @@ void GameScene::Initialize() {
 	particleModel[ParticleModelIndex::kUvChecker] = particleUvcheckerModel_.get();
 	particleModel[ParticleModelIndex::kCircle] = particleCircleModel_.get();
 	particleManager_->ModelCreate(particleModel);
+	TransformStructure emitter = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{-3.0f,0.0f,0.0f} };
+	particleManager_->MakeEmitter(emitter, 1, 0.5f, 300.0f, ParticleModelIndex::kUvChecker, 0, 0);
+	emitter.translate.x = 3.0f;
+	particleManager_->MakeEmitter(emitter, 1, 0.5f, 300.0f, ParticleModelIndex::kCircle, 0, 0);
 
 	isDebugCameraActive_ = true;
 
-	model_.reset(Model::Create("Resources/default/", "Ball.obj", dxCommon_));
+	model_.reset(Model::Create("Resources/default/", "Ball.obj", dxCommon_, textureHandleManager_.get()));
 	material_.reset(Material::Create());
 	material_->Initialize();
 	TransformStructure uvTransform = {
@@ -47,7 +52,7 @@ void GameScene::Initialize() {
 	{0.0f,0.0f,0.0f},
 	};
 	Vector4 color = { 1.0f,1.0f,1.0f,1.0f };
-	material_->Update(uvTransform, color, PhongReflection, 100.0f);
+	material_->Update(uvTransform, color, BlinnPhongReflection, 100.0f);
 
 	worldTransform_.Initialize();
 
@@ -70,6 +75,11 @@ void GameScene::Update(){
 
 	camera_.Update();
 
+	worldTransform_.UpdateMatrix();
+
+	// デバッグ
+	sampleBone_->Update();
+
 	// デバッグカメラ
 	DebugCameraUpdate();
 	
@@ -84,9 +94,6 @@ void GameScene::Update(){
 
 	// タイトルへ行く
 	GoToTheTitle();
-
-	//
-	sampleBone_->Update();
 
 }
 
@@ -162,9 +169,12 @@ void GameScene::ImguiDraw(){
 
 	ImGui::Begin("Light");
 	ImGui::DragFloat3("direction", &direction.x, 0.1f);
+	ImGui::DragFloat3("worldtransform", &worldTransform_.transform_.scale.x, 0.1f);
 	ImGui::DragFloat("i", &intencity, 0.01f);
 	ImGui::Text("Frame rate: %6.2f fps", ImGui::GetIO().Framerate);
 	ImGui::End();
+
+	debugCamera_->ImGuiDraw();
 
 #endif // _DEBUG
 
@@ -200,7 +210,7 @@ void GameScene::GoToTheTitle()
 {
 
 	if (pause_->GoToTheTitle()) {
-		sceneNo = kTitle;
+		requestSceneNo = kTitle;
 	}
 
 }
@@ -208,10 +218,10 @@ void GameScene::GoToTheTitle()
 void GameScene::ModelCreate()
 {
 
-	colliderSphereModel_.reset(Model::Create("Resources/TD2_November/collider/sphere/", "sphere.obj", dxCommon_));
-	colliderBoxModel_.reset(Model::Create("Resources/TD2_November/collider/box/", "box.obj", dxCommon_));
-	particleUvcheckerModel_.reset(Model::Create("Resources/default/", "plane.obj", dxCommon_));
-	particleCircleModel_.reset(Model::Create("Resources/Particle/", "plane.obj", dxCommon_));
+	colliderSphereModel_.reset(Model::Create("Resources/TD2_November/collider/sphere/", "sphere.obj", dxCommon_, textureHandleManager_.get()));
+	colliderBoxModel_.reset(Model::Create("Resources/TD2_November/collider/box/", "box.obj", dxCommon_, textureHandleManager_.get()));
+	particleUvcheckerModel_.reset(Model::Create("Resources/default/", "plane.obj", dxCommon_, textureHandleManager_.get()));
+	particleCircleModel_.reset(Model::Create("Resources/Particle/", "plane.obj", dxCommon_, textureHandleManager_.get()));
 
 }
 
@@ -227,9 +237,9 @@ void GameScene::TextureLoad()
 
 	// ポーズ
 	pauseTextureHandles_ = {
-		TextureManager::Load("Resources/TD2_November/pause/pausing.png", dxCommon_),
-		TextureManager::Load("Resources/TD2_November/pause/goToTitle.png", dxCommon_),
-		TextureManager::Load("Resources/TD2_November/pause/returnToGame.png", dxCommon_),
+		TextureManager::Load("Resources/TD2_November/pause/pausing.png", dxCommon_, textureHandleManager_.get()),
+		TextureManager::Load("Resources/TD2_November/pause/goToTitle.png", dxCommon_, textureHandleManager_.get()),
+		TextureManager::Load("Resources/TD2_November/pause/returnToGame.png", dxCommon_, textureHandleManager_.get()),
 	};
 
 }

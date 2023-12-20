@@ -9,7 +9,7 @@ void SceneTransitionBlackOut::Initialize()
 	ISceneTransition::Initialize();
 
 	// テクスチャ読み込み
-	textureHandle_ = TextureManager::Load("Resources/default/white2x2.png", DirectXCommon::GetInstance());
+	textureHandle_ = TextureManager::Load("Resources/default/white2x2.png", DirectXCommon::GetInstance(), textureHandleManager_.get());
 	color_ = { 0.0f,0.0f,0.0f,0.0f };
 	Vector2 position = { static_cast<float>(WinApp::kWindowWidth) / 2.0f, static_cast<float>(WinApp::kWindowHeight) / 2.0f };
 	sprite_.reset(Sprite::Create(textureHandle_, position, color_));

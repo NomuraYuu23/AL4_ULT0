@@ -18,12 +18,13 @@ void WorldTransform::Initialize() {
 	parentMatrix_ = matrix4x4Calc->MakeAffineMatrix(Vector3{1.0f,1.0f,1.0f}, transform_.rotate, transform_.translate);
 
 	//WVP用のリソースを作る。Matrix4x4 1つ分のサイズを用意する
-	transformationMatrixBuff_ = BufferResource::CreateBufferResource(DirectXCommon::GetInstance()->GetDevice(), sizeof(TransformationMatrix));
+	transformationMatrixBuff_ = BufferResource::CreateBufferResource(DirectXCommon::GetInstance()->GetDevice(), (sizeof(TransformationMatrix) + 0xff) & ~0xff);
 	//書き込むためのアドレスを取得
 	transformationMatrixBuff_->Map(0, nullptr, reinterpret_cast<void**>(&transformationMatrixMap_));
 
 	transformationMatrixMap_->World = matrix4x4Calc->MakeIdentity4x4();
 	transformationMatrixMap_->WVP = matrix4x4Calc->MakeIdentity4x4();
+	transformationMatrixMap_->WorldInverseTranspose = matrix4x4Calc->MakeIdentity4x4();
 
 	UpdateMatrix();
 
@@ -76,6 +77,7 @@ void WorldTransform::MapSprite()
 	Matrix4x4 worldViewProjectionMatrixSprite = matrix4x4Calc->Multiply(worldMatrix_, matrix4x4Calc->Multiply(viewMatrixSprite, projectionMatrixSprite));
 	transformationMatrixMap_->WVP = worldViewProjectionMatrixSprite;
 	transformationMatrixMap_->World = worldMatrix_;
+	transformationMatrixMap_->WorldInverseTranspose = matrix4x4Calc->Inverse(worldMatrix_);
 
 }
 
@@ -99,5 +101,6 @@ void WorldTransform::Map(const Matrix4x4& viewProjectionMatrix)
 
 	transformationMatrixMap_->World = worldMatrix_;
 	transformationMatrixMap_->WVP = matrix4x4Calc->Multiply(worldMatrix_, viewProjectionMatrix);
+	transformationMatrixMap_->WorldInverseTranspose = matrix4x4Calc->Inverse(worldMatrix_);
 
 }

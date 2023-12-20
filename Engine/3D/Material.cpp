@@ -47,7 +47,7 @@ Material* Material::Create() {
 void Material::Initialize() {
 
 	//Sprite用のマテリアルリソースを作る
-	materialBuff_ = BufferResource::CreateBufferResource(sDevice, sizeof(MaterialData));
+	materialBuff_ = BufferResource::CreateBufferResource(sDevice, (sizeof(MaterialData) + 0xff) & ~0xff);
 	//書き込むためのアドレスを取得
 	materialBuff_->Map(0, nullptr, reinterpret_cast<void**>(&materialMap_));
 	//白を書き込んでみる

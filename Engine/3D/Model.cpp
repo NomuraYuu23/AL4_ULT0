@@ -95,14 +95,14 @@ void Model::PostDraw() {
 /// 3Dモデル生成
 /// </summary>
 /// <returns></returns>
-Model* Model::Create(const std::string& directoryPath, const std::string& filename, DirectXCommon* dxCommon) {
+Model* Model::Create(const std::string& directoryPath, const std::string& filename, DirectXCommon* dxCommon, ITextureHandleManager* textureHandleManager) {
 
 	// 3Dオブジェクトのインスタンスを生成
 	Model* object3d = new Model();
 	assert(object3d);
 
 	// 初期化
-	object3d->Initialize(directoryPath, filename, dxCommon);
+	object3d->Initialize(directoryPath, filename, dxCommon, textureHandleManager);
 
 	return object3d;
 
@@ -221,14 +221,14 @@ Model::ModelData Model::LoadObjFile(const std::string& directoryPath, const std:
 /// <summary>
 /// 初期化
 /// </summary>
-void Model::Initialize(const std::string& directoryPath, const std::string& filename, DirectXCommon* dxCommon) {
+void Model::Initialize(const std::string& directoryPath, const std::string& filename, DirectXCommon* dxCommon, ITextureHandleManager* textureHandleManager) {
 
 	assert(sDevice);
 
 	//メッシュ生成
 	CreateMesh(directoryPath, filename);
 
-	textureHandle_ = TextureManager::Load(modelData.material.textureFilePath, dxCommon);
+	textureHandle_ = TextureManager::Load(modelData.material.textureFilePath, dxCommon, textureHandleManager);
 
 	resourceDesc_ = TextureManager::GetInstance()->GetResourceDesc(textureHandle_);
 

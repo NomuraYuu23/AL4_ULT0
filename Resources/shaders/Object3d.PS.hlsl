@@ -65,7 +65,27 @@ PixelShaderOutput main(VertexShaderOutput input) {
 			gMaterial.color.rgb * textureColor.rgb * gDirectionalLight.color.rgb * cos * gDirectionalLight.intencity;
 		// 鏡面反射
 		float32_t3 specular =
-			gDirectionalLight.color.rgb * gDirectionalLight.intencity * specularPow * float32_t3(0.0f, 1.0f, 1.0f);
+			gDirectionalLight.color.rgb * gDirectionalLight.intencity * specularPow * float32_t3(1.0f, 1.0f, 1.0f);
+		// 拡散反射+鏡面反射
+		output.color.rgb = diffuse + specular;
+		// α
+		output.color.a = gMaterial.color.a * textureColor.a;
+	}
+	// ブリン鏡面反射
+	else if (gMaterial.enableLighting == 4) {
+		float NdotL = dot(normalize(input.normal), -gDirectionalLight.direction);
+		float cos = pow(NdotL * 0.5f + 0.5f, 2.0f);
+		float32_t3 reflectLight = reflect(gDirectionalLight.direction, normalize(input.normal));
+		float RdotE = dot(reflectLight, toEye);
+		float32_t3 halfVector = normalize(-gDirectionalLight.direction + toEye);
+		float NDotH = dot(normalize(input.normal), halfVector);
+		float specularPow = pow(saturate(NDotH), gMaterial.shininess);
+		// 拡散反射
+		float32_t3 diffuse =
+			gMaterial.color.rgb * textureColor.rgb * gDirectionalLight.color.rgb * cos * gDirectionalLight.intencity;
+		// 鏡面反射
+		float32_t3 specular =
+			gDirectionalLight.color.rgb * gDirectionalLight.intencity * specularPow * float32_t3(1.0f, 1.0f, 1.0f);
 		// 拡散反射+鏡面反射
 		output.color.rgb = diffuse + specular;
 		// α

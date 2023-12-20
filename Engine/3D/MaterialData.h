@@ -9,6 +9,8 @@ enum EnableLighting {
 	Lambert = 1,
 	HalfLambert = 2,
 	PhongReflection = 3,
+	BlinnPhongReflection = 4,
+
 };
 
 struct MaterialData {

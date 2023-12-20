@@ -3,6 +3,8 @@
 void TitleScene::Initialize()
 {
 
+	IScene::Initialize();
+
 	ModelCreate();
 	MaterialCreate();
 	TextureLoad();
@@ -14,7 +16,7 @@ void TitleScene::Update()
 
 	if (input_->TriggerKey(DIK_SPACE)) {
 		// 行きたいシーンへ
-		requestSeneNo = kGame;
+		requestSceneNo = kGame;
 	}
 
 }

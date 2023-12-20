@@ -1,5 +1,6 @@
 #include "DebugCamera.h"
 #include "../Input/Input.h"
+#include "../2D/ImguiManager.h"
 
 /// <summary>
 /// 初期化
@@ -53,5 +54,15 @@ void DebugCamera::Update() {
 	}
 
 	BaseCamera::Update();
+
+}
+
+void DebugCamera::ImGuiDraw()
+{
+
+	ImGui::Begin("DebugCamera");
+	ImGui::DragFloat3("translate",&transform_.translate.x,0.01f);
+	ImGui::DragFloat3("rotate", &transform_.rotate.x, 0.01f);
+	ImGui::End();
 
 }

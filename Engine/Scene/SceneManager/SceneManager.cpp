@@ -55,8 +55,7 @@ void SceneManager::Update()
 			sceneTransition_->SetSwitchScene(false);
 		}
 		else if (!sceneTransition_->GetTransitioning()) {
-			sceneTransition_.release();
-			sceneTransition_ = nullptr;
+			sceneTransition_.reset(nullptr);
 		}
 	}
 

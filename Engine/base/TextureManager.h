@@ -9,6 +9,7 @@
 
 #include "WinApp.h"
 #include "DirectXCommon.h"
+#include "ITextureHandleManager.h"
 
 using namespace DirectX;
 
@@ -28,6 +29,8 @@ public:
 		CD3DX12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV;
 		//名前
 		std::string name;
+		// 使っているか
+		bool used;
 	};
 
 	/// <summary>
@@ -35,7 +38,7 @@ public:
 	/// </summary>
 	/// <param name="fileName">ファイル名</param>
 	/// <returns>テクスチャハンドル</returns>
-	static uint32_t Load(const std::string& fileName, DirectXCommon* dxCommon);
+	static uint32_t Load(const std::string& fileName, DirectXCommon* dxCommon, ITextureHandleManager* textureHandleManager);
 
 	/// <summary>
 	/// シングルトンインスタンスの取得
@@ -59,6 +62,12 @@ public:
 	/// テクスチャのリセット
 	/// </summary>
 	void ResetTexture();
+
+	
+	/// <summary>
+	/// テクスチャのリセット
+	/// </summary>
+	void ResetTexture(const std::vector<uint32_t>& handles);
 
 	/// <summary>
 	/// リソース情報取得
@@ -96,8 +105,8 @@ private:
 	std::string directoryPath_;
 	//ディスクリプタヒープ
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> descriptorHeap_;
-	//次に使うディスクリプタヒープの番号
-	uint32_t indexNextDescriptorHeap = 0u;
+	//テクスチャマネージャーが使うディスクリプタヒープの最初の番号
+	uint32_t textureIndexDescriptorHeap = 2;
 	//テクスチャコンテナ
 	std::array<Texture, kNumDescriptors> textures_;
 

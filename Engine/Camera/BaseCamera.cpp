@@ -17,7 +17,7 @@ void BaseCamera::Initialize()
 	farClip_ = 1000.0f;
 
 	//WVP用のリソースを作る。Matrix4x4 1つ分のサイズを用意する
-	worldPositionBuff_ = BufferResource::CreateBufferResource(DirectXCommon::GetInstance()->GetDevice(), sizeof(CameraForGPU));
+	worldPositionBuff_ = BufferResource::CreateBufferResource(DirectXCommon::GetInstance()->GetDevice(), (sizeof(CameraForGPU) + 0xff) & ~0xff);
 	//書き込むためのアドレスを取得
 	worldPositionBuff_->Map(0, nullptr, reinterpret_cast<void**>(&worldPositionMap_));
 

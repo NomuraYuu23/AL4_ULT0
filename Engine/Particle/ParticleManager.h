@@ -18,7 +18,8 @@ class ParticleManager
 public: // サブクラス
 
 	struct StartInstanceId {
-		uint32_t num;
+		int32_t num;
+		//float padding[3];
 	};
 
 	//パーティクルリスト

@@ -1,4 +1,6 @@
 #pragma once
+#include <memory>
+#include "../../base/ITextureHandleManager.h"
 
 /// <summary>
 /// シーン遷移
@@ -7,6 +9,8 @@ class ISceneTransition
 {
 
 public: // メンバ関数
+
+	~ISceneTransition();
 
 	/// <summary>
 	/// 初期化
@@ -43,6 +47,8 @@ protected: // メンバ変数
 	bool transitioning_; //遷移しているか
 	bool isFadeIn_; // フェードインか
 	bool switchScene_; //シーンを切り替える
+
+	std::unique_ptr<ITextureHandleManager> textureHandleManager_;
 
 };
 

@@ -52,7 +52,7 @@ DirectionalLight* DirectionalLight::Create() {
 void DirectionalLight::Initialize() {
 
 	//平行光源リソースを作る
-	directionalLightBuff_ = BufferResource::CreateBufferResource(sDevice, sizeof(DirectionalLightData));
+	directionalLightBuff_ = BufferResource::CreateBufferResource(sDevice, (sizeof(DirectionalLightData) + 0xff) & ~0xff);
 
 	//書き込むためのアドレスを取得
 	directionalLightBuff_->Map(0, nullptr, reinterpret_cast<void**>(&directionalLightMap));

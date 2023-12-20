@@ -92,13 +92,10 @@
       <UniqueIdentifier>{6558aabd-3cbd-4ea1-bcdb-5f63ade457ba}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Animation">
-      <UniqueIdentifier>{030dff88-0155-4376-83a4-21dc768b1c78}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Application\Camera">
-      <UniqueIdentifier>{917d93a3-cc2d-4af7-a605-023f6d42245f}</UniqueIdentifier>
+      <UniqueIdentifier>{43280e91-b268-4c81-aac7-d52c62b831b0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Application\SampleBone">
-      <UniqueIdentifier>{30279646-9ac2-492a-b0e5-485a6c89ff7e}</UniqueIdentifier>
+      <UniqueIdentifier>{725bd115-0d5f-49d4-b607-cf4602735a78}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -283,17 +280,17 @@
     <ClCompile Include="Engine\Math\ShortestDistance.cpp">
       <Filter>Engine\Math</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\base\ITextureHandleManager.cpp">
+      <Filter>Engine\Base</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Animation\AnimationFile.cpp">
+      <Filter>Engine\Animation</Filter>
+    </ClCompile>
     <ClCompile Include="Engine\Animation\IBone.cpp">
       <Filter>Engine\Animation</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Camera\FollowCamera\FollowCamera.cpp">
-      <Filter>Application\Camera</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\Animation\AnimationFile.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Application\SampleBone\SampleBone.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>Application\SampleBone</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -531,23 +528,20 @@
     <ClInclude Include="Engine\Camera\CameraForGPU.h">
       <Filter>Engine\Camera</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Animation\BoneData.h">
+    <ClInclude Include="Engine\base\ITextureHandleManager.h">
+      <Filter>Engine\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Animation\AnimationFile.h">
       <Filter>Engine\Animation</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Animation\IBone.h">
       <Filter>Engine\Animation</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Camera\FollowCamera\FollowCamera.h">
-      <Filter>Application\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Animation\AnimationFile.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\Collider\ColliderShape.h">
-      <Filter>Engine\Collider</Filter>
+    <ClInclude Include="Engine\Animation\BoneData.h">
+      <Filter>Engine\Animation</Filter>
     </ClInclude>
     <ClInclude Include="Application\SampleBone\SampleBone.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Application\SampleBone</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

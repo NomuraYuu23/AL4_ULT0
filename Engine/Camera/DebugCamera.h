@@ -16,6 +16,11 @@ public:
 	/// </summary>
 	void Update() override;
 
+	/// <summary>
+	/// ImGui描画
+	/// </summary>
+	void ImGuiDraw();
+
 private:
 
 	// 移動速度

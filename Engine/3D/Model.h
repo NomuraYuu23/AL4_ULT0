@@ -29,6 +29,8 @@
 
 #include "../Camera/BaseCamera.h"
 
+#include "../base/ITextureHandleManager.h"
+
 class Model
 {
 
@@ -74,7 +76,7 @@ public:
 	/// 3Dモデル生成
 	/// </summary>
 	/// <returns></returns>
-	static Model* Create(const std::string& directoryPath, const std::string& filename, DirectXCommon* dxCommon);
+	static Model* Create(const std::string& directoryPath, const std::string& filename, DirectXCommon* dxCommon, ITextureHandleManager* textureHandleManager);
 
 private:
 
@@ -96,7 +98,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(const std::string& directoryPath, const std::string& filename, DirectXCommon* dxCommon);
+	void Initialize(const std::string& directoryPath, const std::string& filename, DirectXCommon* dxCommon, ITextureHandleManager* textureHandleManager);
 
 	/// <summary>
 	/// 更新

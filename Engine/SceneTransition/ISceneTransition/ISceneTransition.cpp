@@ -1,6 +1,13 @@
 #include "ISceneTransition.h"
 #include "../../Math/DeltaTime.h"
 
+ISceneTransition::~ISceneTransition()
+{
+
+	textureHandleManager_->ResetTextureHandles();
+
+}
+
 void ISceneTransition::Initialize()
 {
 
@@ -11,6 +18,9 @@ void ISceneTransition::Initialize()
 	transitioning_ = true; //遷移しているか
 	isFadeIn_ = true; // フェードインか
 	switchScene_ = false; //シーンを切り替える
+
+	textureHandleManager_ = std::make_unique<ITextureHandleManager>();
+	textureHandleManager_->Initialize();
 
 }
 

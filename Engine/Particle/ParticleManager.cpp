@@ -20,7 +20,7 @@ void ParticleManager::Initialize()
 	Matrix4x4Calc* matrix4x4Calc = Matrix4x4Calc::GetInstance();
 
 	//WVP用のリソースを作る。
-	particleForGPUBuff_ = BufferResource::CreateBufferResource(DirectXCommon::GetInstance()->GetDevice(), sizeof(ParticleForGPU) * kNumInstanceMax_);
+	particleForGPUBuff_ = BufferResource::CreateBufferResource(DirectXCommon::GetInstance()->GetDevice(), ((sizeof(ParticleForGPU) + 0xff) & ~0xff) * kNumInstanceMax_);
 	//書き込むためのアドレスを取得
 	particleForGPUBuff_->Map(0, nullptr, reinterpret_cast<void**>(&particleForGPUMap_));
 
@@ -37,7 +37,7 @@ void ParticleManager::Initialize()
 	for (size_t i = 0; i < particleDatas_.size(); i++) {
 		particleDatas_[i].instanceIndex_ = 0;
 		//スタートインスタンス用のリソースを作る。
-		particleDatas_[i].startInstanceIdBuff_ = BufferResource::CreateBufferResource(DirectXCommon::GetInstance()->GetDevice(), sizeof(StartInstanceId));
+		particleDatas_[i].startInstanceIdBuff_ = BufferResource::CreateBufferResource(DirectXCommon::GetInstance()->GetDevice(), (sizeof(StartInstanceId) + 0xff) & ~ 0xff);
 		//書き込むためのアドレスを取得
 		particleDatas_[i].startInstanceIdBuff_->Map(0, nullptr, reinterpret_cast<void**>(&particleDatas_[i].startInstanceIdMap_));
 		particleDatas_[i].startInstanceIdMap_->num = 0;

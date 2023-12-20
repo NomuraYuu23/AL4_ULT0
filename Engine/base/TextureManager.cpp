@@ -10,8 +10,13 @@ using namespace DirectX;
 /// </summary>
 /// <param name="fileName">ファイル名</param>
 /// <returns>テクスチャハンドル</returns>
-uint32_t TextureManager::Load(const std::string& fileName, DirectXCommon* dxCommon) {
-	return TextureManager::GetInstance()->LoadInternal(fileName, dxCommon);
+uint32_t TextureManager::Load(const std::string& fileName, DirectXCommon* dxCommon, ITextureHandleManager* textureHandleManager) {
+
+	uint32_t textureHandle = TextureManager::GetInstance()->LoadInternal(fileName, dxCommon);
+
+	textureHandleManager->SetTextureHandle(textureHandle);
+
+	return textureHandle;
 }
 
 /// <summary>
@@ -66,14 +71,26 @@ void TextureManager::ResetAll() {
 void TextureManager::ResetTexture()
 {
 
-	indexNextDescriptorHeap = 0;
-
 	//全テクスチャを初期化
 	for (size_t i = 0; i < kNumDescriptors; i++) {
 		textures_[i].resource.Reset();
 		textures_[i].cpuDescHandleSRV.ptr = 0;
 		textures_[i].gpuDescHandleSRV.ptr = 0;
 		textures_[i].name.clear();
+		textures_[i].used = false;
+	}
+
+}
+
+void TextureManager::ResetTexture(const std::vector<uint32_t>& handles)
+{
+	//指定したハンドルのテクスチャを初期化
+	for (uint32_t i = 0; i < handles.size(); i++) {
+		textures_[handles[i]].resource.Reset();
+		textures_[handles[i]].cpuDescHandleSRV.ptr = 0;
+		textures_[handles[i]].gpuDescHandleSRV.ptr = 0;
+		textures_[handles[i]].name.clear();
+		textures_[handles[i]].used = false;
 	}
 
 }
@@ -235,6 +252,16 @@ Microsoft::WRL::ComPtr<ID3D12Resource> TextureManager::UploadTextureData(Microso
 /// <returns></returns>
 uint32_t TextureManager::LoadInternal(const std::string& fileName, DirectXCommon* dxCommon) {
 
+	//indexNextDescriptorHeap
+	uint32_t indexNextDescriptorHeap = 0u;
+	for (uint32_t i = 0; i < textures_.size(); i++) {
+		if (!textures_[i].used) {
+			indexNextDescriptorHeap = i;
+			textures_[i].used = true;
+			break;
+		}
+	}
+
 	assert(indexNextDescriptorHeap < kNumDescriptors);
 	uint32_t handle = indexNextDescriptorHeap;
 
@@ -289,14 +316,12 @@ uint32_t TextureManager::LoadInternal(const std::string& fileName, DirectXCommon
 
 	//DescriptorSizeを取得しておく
 	const uint32_t desriptorSizeSRV = device_->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
-	
+
 	//SRVを作成するDescriptorHeapの場所を決める
-	texture.cpuDescHandleSRV = GetCPUDescriptorHandle(descriptorHeap_.Get(), desriptorSizeSRV, indexNextDescriptorHeap + 2);
-	texture.gpuDescHandleSRV = GetGPUDescriptorHandle(descriptorHeap_.Get(), desriptorSizeSRV, indexNextDescriptorHeap + 2);
+	texture.cpuDescHandleSRV = GetCPUDescriptorHandle(descriptorHeap_.Get(), desriptorSizeSRV, indexNextDescriptorHeap + textureIndexDescriptorHeap);
+	texture.gpuDescHandleSRV = GetGPUDescriptorHandle(descriptorHeap_.Get(), desriptorSizeSRV, indexNextDescriptorHeap + textureIndexDescriptorHeap);
 	//SRVの生成
 	device_->CreateShaderResourceView(texture.resource.Get(), &srvDesc, texture.cpuDescHandleSRV);
-
-	indexNextDescriptorHeap++;
 
 	return handle;
 
