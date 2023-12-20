@@ -74,7 +74,13 @@ void AnimationFile::SaveFile(const std::string& objectName, const std::string& p
 	for (std::map<std::string, Motion>::iterator itMotion = itPart->second.begin();
 		itMotion != itPart->second.end(); ++itMotion) {
 		//項目名を取得
-		const std::string& motionName = itMotion->first;
+		std::string motionName = itMotion->first;
+		for (uint32_t i = 0; i < motionName.size(); ++i) {
+			if (motionName[i] == '\u0000') {
+				motionName.resize(i);
+				break;
+			}
+		}
 		//項目の参照を取得
 		Motion& motion = itMotion->second;
 
@@ -218,11 +224,12 @@ void AnimationFile::Update()
 			//改行
 			ImGui::Text("\n");
 
+			ImGui::InputText("newMotionName", newMotionName.data(), 16);
+			// 文字列
 			if (newMotionName.size() < 16u) {
 				newMotionName.resize(16u);
 			}
 
-			ImGui::InputText("newMotionName", newMotionName.data(), 16);
 			if (ImGui::Button("AddNewMotionName")) {
 				CreateMotion(objectName, partName, newMotionName);
 			}
