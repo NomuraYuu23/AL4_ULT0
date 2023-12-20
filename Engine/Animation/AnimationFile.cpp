@@ -148,50 +148,75 @@ void AnimationFile::Update()
 			// グループの参照を取得
 			Part& part = itPart->second;
 
-			if (!ImGui::BeginMenu(partName.c_str()))
-				continue;
+			if (ImGui::TreeNode(partName.c_str())) {
 
-			//各項目について
-			for (std::map<std::string, Motion>::iterator itMotion = part.begin();
-				itMotion != part.end(); ++itMotion) {
+				//各項目について
+				for (std::map<std::string, Motion>::iterator itMotion = part.begin();
+					itMotion != part.end(); ++itMotion) {
 
-				//項目名を取得
-				const std::string& motionName = itMotion->first;
-				//項目の参照を取得
-				Motion& motion = itMotion->second;
+					//項目名を取得
+					const std::string& motionName = itMotion->first;
+					//項目の参照を取得
+					Motion& motion = itMotion->second;
 
-				if (!ImGui::BeginMenu(motionName.c_str()))
-					continue;
+					if (ImGui::TreeNode(motionName.c_str())) {
 
-				BoneData* ptr = nullptr;
-				int preEndFrame = 0;
-				for (size_t i = 0; i < motion.size(); i++)
-				{
+						BoneData* ptr = nullptr;
+						int preEndFrame = 0;
+						for (size_t i = 0; i < motion.size(); i++)
+						{
 
-					if (ImGui::TreeNode(std::to_string(i).c_str())) {
+							if (ImGui::TreeNode(std::to_string(i).c_str())) {
 
-						ptr = &motion[i];
+								ptr = &motion[i];
 
-						int endFrame = static_cast<int>(ptr->endFrame_);
-						ImGui::DragInt("endFrame", &endFrame);
-						if (preEndFrame < endFrame) {
-							ptr->endFrame_ = static_cast<uint32_t>(endFrame);
-							preEndFrame = endFrame;
+								int endFrame = static_cast<int>(ptr->endFrame_);
+								ImGui::DragInt("endFrame", &endFrame);
+								if (preEndFrame < endFrame) {
+									ptr->endFrame_ = static_cast<uint32_t>(endFrame);
+									preEndFrame = endFrame;
+								}
+								else {
+									ptr->endFrame_ = static_cast<uint32_t>(preEndFrame);
+								}
+
+								ImGui::DragFloat3("translate", &ptr->transform_.translate.x, 0.01f);
+								ImGui::DragFloat3("rotate", &ptr->transform_.rotate.x, 0.01f);
+								ImGui::DragFloat3("scale", &ptr->transform_.scale.x, 0.01f);
+
+								int easeType = static_cast<int>(ptr->easeType_);
+								ImGui::DragInt("easeType", &easeType);
+								ptr->easeType_ = static_cast<uint32_t>(easeType);
+
+								ImGui::TreePop();
+
+							}
+
 						}
-						else {
-							ptr->endFrame_ = static_cast<uint32_t>(preEndFrame);
+
+						//改行
+						ImGui::Text("\n");
+
+						// フレームを増やす
+						if (ImGui::Button("AddFrame")) {
+							BoneData newBoneData = {
+								static_cast<uint32_t>(preEndFrame),
+								1.0f, 1.0f, 1.0f,
+								0.0f, 0.0f, 0.0f,
+								0.0f, 0.0f, 0.0f,
+								0
+							};
+							motion.push_back(newBoneData);
 						}
-
-						ImGui::DragFloat3("translate", &ptr->transform_.translate.x, 0.01f);
-						ImGui::DragFloat3("rotate", &ptr->transform_.rotate.x, 0.01f);
-						ImGui::DragFloat3("scale", &ptr->transform_.scale.x, 0.01f);
-
-						int easeType = static_cast<int>(ptr->easeType_);
-						ImGui::DragInt("easeType", &easeType);
-						ptr->easeType_ = static_cast<uint32_t>(easeType);
+						// 最後のフレームを消す
+						if (ImGui::Button("DeleteLastFrame")) {
+							if (motion.size() != 0) {
+								motion.pop_back();
+							}
+						}
 
 						ImGui::TreePop();
-
+					
 					}
 
 				}
@@ -199,51 +224,31 @@ void AnimationFile::Update()
 				//改行
 				ImGui::Text("\n");
 
-				// フレームを増やす
-				if (ImGui::Button("AddFrame")) {
-					BoneData newBoneData = {
-						static_cast<uint32_t>(preEndFrame),
-						1.0f, 1.0f, 1.0f,
-						0.0f, 0.0f, 0.0f,
-						0.0f, 0.0f, 0.0f,
-						0
-					};
-					motion.push_back(newBoneData);
+				ImGui::InputText("newMotionName", newMotionName.data(), 16);
+				// 文字列
+				if (newMotionName.size() < 16u) {
+					newMotionName.resize(16u);
 				}
-				// 最後のフレームを消す
-				if (ImGui::Button("DeleteLastFrame")) {
-					if (motion.size() != 0) {
-						motion.pop_back();
+
+				if (ImGui::Button("AddNewMotionName")) {
+					CreateMotion(objectName, partName, newMotionName);
+				}
+
+				//改行
+				ImGui::Text("\n");
+
+				if (ImGui::Button("Save")) {
+					std::string message = std::format("Do you want to save the {} animation file?", partName);
+					int ans = MessageBoxA(nullptr, message.c_str(), "Save confirmation",
+						MB_ICONQUESTION | MB_OKCANCEL);
+					if (ans == 1) {
+						SaveFile(objectName, partName);
 					}
 				}
 
-				ImGui::EndMenu();
-
+				ImGui::TreePop();
+			
 			}
-
-			//改行
-			ImGui::Text("\n");
-
-			ImGui::InputText("newMotionName", newMotionName.data(), 16);
-			// 文字列
-			if (newMotionName.size() < 16u) {
-				newMotionName.resize(16u);
-			}
-
-			if (ImGui::Button("AddNewMotionName")) {
-				CreateMotion(objectName, partName, newMotionName);
-			}
-
-			//改行
-			ImGui::Text("\n");
-
-			if (ImGui::Button("Save")) {
-				SaveFile(objectName, partName);
-				std::string message = std::format("{}.json saved.", partName);
-				MessageBoxA(nullptr, message.c_str(), "AnimationFile", 0);
-			}
-
-			ImGui::EndMenu();
 
 		}
 
