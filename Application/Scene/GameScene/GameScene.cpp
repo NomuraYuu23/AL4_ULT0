@@ -59,6 +59,11 @@ void GameScene::Initialize() {
 	sampleBone_ = std::make_unique<SampleBone>();
 	sampleBone_->Initialize(model_.get());
 
+	audioManager_ = std::make_unique<GameAudioManager>();
+	audioManager_->StaticInitialize();
+	audioManager_->Initialize();
+	audioManager_->PlayWave(GameAudioNameIndex::kSample);
+
 }
 
 /// <summary>

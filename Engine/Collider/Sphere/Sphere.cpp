@@ -1,6 +1,6 @@
 #include "Sphere.h"
 
-void Sphere::Initialize(const Vector3& center, float radius, void* parentObject)
+void Sphere::Initialize(const Vector3& center, float radius, ColliderParentObject parentObject)
 {
 
 	Collider::Initialize(parentObject);

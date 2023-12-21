@@ -1,6 +1,6 @@
 #include "Collider.h"
 
-void Collider::Initialize(void* parentObject)
+void Collider::Initialize(ColliderParentObject parentObject)
 {
 
 	worldTransform_.Initialize();

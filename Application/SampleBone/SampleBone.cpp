@@ -7,8 +7,9 @@ void SampleBone::Initialize(Model* model)
 	objectName_ = "SampleObject";
 	partName_ = "SamplePart";
 
-	motionNames_.push_back("SampleMotion1");
-	motionNames_.push_back("SampleMotion2");
+	motionNames_.push_back("a");
+	motionNames_.push_back("b");
+	motionNames_.push_back("c");
 
 	bone_ = std::make_unique<IBone>();
 	bone_->Initialize(model_, objectName_, partName_, motionNames_);

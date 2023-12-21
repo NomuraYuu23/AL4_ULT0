@@ -1,6 +1,6 @@
 #include "AABB.h"
 
-void AABB::Initialize(const Vector3& min, const Vector3& max, void* parentObject)
+void AABB::Initialize(const Vector3& min, const Vector3& max, ColliderParentObject parentObject)
 {
 
 	Collider::Initialize(parentObject);

@@ -1,6 +1,6 @@
 #include "OBB.h"
 
-void OBB::Initialize(const Vector3& center, const Vector3& otientatuons1, const Vector3& otientatuons2, const Vector3& otientatuons3, const Vector3& size, void* parentObject)
+void OBB::Initialize(const Vector3& center, const Vector3& otientatuons1, const Vector3& otientatuons2, const Vector3& otientatuons3, const Vector3& size, ColliderParentObject parentObject)
 {
 
 	Collider::Initialize(parentObject);

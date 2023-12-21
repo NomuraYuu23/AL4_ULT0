@@ -3,6 +3,7 @@
 #include "../Math/Vector3.h"
 #include <functional>
 #include "../3D/WorldTransform.h"
+#include "../../Application/Collider/ColliderParentObject.h"
 
 /// <summary>
 /// コライダー
@@ -12,7 +13,7 @@ class Collider
 
 public: // メンバ関数
 
-	void Initialize(void* parentObject);
+	void Initialize(ColliderParentObject parentObject);
 
 	virtual void worldTransformUpdate() = 0;
 
@@ -27,7 +28,7 @@ public: //メンバ関数 (衝突)
 	// 衝突マスク(相手)を設定
 	void SetCollisionMask(uint32_t collisionMask) { collisionMask_ = collisionMask; }
 	
-	void* GetParentObject() { return parentObject_; }
+	ColliderParentObject GetParentObject() { return parentObject_; }
 
 public:
 	// ワールドトランスフォーム
@@ -41,7 +42,7 @@ protected:
 	uint32_t collisionMask_ = 0xffffffff;
 
 	// 親オブジェクト
-	void* parentObject_ = nullptr;
+	ColliderParentObject parentObject_ = nullptr;
 
 };
 

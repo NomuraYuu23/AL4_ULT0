@@ -9,7 +9,7 @@ public: // メンバ関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(const std::array<Vector3, 3>& vertices, void* parentObject);
+	void Initialize(const std::array<Vector3, 3>& vertices, ColliderParentObject parentObject);
 
 	void SetVertices(const std::array<Vector3, 3>& vertices);
 

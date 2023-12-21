@@ -162,7 +162,7 @@ void Audio::Unload(SoundData* soundData) {
 /// <param name="soundDataHandle">サウンドデータハンドル</param>
 /// <param name="isloop">ループをするか</param>
 /// <returns>再生中のサウンドデータの番号</returns>
-uint32_t Audio::PlayWave(uint32_t soundDataHandle, bool isLoop, float volume) {
+IXAudio2SourceVoice* Audio::PlayWave(uint32_t soundDataHandle, bool isLoop, float volume) {
 
 	HRESULT result;
 
@@ -171,21 +171,10 @@ uint32_t Audio::PlayWave(uint32_t soundDataHandle, bool isLoop, float volume) {
 	// サウンドデータの参照を取得
 	SoundData& soundData = soundDatas_.at(soundDataHandle);
 
-	//再生中のサウンドデータの番号
-	uint32_t handle = indexPlayingSoundData_;
-
 	// 波形フォーマットを元にSourceVoiceの生成
 	IXAudio2SourceVoice* pSourceVoice = nullptr;
 	result = xAudio2_->CreateSourceVoice(&pSourceVoice, &soundData.wfex);
 	assert(SUCCEEDED(result));
-
-	// 再生中のデータを保存
-
-	// returnする為の音声データ
-	PlayingSoundData playingSoundData;
-	playingSoundData.handle = handle;
-	playingSoundData.pSourceVoice = pSourceVoice;
-	playingSoundDatas_.push_back(playingSoundData);
 
 	// 再生する波形データの設定
 	XAUDIO2_BUFFER buf{};
@@ -202,48 +191,6 @@ uint32_t Audio::PlayWave(uint32_t soundDataHandle, bool isLoop, float volume) {
 	pSourceVoice->SetVolume(volume);
 	result = pSourceVoice->Start();
 
-	indexPlayingSoundData_++;
-
-	return handle;
-
-}
-
-void Audio::StopWave(uint32_t PlayingSoundDataHandle)
-{
-
-	playingSoundDatas_.remove_if([PlayingSoundDataHandle](PlayingSoundData playingSoundData) {	
-		if (playingSoundData.handle == PlayingSoundDataHandle) {
-			playingSoundData.pSourceVoice->DestroyVoice();
-			return true;
-		}
-		return false;
-	});
-
-	indexPlayingSoundData_ = static_cast<uint32_t>(playingSoundDatas_.size());
-
-}
-
-bool Audio::IsPlayAudio(uint32_t PlayingSoundDataHandle)
-{
-
-	for (PlayingSoundData playingSoundData : playingSoundDatas_) {
-		if (playingSoundData.handle == PlayingSoundDataHandle) {
-			return true;
-		}
-	}
-
-	return false;
-
-}
-
-void Audio::SetVolume(uint32_t PlayingSoundDataHandle, float volume)
-{
-
-	for (PlayingSoundData playingSoundData : playingSoundDatas_) {
-		if (playingSoundData.handle == PlayingSoundDataHandle) {
-			playingSoundData.pSourceVoice->SetVolume(volume);
-			return;
-		}
-	}
+	return pSourceVoice;
 
 }

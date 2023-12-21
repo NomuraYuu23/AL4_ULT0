@@ -48,7 +48,7 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update(const TransformStructure& transform, const Vector4& color, int enableLighting, float shininess);
+	void Update(const TransformStructure& uvTransform, const Vector4& color, int enableLighting, float shininess);
 
 public: //アクセッサ
 
@@ -58,6 +58,13 @@ public: //アクセッサ
 
 	void SetMaterialMap(MaterialData* materialMap) { materialMap_ = materialMap; }
 
+public:
+
+	void SetUvTransform(const TransformStructure& uvTransform);
+	void SetColor(const Vector4& color);
+	void SetEnableLighting(const int32_t enableLighting);
+	void SetShininess(const float uvTransform);
+
 private:
 
 	//Sprite用のマテリアルリソースを作る
@@ -65,7 +72,13 @@ private:
 
 	MaterialData* materialMap_ = nullptr;
 
-	TransformStructure uvTransform;
+	TransformStructure uvTransform_;
+
+	Vector4 color_;
+
+	int32_t enableLighting_;
+
+	float shininess_;
 
 };
 

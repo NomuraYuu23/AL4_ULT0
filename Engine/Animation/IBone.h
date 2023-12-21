@@ -58,6 +58,8 @@ public:
 
 	WorldTransform GetWorldTransform() { return worldTransform_; }
 
+	Vector3 GetWorldPosition() { return Vector3{ worldTransform_.worldMatrix_.m[3][0], worldTransform_.worldMatrix_.m[3][1], worldTransform_.worldMatrix_.m[3][2] }; }
+
 protected: // 
 
 	// モデル
@@ -87,7 +89,9 @@ public: //アニメーション関数
 	/// <summary>
 	/// animationTransforms_の変更
 	/// </summary>
-	void animationTransformChange(const std::string& key);
+	/// <param name="motionName"></param>
+	/// <returns>モーション全体のフレーム</returns>
+	uint32_t animationTransformChange(const std::string& motionName);
 
 protected: // アニメーション変数
 
@@ -101,7 +105,7 @@ protected: // アニメーション変数
 	std::string objectName_;
 
 	// パーツ名
-	std::string partName_;;
+	std::string partName_;
 
 };
 

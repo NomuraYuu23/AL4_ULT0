@@ -4,12 +4,14 @@
 class Capsule : public Collider
 {
 
+public:
+
 	/// <summary>
 	/// 初期化
 	/// </summary>
 	/// <param name="center">センター</param>
 	/// <param name="radius">半径</param>
-	void Initialize(const Segment& segment, float radius, void* parentObject);
+	void Initialize(const Segment& segment, float radius, ColliderParentObject parentObject);
 
 	/// <summary>
 	/// ワールドトランスフォーム更新

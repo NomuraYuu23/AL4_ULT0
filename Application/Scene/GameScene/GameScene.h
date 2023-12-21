@@ -6,6 +6,7 @@
 #include "../../Pause/Pause.h"
 #include "../../../Engine/base/ITextureHandleManager.h"
 #include "../../SampleBone/SampleBone.h"
+#include "../../AudioManager/GameAudioManager.h"
 
 class GameScene : public IScene
 {
@@ -88,5 +89,8 @@ private:
 
 	// サンプルボーン
 	std::unique_ptr<SampleBone> sampleBone_;
+
+	// オーディオマネージャー
+	std::unique_ptr<GameAudioManager> audioManager_;
 
 };

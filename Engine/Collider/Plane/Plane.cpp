@@ -1,6 +1,6 @@
 #include "Plane.h"
 
-void Plane::Initialize(const Vector3& normal, float distance, void* parentObject)
+void Plane::Initialize(const Vector3& normal, float distance, ColliderParentObject parentObject)
 {
 
 	Collider::Initialize(parentObject);

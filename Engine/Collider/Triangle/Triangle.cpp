@@ -1,6 +1,6 @@
 #include "Triangle.h"
 
-void Triangle::Initialize(const std::array<Vector3, 3>& vertices, void* parentObject)
+void Triangle::Initialize(const std::array<Vector3, 3>& vertices, ColliderParentObject parentObject)
 {
 
 	Collider::Initialize(parentObject);

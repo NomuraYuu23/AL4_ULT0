@@ -20,7 +20,7 @@ void IBone::Initialize(Model* model, const std::string& objectName, const std::s
 
 	RegistrationAnimationFile();
 
-	//ApplyAnimationFile(motionNames);
+	ApplyAnimationFile(motionNames);
 
 }
 
@@ -43,7 +43,7 @@ void IBone::Update(uint32_t frameCount, const std::vector<std::string>& motionNa
 
 #ifdef _DEBUG
 
-	//ApplyAnimationFile(motionNames);
+	ApplyAnimationFile(motionNames);
 
 #endif // _DEBUG
 
@@ -127,7 +127,7 @@ void IBone::ApplyAnimationFile(const std::vector<std::string>& motionNames)
 
 }
 
-void IBone::animationTransformChange(const std::string& key)
+uint32_t IBone::animationTransformChange(const std::string& motionName)
 {
 
 	//各グループについて
@@ -135,12 +135,15 @@ void IBone::animationTransformChange(const std::string& key)
 		++itData) {
 		// グループ名を取得
 		const std::string& dataKey = itData->first;
-		if (key == dataKey) {
+		if (motionName == dataKey) {
 			// グループの参照を取得
 			animationTransforms_.clear();
 			animationTransforms_.shrink_to_fit();
 			animationTransforms_ = itData->second;
+			break;
 		}
 	}
+
+	return (--animationTransforms_.end())->endFrame_;
 
 }

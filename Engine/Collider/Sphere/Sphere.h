@@ -10,7 +10,7 @@ public: // メンバ関数
 	/// </summary>
 	/// <param name="center">センター</param>
 	/// <param name="radius">半径</param>
-	void Initialize(const Vector3& center, float radius, void* parentObject);
+	void Initialize(const Vector3& center, float radius, ColliderParentObject parentObject);
 
 	/// <summary>
 	/// ワールドトランスフォーム更新
