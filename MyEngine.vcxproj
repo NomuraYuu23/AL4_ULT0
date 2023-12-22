@@ -101,6 +101,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application\AudioManager\GameAudioManager.cpp" />
+    <ClCompile Include="Application\Player\Player.cpp" />
+    <ClCompile Include="Application\Player\PlayerState\IPlayerState.cpp" />
     <ClCompile Include="Application\SampleBone\SampleBone.cpp" />
     <ClCompile Include="Application\Scene\SelectScene\SelectScene.cpp" />
     <ClCompile Include="Application\Scene\TitleScene\TitleScene.cpp" />
@@ -172,6 +174,8 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
   <ItemGroup>
     <ClInclude Include="Application\AudioManager\GameAudioManager.h" />
     <ClInclude Include="Application\Collider\ColliderParentObject.h" />
+    <ClInclude Include="Application\Player\Player.h" />
+    <ClInclude Include="Application\Player\PlayerState\IPlayerState.h" />
     <ClInclude Include="Application\SampleBone\SampleBone.h" />
     <ClInclude Include="Application\Scene\SceneName.h" />
     <ClInclude Include="Application\Scene\SelectScene\SelectScene.h" />
