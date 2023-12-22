@@ -20,9 +20,9 @@ inline void to_json(nlohmann::json& json, const TransformStructure& value) {
 inline void from_json(const nlohmann::json& json, TransformStructure& value) {
 
     // キーを確認
-    if (json.contains("scale") && json["scale"].is_object() &&
-        json.contains("rotate") && json["rotate"].is_object() &&
-        json.contains("translate") && json["translate"].is_object()) {
+    if (json.contains("scale") && json["scale"].is_array() &&
+        json.contains("rotate") && json["rotate"].is_array() &&
+        json.contains("translate") && json["translate"].is_array()) {
 
         value.scale = json["scale"].get<Vector3>();
         value.rotate = json["rotate"].get<Vector3>();

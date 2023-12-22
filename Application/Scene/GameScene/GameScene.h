@@ -5,8 +5,9 @@
 #include"../../../Engine/Collision/CollisionManager.h"
 #include "../../Pause/Pause.h"
 #include "../../../Engine/base/ITextureHandleManager.h"
-#include "../../SampleBone/SampleBone.h"
 #include "../../AudioManager/GameAudioManager.h"
+
+#include "../../Player/Player.h"
 
 class GameScene : public IScene
 {
@@ -80,17 +81,15 @@ private:
 	std::unique_ptr<Model> particleUvcheckerModel_ = nullptr;
 	std::unique_ptr<Model> particleCircleModel_ = nullptr;
 
-	// モデル
-	std::unique_ptr<Model> model_ = nullptr;
-	std::unique_ptr<Material> material_ = nullptr;
-	WorldTransform worldTransform_;
-	Vector3 direction = { 1.0f, -1.0f, 0.0f};
-	float intencity = 1.0f;
-
-	// サンプルボーン
-	std::unique_ptr<SampleBone> sampleBone_;
+	//ライトデータ
+	DirectionalLightData directionalLightData_;
 
 	// オーディオマネージャー
 	std::unique_ptr<GameAudioManager> audioManager_;
+
+	// プレイヤー
+	std::unique_ptr<Player> player_;	
+	// プレイヤーモデル
+	std::array<std::unique_ptr<Model>, PlayerPartIndex::kPlayerPartIndexOfCount> playerModels_;
 
 };

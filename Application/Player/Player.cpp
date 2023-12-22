@@ -28,7 +28,7 @@ void Player::Update()
 {
 
 	// ステート
-	StateUpdate;
+	StateUpdate();
 
 	// パーツ,アニメーション
 	PartUpdate();

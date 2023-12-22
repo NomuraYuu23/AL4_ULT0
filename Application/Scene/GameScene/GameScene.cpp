@@ -36,33 +36,31 @@ void GameScene::Initialize() {
 	particleModel[ParticleModelIndex::kUvChecker] = particleUvcheckerModel_.get();
 	particleModel[ParticleModelIndex::kCircle] = particleCircleModel_.get();
 	particleManager_->ModelCreate(particleModel);
-	TransformStructure emitter = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{-3.0f,0.0f,0.0f} };
-	particleManager_->MakeEmitter(emitter, 1, 0.5f, 300.0f, ParticleModelIndex::kUvChecker, 0, 0);
-	emitter.translate.x = 3.0f;
-	particleManager_->MakeEmitter(emitter, 1, 0.5f, 300.0f, ParticleModelIndex::kCircle, 0, 0);
+	//TransformStructure emitter = { {1.0f,1.0f,1.0f},{0.0f,0.0f,0.0f},{-3.0f,0.0f,0.0f} };
+	//particleManager_->MakeEmitter(emitter, 1, 0.5f, 300.0f, ParticleModelIndex::kUvChecker, 0, 0);
+	//emitter.translate.x = 3.0f;
+	//particleManager_->MakeEmitter(emitter, 1, 0.5f, 300.0f, ParticleModelIndex::kCircle, 0, 0);
 
+	// デバッグカメラ
 	isDebugCameraActive_ = true;
 
-	model_.reset(Model::Create("Resources/default/", "Ball.obj", dxCommon_, textureHandleManager_.get()));
-	material_.reset(Material::Create());
-	material_->Initialize();
-	TransformStructure uvTransform = {
-	{1.0f,1.0f,1.0f},
-	{0.0f,0.0f,0.0f},
-	{0.0f,0.0f,0.0f},
-	};
-	Vector4 color = { 1.0f,1.0f,1.0f,1.0f };
-	material_->Update(uvTransform, color, BlinnPhongReflection, 100.0f);
-
-	worldTransform_.Initialize();
-
-	sampleBone_ = std::make_unique<SampleBone>();
-	sampleBone_->Initialize(model_.get());
-
+	// オーディオマネージャー
 	audioManager_ = std::make_unique<GameAudioManager>();
 	audioManager_->StaticInitialize();
 	audioManager_->Initialize();
-	audioManager_->PlayWave(GameAudioNameIndex::kSample);
+
+	// ライト
+	directionalLightData_.color = { 1.0f,1.0f,1.0f,1.0f };
+	directionalLightData_.direction = Vector3Calc::Normalize(directionalLightData_.direction);
+	directionalLightData_.intencity = 100.0f;
+
+	// プレイヤー
+	player_ = std::make_unique<Player>();
+	std::array<Model*, PlayerPartIndex::kPlayerPartIndexOfCount> models;
+	for (uint32_t i = 0; i < playerModels_.size(); ++i) {
+		models[i] = playerModels_[i].get();
+	}
+	player_->Initialize(models);
 
 }
 
@@ -72,18 +70,9 @@ void GameScene::Initialize() {
 void GameScene::Update(){
 	ImguiDraw();
 	//光源
-	DirectionalLightData directionalLightData;
-	directionalLightData.color = { 1.0f,1.0f,1.0f,1.0f };
-	directionalLightData.direction = Vector3Calc::Normalize(direction);
-	directionalLightData.intencity = intencity;
-	directionalLight_->Update(directionalLightData);
+	directionalLight_->Update(directionalLightData_);
 
 	camera_.Update();
-
-	worldTransform_.UpdateMatrix();
-
-	// デバッグ
-	sampleBone_->Update();
 
 	// デバッグカメラ
 	DebugCameraUpdate();
@@ -99,6 +88,9 @@ void GameScene::Update(){
 
 	// タイトルへ行く
 	GoToTheTitle();
+
+	// プレイヤー
+	player_->Update();
 
 }
 
@@ -126,9 +118,7 @@ void GameScene::Draw() {
 	//光源
 	directionalLight_->Draw(dxCommon_->GetCommadList());
 	//3Dオブジェクトはここ
-
-	model_->Draw(worldTransform_, camera_, material_.get());
-	sampleBone_->Draw(camera_);
+	player_->Draw(camera_);
 
 #ifdef _DEBUG
 
@@ -173,9 +163,11 @@ void GameScene::ImguiDraw(){
 #ifdef _DEBUG
 
 	ImGui::Begin("Light");
-	ImGui::DragFloat3("direction", &direction.x, 0.1f);
-	ImGui::DragFloat3("worldtransform", &worldTransform_.transform_.scale.x, 0.1f);
-	ImGui::DragFloat("i", &intencity, 0.01f);
+	ImGui::DragFloat3("direction", &directionalLightData_.direction.x, 0.1f);
+	ImGui::DragFloat("i", &directionalLightData_.intencity, 0.01f);
+	ImGui::End();
+
+	ImGui::Begin("FPS");
 	ImGui::Text("Frame rate: %6.2f fps", ImGui::GetIO().Framerate);
 	ImGui::End();
 
@@ -223,10 +215,16 @@ void GameScene::GoToTheTitle()
 void GameScene::ModelCreate()
 {
 
-	colliderSphereModel_.reset(Model::Create("Resources/TD2_November/collider/sphere/", "sphere.obj", dxCommon_, textureHandleManager_.get()));
-	colliderBoxModel_.reset(Model::Create("Resources/TD2_November/collider/box/", "box.obj", dxCommon_, textureHandleManager_.get()));
+	colliderSphereModel_.reset(Model::Create("Resources/default/collider/sphere/", "sphere.obj", dxCommon_, textureHandleManager_.get()));
+	colliderBoxModel_.reset(Model::Create("Resources/default/collider/box/", "box.obj", dxCommon_, textureHandleManager_.get()));
 	particleUvcheckerModel_.reset(Model::Create("Resources/default/", "plane.obj", dxCommon_, textureHandleManager_.get()));
 	particleCircleModel_.reset(Model::Create("Resources/Particle/", "plane.obj", dxCommon_, textureHandleManager_.get()));
+
+	// プレイヤー
+	for (uint32_t i = 0; i < playerModels_.size(); ++i) {
+		playerModels_[i].reset(Model::Create("Resources/default/", "Ball.obj", dxCommon_, textureHandleManager_.get()));
+	}
+
 
 }
 
@@ -242,9 +240,9 @@ void GameScene::TextureLoad()
 
 	// ポーズ
 	pauseTextureHandles_ = {
-		TextureManager::Load("Resources/TD2_November/pause/pausing.png", dxCommon_, textureHandleManager_.get()),
-		TextureManager::Load("Resources/TD2_November/pause/goToTitle.png", dxCommon_, textureHandleManager_.get()),
-		TextureManager::Load("Resources/TD2_November/pause/returnToGame.png", dxCommon_, textureHandleManager_.get()),
+		TextureManager::Load("Resources/default/pause/pausing.png", dxCommon_, textureHandleManager_.get()),
+		TextureManager::Load("Resources/default/pause/goToTitle.png", dxCommon_, textureHandleManager_.get()),
+		TextureManager::Load("Resources/default/pause/returnToGame.png", dxCommon_, textureHandleManager_.get()),
 	};
 
 }
