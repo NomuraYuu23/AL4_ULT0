@@ -18,6 +18,9 @@ protected:
 	// プレイヤーの状態番号
 	static uint32_t plaryerStateNo_;
 
+	// プレイヤーのモーション番号
+	static uint32_t plaryerMotionNo_;
+
 public: // メンバ関数
 
 	/// <summary>
@@ -37,6 +40,9 @@ public: // メンバ関数
 
 	// プレイヤーの状態番号
 	uint32_t GetPlaryerStateNo() { return plaryerStateNo_; }
+
+	// プレイヤーのモーション番号
+	uint32_t GetPlaryerMotionNo() { return plaryerMotionNo_; }
 
 };
 

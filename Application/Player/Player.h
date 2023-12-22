@@ -2,6 +2,7 @@
 #include "../../Engine/Animation/IBone.h"
 #include "../../Engine/Collider/Collider.h"
 #include "PlayerState/IPlayerState.h"
+#include "PlayerState/PlayerStateFactory.h"
 
 /// <summary>
 /// プレイヤーの部位一覧
@@ -89,21 +90,55 @@ private: // ベースのメンバ変数
 	// ワールドトランスフォーム
 	WorldTransform worldTransform_;
 
+private: // ステート関数
+
+	/// <summary>
+	/// ステート初期化
+	/// </summary>
+	void StateInitialize();
+	
+	/// <summary>
+	/// ステート更新
+	/// </summary>
+	void StateUpdate();
+
+private: // ステート変数
+
 	// ステート
 	std::unique_ptr<IPlayerState> playerState_;
 
-	// ステート番号
-	uint32_t stateNo_;
-	uint32_t requestStateNo_;
+	// 現在のステート番号
+	uint32_t currentStateNo_;
+
+	// 前のステート番号
+	uint32_t prevStateNo_;
+	
+	// ステートファクトリー
+	PlayerStateFactory* playerStateFactory_;
 
 private: // パーツ構成関数
+
+	/// <summary>
+	/// パーツ初期化
+	/// </summary>
+	void PartInitialize();
+
+	/// <summary>
+	/// パーツ更新
+	/// </summary>
+	void PartUpdate();
 
 	/// <summary>
 	/// コライダー初期化
 	/// </summary>
 	void ColliderInitialize();
 
-private: // パーツ構成変数
+	/// <summary>
+	/// コライダー更新
+	/// </summary>
+	void ColliderUpdate();
+
+private: // パーツ,アニメーション変数
 
 	// 骨
 	std::array<std::unique_ptr<IBone>, PlayerPartIndex::kPlayerPartIndexOfCount> parts_;
@@ -114,11 +149,22 @@ private: // パーツ構成変数
 	// コライダー (ダメージを受ける側、位置が被らない用)
 	std::array<std::unique_ptr<Collider>, PlayerColliderIndex::kPlayerColliderIndexOfCount> colliders_;
 
-	// コライダー用
+	// コライダー用半径
 	std::array<float, PlayerColliderIndex::kPlayerColliderIndexOfCount> colliderRadiuses_;
 
+	// 現在のモーション番号
+	uint32_t currentMotionNo_;
 
-private: // アニメーション
+	// 前のモーション番号
+	uint32_t prevMotionNo_;
+
+	// アニメーションカウント
+	uint32_t animationCount_;
+
+	// アニメーションカウント上限
+	uint32_t animationCountLimit_;
+
+private:  // パーツ,アニメーション定数
 
 	// オブジェクト名
 	const std::string objectName_ = "Player";
@@ -146,9 +192,5 @@ private: // アニメーション
 	const std::array<const std::string, PlayerMotionIndex::kPlayerMotionIndexOfCount> motionNames_ = {
 		"Normal",
 	};
-
-	// アニメーションカウント
-	uint32_t animationCount_;
-
 
 };
