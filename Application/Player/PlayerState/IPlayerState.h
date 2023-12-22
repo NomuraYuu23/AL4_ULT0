@@ -1,6 +1,8 @@
 #pragma once
 #include <cstdint>
 
+class Player;
+
 //プレイヤーの状態名
 enum PlayerState {
 	kPlayerStateStand, // 立っている状態
@@ -20,6 +22,9 @@ protected:
 
 	// プレイヤーのモーション番号
 	static uint32_t plaryerMotionNo_;
+
+	// プレイヤー
+	static Player* player_;
 
 public: // メンバ関数
 
@@ -43,6 +48,9 @@ public: // メンバ関数
 
 	// プレイヤーのモーション番号
 	uint32_t GetPlaryerMotionNo() { return plaryerMotionNo_; }
+
+	// プレイヤーセット
+	void SetPlayer(Player* player) { player_ = player; }
 
 };
 

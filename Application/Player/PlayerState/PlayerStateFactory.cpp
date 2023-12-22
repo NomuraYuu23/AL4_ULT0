@@ -1,4 +1,6 @@
 #include "PlayerStateFactory.h"
+#include "../PlayerState/PlayerStateStand/PlayerStateStand.h"
+#include <cassert>
 
 PlayerStateFactory* PlayerStateFactory::GetInstance()
 {
@@ -14,11 +16,11 @@ IPlayerState* PlayerStateFactory::CreatePlayerState(uint32_t playerStateName)
 	switch (playerStateName)
 	{
 	case kPlayerStateStand:  // 立っている状態
-		newPlayerState;
+		newPlayerState = new PlayerStateStand();
 		break;
 	case kPlayerStateOfCount: // 使用不可
-		break;
 	default:
+		assert(0);
 		break;
 	}
 

@@ -60,6 +60,7 @@ void Player::StateInitialize()
 	// ステート番号
 	currentStateNo_ = PlayerState::kPlayerStateStand; // 最初のステート
 	prevStateNo_ = PlayerState::kPlayerStateStand; // 最初のステート
+	playerState_->SetPlayer(this); // プレイヤーセット
 
 }
 
@@ -86,10 +87,10 @@ void Player::PartInitialize()
 {
 
 	// 現在のモーション番号
-	currentMotionNo_ = PlayerMotionIndex::kPlayerMotionNormal;
+	currentMotionNo_ = PlayerMotionIndex::kPlayerMotionStand;
 
 	// 前のモーション番号
-	prevMotionNo_ = PlayerMotionIndex::kPlayerMotionNormal;
+	prevMotionNo_ = PlayerMotionIndex::kPlayerMotionStand;
 
 	// アニメーションカウント
 	animationCount_ = 0u;
@@ -132,7 +133,9 @@ void Player::PartUpdate()
 	}
 
 	// アニメーションカウント
-	animationCount_ = (animationCount_ + 1) % animationCountLimit_;
+	if (animationCountLimit_ > 0) {
+		animationCount_ = (animationCount_ + 1) % animationCountLimit_;
+	}
 
 }
 
