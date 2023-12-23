@@ -12,7 +12,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="model">モデル</param>
-	void Initialize(Model* model, Material* material);
+	void Initialize(Model* model);
 
 	/// <summary>
 	/// 更新
@@ -32,7 +32,7 @@ private:
 	// モデル
 	Model* model_ = nullptr;
 	//マテリアル
-	Material* material_ = nullptr;
+	std::unique_ptr<Material> material_ = nullptr;
 
 };
 

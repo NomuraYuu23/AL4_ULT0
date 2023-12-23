@@ -61,9 +61,19 @@ void GameScene::Initialize() {
 		models[i] = playerModels_[i].get();
 	}
 	player_->Initialize(models);
+
+	// 追従カメラ
 	followCamera_ = std::make_unique<FollowCamera>();
 	followCamera_->Initialize();
 	followCamera_->SetTarget(player_->GetWorldTransformAdress());
+
+	// スカイドーム
+	skyDome_ = std::make_unique<Skydome>();
+	skyDome_->Initialize(skyDomeModel_.get());
+
+	// 地面
+	ground_ = std::make_unique<Ground>();
+	ground_->Initialize(groundModel_.get());
 
 }
 
@@ -121,13 +131,18 @@ void GameScene::Draw() {
 
 	//光源
 	directionalLight_->Draw(dxCommon_->GetCommadList());
+	// カメラ
+	BaseCamera camera = *(static_cast<BaseCamera*>(followCamera_.get()));
+
 	//3Dオブジェクトはここ
-	player_->Draw(*(static_cast<BaseCamera*>(followCamera_.get())));
+	player_->Draw(camera);
+	skyDome_->Draw(camera);
+	ground_->Draw(camera);
 
 #ifdef _DEBUG
 
 	// デバッグ描画
-	colliderDebugDraw_->Draw(*(static_cast<BaseCamera*>(followCamera_.get())));
+	colliderDebugDraw_->Draw(camera);
 
 #endif // _DEBUG
 
@@ -241,6 +256,10 @@ void GameScene::ModelCreate()
 	playerModels_[kPlayerPartRightShin].reset(Model::Create("Resources/Player/", "PlayerRightShin.obj", dxCommon_, textureHandleManager_.get()));
 	playerModels_[kPlayerPartRightAnkle].reset(Model::Create("Resources/Player/", "PlayerRightAnkle.obj", dxCommon_, textureHandleManager_.get()));
 
+	// スカイドーム
+	skyDomeModel_.reset(Model::Create("Resources/skydome/", "skydome.obj", dxCommon_, textureHandleManager_.get()));
+	// 地面モデル
+	groundModel_.reset(Model::Create("Resources/Ground/", "Ground.obj", dxCommon_, textureHandleManager_.get()));
 
 }
 

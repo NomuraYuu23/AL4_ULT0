@@ -7,8 +7,15 @@
 #include "../../../Engine/base/ITextureHandleManager.h"
 #include "../../AudioManager/GameAudioManager.h"
 
+// プレイヤー
 #include "../../Player/Player.h"
+// 追従カメラ
 #include "../../Camera/FollowCamera/FollowCamera.h"
+// スカイドーム
+#include "../../Skydome/Skydome.h"
+// 地面
+#include "../../Ground/Ground.h"
+
 
 class GameScene : public IScene
 {
@@ -92,7 +99,18 @@ private:
 	std::unique_ptr<Player> player_;	
 	// プレイヤーモデル
 	std::array<std::unique_ptr<Model>, PlayerPartIndex::kPlayerPartIndexOfCount> playerModels_;
+	
 	// 追加カメラ
 	std::unique_ptr<FollowCamera> followCamera_;
+	
+	// スカイドーム
+	std::unique_ptr<Skydome> skyDome_;
+	// スカイドームモデル
+	std::unique_ptr<Model> skyDomeModel_;
+
+	// 地面
+	std::unique_ptr<Ground> ground_;
+	// 地面モデル
+	std::unique_ptr<Model> groundModel_;
 
 };

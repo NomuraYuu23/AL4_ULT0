@@ -2,6 +2,7 @@
 #include "../../Engine/3D/Model.h"
 #include "../../Engine/3D/Material.h"
 #include "../../Engine/3D/WorldTransform.h"
+#include <memory>
 
 class Skydome {
 
@@ -11,7 +12,7 @@ public:
 	/// 初期化
 	/// </summary>
 	/// <param name="model">モデル</param>
-	void Initialize(Model* model, Material* material);
+	void Initialize(Model* model);
 
 	/// <summary>
 	/// 更新
@@ -31,6 +32,6 @@ private:
 	// モデル
 	Model* model_ = nullptr;
 	//マテリアル
-	Material* material_ = nullptr;
+	std::unique_ptr<Material> material_ = nullptr;
 
 };
