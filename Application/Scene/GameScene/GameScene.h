@@ -8,6 +8,7 @@
 #include "../../AudioManager/GameAudioManager.h"
 
 #include "../../Player/Player.h"
+#include "../../Camera/FollowCamera/FollowCamera.h"
 
 class GameScene : public IScene
 {
@@ -91,5 +92,7 @@ private:
 	std::unique_ptr<Player> player_;	
 	// プレイヤーモデル
 	std::array<std::unique_ptr<Model>, PlayerPartIndex::kPlayerPartIndexOfCount> playerModels_;
+	// 追加カメラ
+	std::unique_ptr<FollowCamera> followCamera_;
 
 };

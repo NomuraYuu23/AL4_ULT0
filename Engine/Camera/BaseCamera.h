@@ -48,6 +48,8 @@ public:
 
 	ID3D12Resource* GetWorldPositionBuff() { return worldPositionBuff_.Get(); }
 
+
+
 protected:
 
 	TransformStructure transform_{ { 1.0f, 1.0f, 1.0f},{ 0.0f, 0.0f, 0.0f},{ 0.0f, 0.0f, -10.0f} };

@@ -198,4 +198,8 @@ private:  // パーツ,アニメーション定数
 		"Stand",
 	};
 
+public: // アクセッサ
+
+	WorldTransform* GetWorldTransformAdress() { return &worldTransform_; }
+
 };

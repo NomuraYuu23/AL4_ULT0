@@ -61,6 +61,9 @@ void GameScene::Initialize() {
 		models[i] = playerModels_[i].get();
 	}
 	player_->Initialize(models);
+	followCamera_ = std::make_unique<FollowCamera>();
+	followCamera_->Initialize();
+	followCamera_->SetTarget(player_->GetWorldTransformAdress());
 
 }
 
@@ -72,7 +75,8 @@ void GameScene::Update(){
 	//光源
 	directionalLight_->Update(directionalLightData_);
 
-	camera_.Update();
+	// 追従カメラ
+	followCamera_->Update();
 
 	// デバッグカメラ
 	DebugCameraUpdate();
@@ -81,7 +85,7 @@ void GameScene::Update(){
 	colliderDebugDraw_->Update();
 	
 	//パーティクル
-	particleManager_->Update(debugCamera_->GetTransformMatrix());
+	particleManager_->Update(followCamera_->GetTransformMatrix());
 
 	// ポーズ機能
 	pause_->Update();
@@ -118,19 +122,19 @@ void GameScene::Draw() {
 	//光源
 	directionalLight_->Draw(dxCommon_->GetCommadList());
 	//3Dオブジェクトはここ
-	player_->Draw(camera_);
+	player_->Draw(*(static_cast<BaseCamera*>(followCamera_.get())));
 
 #ifdef _DEBUG
 
 	// デバッグ描画
-	colliderDebugDraw_->Draw(camera_);
+	colliderDebugDraw_->Draw(*(static_cast<BaseCamera*>(followCamera_.get())));
 
 #endif // _DEBUG
 
 	Model::PostDraw();
 
 #pragma region パーティクル描画
-	Model::PreParticleDraw(dxCommon_->GetCommadList(), camera_.GetViewProjectionMatrix());
+	Model::PreParticleDraw(dxCommon_->GetCommadList(), followCamera_->GetViewProjectionMatrix());
 
 	//光源
 	directionalLight_->Draw(dxCommon_->GetCommadList());
