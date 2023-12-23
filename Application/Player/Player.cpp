@@ -1,5 +1,6 @@
 #include "Player.h"
 #include "../../Engine/Collider/Capsule/Capsule.h"
+#include "../../Engine/2D/ImguiManager.h"
 
 void Player::Initialize(const std::array<Model*, PlayerPartIndex::kPlayerPartIndexOfCount>& models)
 {
@@ -9,6 +10,8 @@ void Player::Initialize(const std::array<Model*, PlayerPartIndex::kPlayerPartInd
 
 	// ワールドトランスフォーム
 	worldTransform_.Initialize();
+	worldTransform_.transform_.translate.y = height_;
+	worldTransform_.UpdateMatrix();
 
 	// ステート
 	StateInitialize();
@@ -29,6 +32,7 @@ void Player::Update()
 
 	// ステート
 	StateUpdate();
+	worldTransform_.UpdateMatrix();
 
 	// パーツ,アニメーション
 	PartUpdate();
@@ -47,6 +51,18 @@ void Player::Draw(BaseCamera& camera)
 
 }
 
+void Player::ImGuiDraw()
+{
+
+	ImGui::Begin("Player");
+	ImGui::Text("Position");
+	ImGui::Text("X:%f, Y:%f, Z:%f", worldTransform_.worldMatrix_.m[3][0], worldTransform_.worldMatrix_.m[3][1], worldTransform_.worldMatrix_.m[3][2]);
+	ImGui::Text("Direction");
+	ImGui::Text("X:%f, Y:%f, Z:%f", worldTransform_.direction_.x, worldTransform_.direction_.y, worldTransform_.direction_.z);
+	ImGui::End();
+
+}
+
 void Player::StateInitialize()
 {
 
@@ -54,12 +70,12 @@ void Player::StateInitialize()
 	playerStateFactory_ = PlayerStateFactory::GetInstance();
 
 	// ステート
-	playerState_.reset(playerStateFactory_->CreatePlayerState(kPlayerStateStand)); // 最初のステート
+	playerState_.reset(playerStateFactory_->CreatePlayerState(kPlayerStateRun)); // 最初のステート
 	playerState_->Initialize();
 
 	// ステート番号
-	currentStateNo_ = PlayerState::kPlayerStateStand; // 最初のステート
-	prevStateNo_ = PlayerState::kPlayerStateStand; // 最初のステート
+	currentStateNo_ = PlayerState::kPlayerStateRun; // 最初のステート
+	prevStateNo_ = PlayerState::kPlayerStateRun; // 最初のステート
 	playerState_->SetPlayer(this); // プレイヤーセット
 
 }

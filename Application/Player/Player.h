@@ -8,9 +8,9 @@
 /// プレイヤーの部位一覧
 /// </summary>
 enum PlayerPartIndex {
-	kPlayerPartHead, // 頭
 	kPlayerPartTorso, // 胴
 	kPlayerPartLowerBack, // 腰
+	kPlayerPartHead, // 頭
 
 	kPlayerPartLeftUpperArm, // 左上腕
 	kPlayerPartLeftForearm, // 左前腕 
@@ -81,6 +81,11 @@ public: // ベースのメンバ関数
 	/// </summary>
 	/// <param name="viewProjection">ビュープロジェクション(参照渡し)</param>
 	void Draw(BaseCamera& camera);
+
+	/// <summary>
+	/// ImGui描画
+	/// </summary>
+	void ImGuiDraw();
 
 private: // ベースのメンバ変数
 
@@ -176,9 +181,9 @@ private:  // パーツ,アニメーション定数
 
 	// パーツ名
 	const std::array<const std::string, PlayerPartIndex::kPlayerPartIndexOfCount> partNames_ = {
-		"Head",
 		"Torso",
 		"LowerBack",
+		"Head",
 		"LeftUpperArm",
 		"LeftForearm",
 		"LeftHand",
@@ -198,8 +203,20 @@ private:  // パーツ,アニメーション定数
 		"Stand",
 	};
 
+private: // プレイヤーデータ
+
+	// 高さ
+	float height_ = 20.0f;
+
+	// カメラ
+	BaseCamera* camera_ = nullptr;
+
 public: // アクセッサ
 
 	WorldTransform* GetWorldTransformAdress() { return &worldTransform_; }
+
+	void SetCamera(BaseCamera* camera) { camera_ = camera; }
+
+	BaseCamera* GetCamera() { return camera_; }
 
 };

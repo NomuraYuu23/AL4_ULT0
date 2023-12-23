@@ -66,6 +66,7 @@ void GameScene::Initialize() {
 	followCamera_ = std::make_unique<FollowCamera>();
 	followCamera_->Initialize();
 	followCamera_->SetTarget(player_->GetWorldTransformAdress());
+	player_->SetCamera(static_cast<BaseCamera*>(followCamera_.get()));
 
 	// スカイドーム
 	skyDome_ = std::make_unique<Skydome>();
@@ -191,6 +192,8 @@ void GameScene::ImguiDraw(){
 	ImGui::End();
 
 	debugCamera_->ImGuiDraw();
+
+	player_->ImGuiDraw();
 
 #endif // _DEBUG
 

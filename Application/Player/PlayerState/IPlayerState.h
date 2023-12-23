@@ -6,6 +6,7 @@ class Player;
 //プレイヤーの状態名
 enum PlayerState {
 	kPlayerStateStand, // 立っている状態
+	kPlayerStateRun, // 走っている状態
 	kPlayerStateOfCount // 数
 };
 
