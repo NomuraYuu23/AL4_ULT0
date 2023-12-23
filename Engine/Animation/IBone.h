@@ -58,6 +58,8 @@ public:
 
 	WorldTransform GetWorldTransform() { return worldTransform_; }
 
+	WorldTransform* GetWorldTransformAdress() { return &worldTransform_; }
+
 	Vector3 GetWorldPosition() { return Vector3{ worldTransform_.worldMatrix_.m[3][0], worldTransform_.worldMatrix_.m[3][1], worldTransform_.worldMatrix_.m[3][2] }; }
 
 protected: // 

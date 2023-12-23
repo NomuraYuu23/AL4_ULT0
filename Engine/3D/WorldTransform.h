@@ -47,4 +47,6 @@ struct WorldTransform
 
 	Vector3 GetWorldPosition();
 
+	void SetParent(WorldTransform* parent) { parent_ = parent; }
+
 };

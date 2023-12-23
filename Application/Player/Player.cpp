@@ -109,6 +109,9 @@ void Player::PartInitialize()
 		parts_[i]->animationTransformChange(motionNames[currentMotionNo_]);
 	}
 
+	// 親子付け
+	PartParent();
+
 }
 
 void Player::PartUpdate()
@@ -128,13 +131,47 @@ void Player::PartUpdate()
 	}
 
 	// アニメーション
+	std::vector<std::string> motionNames;
+	for (uint32_t i = 0; i < PlayerMotionIndex::kPlayerMotionIndexOfCount; ++i) {
+		motionNames.push_back(motionNames_[i]);
+	}
 	for (uint32_t i = 0; i < PlayerPartIndex::kPlayerPartIndexOfCount; ++i) {
-		parts_[i]->Update(animationCount_);
+		parts_[i]->Update(animationCount_, motionNames);
+#ifdef _DEBUG
+		parts_[i]->animationTransformChange(motionNames[currentMotionNo_]);
+#endif // _DEBUG
 	}
 
 	// アニメーションカウント
 	if (animationCountLimit_ > 0) {
 		animationCount_ = (animationCount_ + 1) % animationCountLimit_;
+	}
+
+}
+
+void Player::PartParent()
+{
+
+	parts_[kPlayerPartHead]->GetWorldTransformAdress()->SetParent(parts_[kPlayerPartTorso]->GetWorldTransformAdress());
+	parts_[kPlayerPartTorso]->GetWorldTransformAdress()->SetParent(&worldTransform_);
+	parts_[kPlayerPartLowerBack]->GetWorldTransformAdress()->SetParent(&worldTransform_);
+
+	parts_[kPlayerPartLeftUpperArm]->GetWorldTransformAdress()->SetParent(parts_[kPlayerPartTorso]->GetWorldTransformAdress());
+	parts_[kPlayerPartLeftForearm]->GetWorldTransformAdress()->SetParent(parts_[kPlayerPartLeftUpperArm]->GetWorldTransformAdress());
+	parts_[kPlayerPartLeftHand]->GetWorldTransformAdress()->SetParent(parts_[kPlayerPartLeftForearm]->GetWorldTransformAdress());
+	parts_[kPlayerPartRightUpperArm]->GetWorldTransformAdress()->SetParent(parts_[kPlayerPartTorso]->GetWorldTransformAdress());
+	parts_[kPlayerPartRightForearm]->GetWorldTransformAdress()->SetParent(parts_[kPlayerPartRightUpperArm]->GetWorldTransformAdress());
+	parts_[kPlayerPartRightHand]->GetWorldTransformAdress()->SetParent(parts_[kPlayerPartRightForearm]->GetWorldTransformAdress());
+
+	parts_[kPlayerPartLeftThigh]->GetWorldTransformAdress()->SetParent(parts_[kPlayerPartLowerBack]->GetWorldTransformAdress());
+	parts_[kPlayerPartLeftShin]->GetWorldTransformAdress()->SetParent(parts_[kPlayerPartLeftThigh]->GetWorldTransformAdress());
+	parts_[kPlayerPartLeftAnkle]->GetWorldTransformAdress()->SetParent(parts_[kPlayerPartLeftShin]->GetWorldTransformAdress());
+	parts_[kPlayerPartRightThigh]->GetWorldTransformAdress()->SetParent(parts_[kPlayerPartLowerBack]->GetWorldTransformAdress());
+	parts_[kPlayerPartRightShin]->GetWorldTransformAdress()->SetParent(parts_[kPlayerPartRightThigh]->GetWorldTransformAdress());
+	parts_[kPlayerPartRightAnkle]->GetWorldTransformAdress()->SetParent(parts_[kPlayerPartRightShin]->GetWorldTransformAdress());
+
+	for (uint32_t i = 0; i < PlayerPartIndex::kPlayerPartIndexOfCount; ++i) {
+		parts_[i]->GetWorldTransformAdress()->UpdateMatrix();
 	}
 
 }

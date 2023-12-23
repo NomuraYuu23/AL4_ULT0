@@ -129,6 +129,11 @@ private: // パーツ構成関数
 	void PartUpdate();
 
 	/// <summary>
+	/// パーツの親子付け
+	/// </summary>
+	void PartParent();
+
+	/// <summary>
 	/// コライダー初期化
 	/// </summary>
 	void ColliderInitialize();
