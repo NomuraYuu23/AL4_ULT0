@@ -221,9 +221,21 @@ void GameScene::ModelCreate()
 	particleCircleModel_.reset(Model::Create("Resources/Particle/", "plane.obj", dxCommon_, textureHandleManager_.get()));
 
 	// プレイヤー
-	for (uint32_t i = 0; i < playerModels_.size(); ++i) {
-		playerModels_[i].reset(Model::Create("Resources/default/", "Ball.obj", dxCommon_, textureHandleManager_.get()));
-	}
+	playerModels_[kPlayerPartHead].reset(Model::Create("Resources/Player/", "PlayerHead.obj", dxCommon_, textureHandleManager_.get()));
+	playerModels_[kPlayerPartTorso].reset(Model::Create("Resources/Player/", "PlayerTorso.obj", dxCommon_, textureHandleManager_.get()));
+	playerModels_[kPlayerPartLowerBack].reset(Model::Create("Resources/Player/", "PlayerLowerBack.obj", dxCommon_, textureHandleManager_.get()));
+	playerModels_[kPlayerPartLeftUpperArm].reset(Model::Create("Resources/Player/", "PlayerLeftUpperArm.obj", dxCommon_, textureHandleManager_.get()));
+	playerModels_[kPlayerPartLeftForearm].reset(Model::Create("Resources/Player/", "PlayerLeftForearm.obj", dxCommon_, textureHandleManager_.get()));
+	playerModels_[kPlayerPartLeftHand].reset(Model::Create("Resources/Player/", "PlayerLeftHand.obj", dxCommon_, textureHandleManager_.get()));
+	playerModels_[kPlayerPartRightUpperArm].reset(Model::Create("Resources/Player/", "PlayerRightUpperArm.obj", dxCommon_, textureHandleManager_.get()));
+	playerModels_[kPlayerPartRightForearm].reset(Model::Create("Resources/Player/", "PlayerRightForearm.obj", dxCommon_, textureHandleManager_.get()));
+	playerModels_[kPlayerPartRightHand].reset(Model::Create("Resources/Player/", "PlayerRightHand.obj", dxCommon_, textureHandleManager_.get()));
+	playerModels_[kPlayerPartLeftThigh].reset(Model::Create("Resources/Player/", "PlayerLeftThigh.obj", dxCommon_, textureHandleManager_.get()));
+	playerModels_[kPlayerPartLeftShin].reset(Model::Create("Resources/Player/", "PlayerLeftShin.obj", dxCommon_, textureHandleManager_.get()));
+	playerModels_[kPlayerPartLeftAnkle].reset(Model::Create("Resources/Player/", "PlayerLeftAnkle.obj", dxCommon_, textureHandleManager_.get()));
+	playerModels_[kPlayerPartRightThigh].reset(Model::Create("Resources/Player/", "PlayerRightThigh.obj", dxCommon_, textureHandleManager_.get()));
+	playerModels_[kPlayerPartRightShin].reset(Model::Create("Resources/Player/", "PlayerRightShin.obj", dxCommon_, textureHandleManager_.get()));
+	playerModels_[kPlayerPartRightAnkle].reset(Model::Create("Resources/Player/", "PlayerRightAnkle.obj", dxCommon_, textureHandleManager_.get()));
 
 
 }
