@@ -3,6 +3,7 @@
 #include "../../Engine/Collider/Collider.h"
 #include "PlayerState/IPlayerState.h"
 #include "PlayerState/PlayerStateFactory.h"
+#include "PlayerCommand/PlayerCommand.h"
 
 /// <summary>
 /// プレイヤーの部位一覧
@@ -96,6 +97,12 @@ private: // ベースのメンバ変数
 	// ワールドトランスフォーム
 	WorldTransform worldTransform_;
 
+	// コマンド
+	PlayerCommand* playerCommand_;
+
+	// コマンドを受け取るか
+	bool receiveCommand_;
+
 private: // ステート関数
 
 	/// <summary>
@@ -118,6 +125,9 @@ private: // ステート変数
 
 	// 前のステート番号
 	uint32_t prevStateNo_;
+
+	// 次のステート番号
+	uint32_t nextStateNo_;
 	
 	// ステートファクトリー
 	PlayerStateFactory* playerStateFactory_;
@@ -220,5 +230,7 @@ public: // アクセッサ
 	void SetCamera(BaseCamera* camera) { camera_ = camera; }
 
 	BaseCamera* GetCamera() { return camera_; }
+
+	void SetReceiveCommand(bool receiveCommand) { receiveCommand_ = receiveCommand; }
 
 };

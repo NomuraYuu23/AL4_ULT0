@@ -53,6 +53,8 @@ void PlayerStateRoot::Update()
 		worldTransform->direction_ = Ease::Easing(Ease::EaseName::Lerp, worldTransform->direction_, targetDirection_, targetAngleT_);
 	}
 
+	player_->SetReceiveCommand(true);
+
 }
 
 void PlayerStateRoot::Move(Vector3& move, WorldTransform* worldTransform, float speed)

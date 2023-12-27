@@ -13,6 +13,13 @@ void Player::Initialize(const std::array<Model*, PlayerPartIndex::kPlayerPartInd
 	worldTransform_.transform_.translate.y = height_;
 	worldTransform_.UpdateMatrix();
 
+	// コマンド
+	playerCommand_ = PlayerCommand::GetInstance();
+	playerCommand_->Initialize();
+
+	// コマンドを受け取るか
+	receiveCommand_ = true;
+
 	// ステート
 	StateInitialize();
 
@@ -30,6 +37,10 @@ void Player::Initialize(const std::array<Model*, PlayerPartIndex::kPlayerPartInd
 void Player::Update()
 {
 
+	if (receiveCommand_) {
+		nextStateNo_ = playerCommand_->Command();
+	}
+
 	// ステート
 	StateUpdate();
 	worldTransform_.UpdateMatrix();
@@ -38,7 +49,7 @@ void Player::Update()
 	PartUpdate();
 
 	// コライダー
-	//ColliderUpdate();
+	ColliderUpdate();
 
 }
 
@@ -76,6 +87,7 @@ void Player::StateInitialize()
 	// ステート番号
 	currentStateNo_ = PlayerState::kPlayerStateRoot; // 最初のステート
 	prevStateNo_ = PlayerState::kPlayerStateRoot; // 最初のステート
+	nextStateNo_ = PlayerState::kPlayerStateRoot; // 最初のステート
 	playerState_->SetPlayer(this); // プレイヤーセット
 
 }
@@ -85,7 +97,12 @@ void Player::StateUpdate()
 
 	// ステートのチェック
 	prevStateNo_ = currentStateNo_;
-	currentStateNo_ = playerState_->GetPlaryerStateNo();
+	if (receiveCommand_) {
+		currentStateNo_ = nextStateNo_;
+	}
+	else {
+		currentStateNo_ = playerState_->GetPlaryerStateNo();
+	}
 
 	// ステートが変わったか
 	if (prevStateNo_ != currentStateNo_) {
