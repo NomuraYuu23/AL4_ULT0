@@ -11,6 +11,19 @@
 
 #include "../Math/Vector2.h"
 
+enum JoystickButton {
+	kJoystickButtonA,
+	kJoystickButtonB,
+	kJoystickButtonX,
+	kJoystickButtonY,
+	kJoystickButtonLB,
+	kJoystickButtonRB,
+	kJoystickButtonBACK,
+	kJoystickButtonSTART,
+	kJoystickButtonLST,
+	kJoystickButtonRST,
+};
+
 class Input
 {
 public:
