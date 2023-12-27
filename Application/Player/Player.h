@@ -55,6 +55,7 @@ enum PlayerColliderIndex {
 /// </summary>
 enum PlayerMotionIndex {
 	kPlayerMotionStand, // 通常時
+	kPlayerMotionRun, // 走行時
 	kPlayerMotionIndexOfCount // 数
 };
 
@@ -201,6 +202,7 @@ private:  // パーツ,アニメーション定数
 	// モーション名
 	const std::array<const std::string, PlayerMotionIndex::kPlayerMotionIndexOfCount> motionNames_ = {
 		"Stand",
+		"Run",
 	};
 
 private: // プレイヤーデータ

@@ -13,6 +13,8 @@ void PlayerStateRun::Initialize()
 
 	targetAngleT_ = 0.1f;
 
+	plaryerMotionNo_ = kPlayerMotionRun;
+
 }
 
 void PlayerStateRun::Update()
