@@ -1,12 +1,14 @@
 #pragma once
 #include <cstdint>
+#include "../../../Engine/Input/Input.h"
+#include "../../../Engine/Math/Vector3.h"
+#include "../../../Engine/Math/Matrix4x4.h"
 
 class Player;
 
 //プレイヤーの状態名
 enum PlayerState {
-	kPlayerStateStand, // 立っている状態
-	kPlayerStateRun, // 走っている状態
+	kPlayerStateRoot, // 立っている状態
 	kPlayerStateOfCount // 数
 };
 
@@ -26,6 +28,13 @@ protected:
 
 	// プレイヤー
 	static Player* player_;
+
+	//インスタンス
+	static Input* input_;
+
+	static Vector3Calc* v3Calc_;
+	
+	static Matrix4x4Calc* m4Calc_;
 
 public: // メンバ関数
 

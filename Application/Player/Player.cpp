@@ -38,7 +38,7 @@ void Player::Update()
 	PartUpdate();
 
 	// コライダー
-	ColliderUpdate();
+	//ColliderUpdate();
 
 }
 
@@ -70,12 +70,12 @@ void Player::StateInitialize()
 	playerStateFactory_ = PlayerStateFactory::GetInstance();
 
 	// ステート
-	playerState_.reset(playerStateFactory_->CreatePlayerState(kPlayerStateRun)); // 最初のステート
+	playerState_.reset(playerStateFactory_->CreatePlayerState(kPlayerStateRoot)); // 最初のステート
 	playerState_->Initialize();
 
 	// ステート番号
-	currentStateNo_ = PlayerState::kPlayerStateRun; // 最初のステート
-	prevStateNo_ = PlayerState::kPlayerStateRun; // 最初のステート
+	currentStateNo_ = PlayerState::kPlayerStateRoot; // 最初のステート
+	prevStateNo_ = PlayerState::kPlayerStateRoot; // 最初のステート
 	playerState_->SetPlayer(this); // プレイヤーセット
 
 }
@@ -201,14 +201,7 @@ void Player::ColliderInitialize()
 		colliderRadiuses_[i] = 1.0f;
 	}
 
-	ColliderUpdate();
-
-}
-
-void Player::ColliderUpdate()
-{
-
-	//計算用
+		//計算用
 	Segment segment = {
 		{ 0.0f,0.0f,0.0f },
 		{ 0.0f,0.0f,0.0f },
@@ -264,5 +257,88 @@ void Player::ColliderUpdate()
 	diff = Vector3Calc::Subtract(parts_[kPlayerPartRightAnkle]->GetWorldPosition(), parts_[kPlayerPartRightShin]->GetWorldPosition());
 	segment.Initialize(parts_[kPlayerPartRightShin]->GetWorldPosition(), diff);
 	static_cast<Capsule*>(colliders_[kPlayerColliderRightShin].get())->Initialize(segment, colliderRadiuses_[kPlayerColliderRightShin], this);
+
+
+}
+
+void Player::ColliderUpdate()
+{
+
+	//計算用
+	Segment segment = {
+		{ 0.0f,0.0f,0.0f },
+		{ 0.0f,0.0f,0.0f },
+	};
+	Vector3 diff = { 0.0f,0.0f,0.0f };
+
+	// 頭
+	diff = Vector3Calc::Subtract(parts_[kPlayerPartTorso]->GetWorldPosition(), parts_[kPlayerPartHead]->GetWorldPosition());
+	segment.Initialize(parts_[kPlayerPartHead]->GetWorldPosition(), diff);
+	static_cast<Capsule*>(colliders_[kPlayerColliderHead].get())->segment_ = segment;
+	static_cast<Capsule*>(colliders_[kPlayerColliderHead].get())->radius_ = colliderRadiuses_[kPlayerColliderHead];
+	static_cast<Capsule*>(colliders_[kPlayerColliderHead].get())->worldTransformUpdate();
+
+	// 胴
+	diff = Vector3Calc::Subtract(parts_[kPlayerPartLowerBack]->GetWorldPosition(), parts_[kPlayerPartTorso]->GetWorldPosition());
+	segment.Initialize(parts_[kPlayerPartTorso]->GetWorldPosition(), diff);
+	static_cast<Capsule*>(colliders_[kPlayerColliderTorso].get())->segment_ = segment;
+	static_cast<Capsule*>(colliders_[kPlayerColliderTorso].get())->radius_ = colliderRadiuses_[kPlayerColliderTorso];
+	static_cast<Capsule*>(colliders_[kPlayerColliderTorso].get())->worldTransformUpdate();
+
+	// 左上腕
+	diff = Vector3Calc::Subtract(parts_[kPlayerPartLeftForearm]->GetWorldPosition(), parts_[kPlayerPartLeftUpperArm]->GetWorldPosition());
+	segment.Initialize(parts_[kPlayerPartLeftUpperArm]->GetWorldPosition(), diff);
+	static_cast<Capsule*>(colliders_[kPlayerColliderLeftUpperArm].get())->segment_ = segment;
+	static_cast<Capsule*>(colliders_[kPlayerColliderLeftUpperArm].get())->radius_ = colliderRadiuses_[kPlayerColliderLeftUpperArm];
+	static_cast<Capsule*>(colliders_[kPlayerColliderLeftUpperArm].get())->worldTransformUpdate();
+
+	// 左前腕 
+	diff = Vector3Calc::Subtract(parts_[kPlayerPartLeftHand]->GetWorldPosition(), parts_[kPlayerPartLeftForearm]->GetWorldPosition());
+	segment.Initialize(parts_[kPlayerPartLeftForearm]->GetWorldPosition(), diff);
+	static_cast<Capsule*>(colliders_[kPlayerColliderLeftForearm].get())->segment_ = segment;
+	static_cast<Capsule*>(colliders_[kPlayerColliderLeftForearm].get())->radius_ = colliderRadiuses_[kPlayerColliderLeftForearm];
+	static_cast<Capsule*>(colliders_[kPlayerColliderLeftForearm].get())->worldTransformUpdate();
+
+	// 右上腕
+	diff = Vector3Calc::Subtract(parts_[kPlayerPartRightForearm]->GetWorldPosition(), parts_[kPlayerPartRightUpperArm]->GetWorldPosition());
+	segment.Initialize(parts_[kPlayerPartRightUpperArm]->GetWorldPosition(), diff);
+	static_cast<Capsule*>(colliders_[kPlayerColliderRightUpperArm].get())->segment_ = segment;
+	static_cast<Capsule*>(colliders_[kPlayerColliderRightUpperArm].get())->radius_ = colliderRadiuses_[kPlayerColliderRightUpperArm];
+	static_cast<Capsule*>(colliders_[kPlayerColliderRightUpperArm].get())->worldTransformUpdate();
+
+	// 右前腕 
+	diff = Vector3Calc::Subtract(parts_[kPlayerPartRightHand]->GetWorldPosition(), parts_[kPlayerPartRightForearm]->GetWorldPosition());
+	segment.Initialize(parts_[kPlayerPartRightForearm]->GetWorldPosition(), diff);
+	static_cast<Capsule*>(colliders_[kPlayerColliderRightForearm].get())->segment_ = segment;
+	static_cast<Capsule*>(colliders_[kPlayerColliderRightForearm].get())->radius_ = colliderRadiuses_[kPlayerColliderRightForearm];
+	static_cast<Capsule*>(colliders_[kPlayerColliderRightForearm].get())->worldTransformUpdate();
+
+	// 左太もも
+	diff = Vector3Calc::Subtract(parts_[kPlayerPartLeftShin]->GetWorldPosition(), parts_[kPlayerPartLeftThigh]->GetWorldPosition());
+	segment.Initialize(parts_[kPlayerPartLeftThigh]->GetWorldPosition(), diff);
+	static_cast<Capsule*>(colliders_[kPlayerColliderLeftThigh].get())->segment_ = segment;
+	static_cast<Capsule*>(colliders_[kPlayerColliderLeftThigh].get())->radius_ = colliderRadiuses_[kPlayerColliderLeftThigh];
+	static_cast<Capsule*>(colliders_[kPlayerColliderLeftThigh].get())->worldTransformUpdate();
+
+	// 左すね
+	diff = Vector3Calc::Subtract(parts_[kPlayerPartLeftAnkle]->GetWorldPosition(), parts_[kPlayerPartLeftShin]->GetWorldPosition());
+	segment.Initialize(parts_[kPlayerPartLeftShin]->GetWorldPosition(), diff);
+	static_cast<Capsule*>(colliders_[kPlayerColliderLeftShin].get())->segment_ = segment;
+	static_cast<Capsule*>(colliders_[kPlayerColliderLeftShin].get())->radius_ = colliderRadiuses_[kPlayerColliderLeftShin];
+	static_cast<Capsule*>(colliders_[kPlayerColliderLeftShin].get())->worldTransformUpdate();
+
+	// 右太もも
+	diff = Vector3Calc::Subtract(parts_[kPlayerPartRightShin]->GetWorldPosition(), parts_[kPlayerPartRightThigh]->GetWorldPosition());
+	segment.Initialize(parts_[kPlayerPartRightThigh]->GetWorldPosition(), diff);
+	static_cast<Capsule*>(colliders_[kPlayerColliderRightThigh].get())->segment_ = segment;
+	static_cast<Capsule*>(colliders_[kPlayerColliderRightThigh].get())->radius_ = colliderRadiuses_[kPlayerColliderRightThigh];
+	static_cast<Capsule*>(colliders_[kPlayerColliderRightThigh].get())->worldTransformUpdate();
+
+	// 右すね
+	diff = Vector3Calc::Subtract(parts_[kPlayerPartRightAnkle]->GetWorldPosition(), parts_[kPlayerPartRightShin]->GetWorldPosition());
+	segment.Initialize(parts_[kPlayerPartRightShin]->GetWorldPosition(), diff);
+	static_cast<Capsule*>(colliders_[kPlayerColliderRightShin].get())->segment_ = segment;
+	static_cast<Capsule*>(colliders_[kPlayerColliderRightShin].get())->radius_ = colliderRadiuses_[kPlayerColliderRightShin];
+	static_cast<Capsule*>(colliders_[kPlayerColliderRightShin].get())->worldTransformUpdate();
 
 }

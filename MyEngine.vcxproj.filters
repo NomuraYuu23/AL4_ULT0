@@ -103,6 +103,15 @@
     <Filter Include="Application\Audio">
       <UniqueIdentifier>{d427ee17-8f5a-4077-9b9a-194749a45066}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Application\Camera">
+      <UniqueIdentifier>{04c33ce8-a47a-423d-8e09-c73382c21faa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Ground">
+      <UniqueIdentifier>{2c3d7f66-2893-47df-8fcd-09f492d19e95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Application\Player">
+      <UniqueIdentifier>{7595d8ca-dab6-4345-9c98-ffdd353bc437}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="externals\imgui\imgui.cpp">
@@ -307,25 +316,25 @@
     <ClCompile Include="Engine\Audio\VoiceCallback.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Player\Player.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Player\PlayerState\IPlayerState.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Player\PlayerState\PlayerStateFactory.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Application\Player\PlayerState\PlayerStateStand\PlayerStateStand.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Application\Camera\FollowCamera\FollowCamera.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>Application\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Application\Ground\Ground.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>Application\Ground</Filter>
     </ClCompile>
-    <ClCompile Include="Application\Player\PlayerState\PlayerStateRun\PlayerStateRun.cpp">
+    <ClCompile Include="Application\Player\Player.cpp">
+      <Filter>Application\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Player\PlayerState\IPlayerState.cpp">
+      <Filter>Application\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Player\PlayerCommand\PlayerCommand.cpp">
+      <Filter>Application\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Player\PlayerState\PlayerStateFactory.cpp">
+      <Filter>Application\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Player\PlayerState\PlayerStateRoot\PlayerStateRoot.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -594,25 +603,25 @@
     <ClInclude Include="Engine\Audio\VoiceCallback.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Player\Player.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Player\PlayerState\IPlayerState.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Player\PlayerState\PlayerStateFactory.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Application\Player\PlayerState\PlayerStateStand\PlayerStateStand.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Application\Camera\FollowCamera\FollowCamera.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Application\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Application\Ground\Ground.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>Application\Ground</Filter>
     </ClInclude>
-    <ClInclude Include="Application\Player\PlayerState\PlayerStateRun\PlayerStateRun.h">
+    <ClInclude Include="Application\Player\PlayerState\IPlayerState.h">
+      <Filter>Application\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Player\Player.h">
+      <Filter>Application\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Player\PlayerCommand\PlayerCommand.h">
+      <Filter>Application\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Player\PlayerState\PlayerStateFactory.h">
+      <Filter>Application\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Player\PlayerState\PlayerStateRoot\PlayerStateRoot.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
