@@ -8,6 +8,7 @@
 #include <cassert>
 #include <string>
 #include <list>
+#include <cstdint>
 
 class Audio {
 public:
