@@ -1,5 +1,6 @@
 #include "PlayerStateFactory.h"
 #include "../PlayerState/PlayerStateRoot/PlayerStateRoot.h"
+#include "../PlayerState/PlayerStateAvoidance/PlayerStateAvoidance.h"
 #include <cassert>
 
 PlayerStateFactory* PlayerStateFactory::GetInstance()
@@ -15,8 +16,11 @@ IPlayerState* PlayerStateFactory::CreatePlayerState(uint32_t playerStateName)
 
 	switch (playerStateName)
 	{
-	case kPlayerStateRoot:  // 立っている状態
+	case kPlayerStateRoot: // 通常
 		newPlayerState = new PlayerStateRoot();
+		break;
+	case kPlayerStateAvoidance: // 回避
+		newPlayerState = new PlayerStateAvoidance();
 		break;
 	case kPlayerStateOfCount: // 使用不可
 	default:

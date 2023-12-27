@@ -21,7 +21,7 @@ public: // メンバ関数
 private:
 
 	/// <summary>
-	/// 走る(スタミナ無し)
+	/// 走る
 	/// </summary>
 	void Move(Vector3& move, WorldTransform* worldTransform, float speed);
 

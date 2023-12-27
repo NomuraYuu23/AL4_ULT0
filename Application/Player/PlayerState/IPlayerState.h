@@ -8,7 +8,8 @@ class Player;
 
 //プレイヤーの状態名
 enum PlayerState {
-	kPlayerStateRoot, // 立っている状態
+	kPlayerStateRoot, // 通常
+	kPlayerStateAvoidance, // 回避
 	kPlayerStateOfCount // 数
 };
 

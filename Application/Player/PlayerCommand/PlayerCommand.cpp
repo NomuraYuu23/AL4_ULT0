@@ -32,6 +32,7 @@ uint32_t PlayerCommand::Command()
 		isAvoidanceFrameCount_ = false;
 		if (avoidanceFrameCount_ <= canBeAvoidanceFrame_) {
 			// ステートを回避に
+			resultState = PlayerState::kPlayerStateAvoidance;
 		}
 		else {
 			// 通常
