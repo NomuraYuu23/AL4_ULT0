@@ -89,6 +89,8 @@ void GameScene::Update(){
 	// 追従カメラ
 	followCamera_->Update();
 
+	camera_ = static_cast<BaseCamera>(*followCamera_.get());
+
 	// デバッグカメラ
 	DebugCameraUpdate();
 	
@@ -132,25 +134,23 @@ void GameScene::Draw() {
 
 	//光源
 	directionalLight_->Draw(dxCommon_->GetCommadList());
-	// カメラ
-	BaseCamera camera = *(static_cast<BaseCamera*>(followCamera_.get()));
 
 	//3Dオブジェクトはここ
-	player_->Draw(camera);
-	skyDome_->Draw(camera);
-	ground_->Draw(camera);
+	player_->Draw(camera_);
+	skyDome_->Draw(camera_);
+	ground_->Draw(camera_);
 
 #ifdef _DEBUG
 
 	// デバッグ描画
-	colliderDebugDraw_->Draw(camera);
+	colliderDebugDraw_->Draw(camera_);
 
 #endif // _DEBUG
 
 	Model::PostDraw();
 
 #pragma region パーティクル描画
-	Model::PreParticleDraw(dxCommon_->GetCommadList(), followCamera_->GetViewProjectionMatrix());
+	Model::PreParticleDraw(dxCommon_->GetCommadList(), camera_.GetViewProjectionMatrix());
 
 	//光源
 	directionalLight_->Draw(dxCommon_->GetCommadList());
