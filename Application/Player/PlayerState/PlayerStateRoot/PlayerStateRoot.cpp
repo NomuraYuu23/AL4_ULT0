@@ -35,7 +35,7 @@ void PlayerStateRoot::Update()
 		// 移動量
 		Vector3 move = { input_->GetLeftAnalogstick().x, 0.0f, -input_->GetLeftAnalogstick().y };
 		if (v3Calc_->Length(move) > kThresholdRunning) {
-			if (input_->PushJoystick(JoystickButton::kJoystickButtonA)) {
+			if (input_->PushJoystick(JoystickButton::kJoystickButtonB)) {
 				// ダッシュ
 				Move(move, worldTransform, dashSpeed_);
 			}
