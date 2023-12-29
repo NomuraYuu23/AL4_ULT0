@@ -10,6 +10,7 @@ class Player;
 enum PlayerState {
 	kPlayerStateRoot, // 通常
 	kPlayerStateAvoidance, // 回避
+	kPlayerStateRecovery, // 回復
 	kPlayerStateOfCount // 数
 };
 

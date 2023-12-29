@@ -28,6 +28,7 @@ uint32_t PlayerCommand::Command()
 
 	uint32_t resultState = PlayerState::kPlayerStateRoot;
 
+	// 回避
 	if (input_->ReleaseJoystick(JoystickButton::kJoystickButtonB)) {
 		isAvoidanceFrameCount_ = false;
 		if (avoidanceFrameCount_ <= canBeAvoidanceFrame_) {
@@ -40,6 +41,11 @@ uint32_t PlayerCommand::Command()
 		}
 
 	}
+	// 回復
+	else if(input_->ReleaseJoystick(JoystickButton::kJoystickButtonX)){
+		resultState = PlayerState::kPlayerStateRecovery;
+	}
+
 	// 通常
 	else{
 

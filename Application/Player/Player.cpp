@@ -70,6 +70,21 @@ void Player::ImGuiDraw()
 	ImGui::Text("X:%f, Y:%f, Z:%f", worldTransform_.worldMatrix_.m[3][0], worldTransform_.worldMatrix_.m[3][1], worldTransform_.worldMatrix_.m[3][2]);
 	ImGui::Text("Direction");
 	ImGui::Text("X:%f, Y:%f, Z:%f", worldTransform_.direction_.x, worldTransform_.direction_.y, worldTransform_.direction_.z);
+
+	ImGui::Text("PlayerState");
+	switch (currentStateNo_)
+	{
+	case kPlayerStateRoot: // 通常
+		ImGui::Text("PlayerStateRoot");
+		break;
+	case kPlayerStateAvoidance: // 回避
+		ImGui::Text("PlayerStateAvoidance");
+		break;
+	case kPlayerStateRecovery: // 回復
+		ImGui::Text("PlayerStateRecovery");
+		break;
+	}
+
 	ImGui::End();
 
 }

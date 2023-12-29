@@ -108,6 +108,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Player\PlayerState\IPlayerState.cpp" />
     <ClCompile Include="Application\Player\PlayerState\PlayerStateAvoidance\PlayerStateAvoidance.cpp" />
     <ClCompile Include="Application\Player\PlayerState\PlayerStateFactory.cpp" />
+    <ClCompile Include="Application\Player\PlayerState\PlayerStateRecovery\PlayerStateRecovery.cpp" />
     <ClCompile Include="Application\Player\PlayerState\PlayerStateRoot\PlayerStateRoot.cpp" />
     <ClCompile Include="Application\SampleBone\SampleBone.cpp" />
     <ClCompile Include="Application\Scene\SelectScene\SelectScene.cpp" />
@@ -187,6 +188,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Player\PlayerState\IPlayerState.h" />
     <ClInclude Include="Application\Player\PlayerState\PlayerStateAvoidance\PlayerStateAvoidance.h" />
     <ClInclude Include="Application\Player\PlayerState\PlayerStateFactory.h" />
+    <ClInclude Include="Application\Player\PlayerState\PlayerStateRecovery\PlayerStateRecovery.h" />
     <ClInclude Include="Application\Player\PlayerState\PlayerStateRoot\PlayerStateRoot.h" />
     <ClInclude Include="Application\SampleBone\SampleBone.h" />
     <ClInclude Include="Application\Scene\SceneName.h" />
