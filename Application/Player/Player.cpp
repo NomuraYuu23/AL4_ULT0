@@ -82,6 +82,9 @@ void Player::ImGuiDraw()
 		break;
 	case kPlayerStateRecovery: // 回復
 		ImGui::Text("PlayerStateRecovery");
+		break;	
+	case kPlayerStateGuard: // ガード
+		ImGui::Text("PlayerStateGuard");
 		break;
 	}
 

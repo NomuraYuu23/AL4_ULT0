@@ -11,6 +11,7 @@ enum PlayerState {
 	kPlayerStateRoot, // 通常
 	kPlayerStateAvoidance, // 回避
 	kPlayerStateRecovery, // 回復
+	kPlayerStateGuard, // ガード
 	kPlayerStateOfCount // 数
 };
 

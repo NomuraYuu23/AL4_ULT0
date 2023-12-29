@@ -2,6 +2,7 @@
 #include "../PlayerState/PlayerStateRoot/PlayerStateRoot.h"
 #include "../PlayerState/PlayerStateAvoidance/PlayerStateAvoidance.h"
 #include "../PlayerState/PlayerStateRecovery/PlayerStateRecovery.h"
+#include "../PlayerState/PlayerStateGuard/PlayerStateGuard.h"
 #include <cassert>
 
 PlayerStateFactory* PlayerStateFactory::GetInstance()
@@ -25,6 +26,9 @@ IPlayerState* PlayerStateFactory::CreatePlayerState(uint32_t playerStateName)
 		break;
 	case kPlayerStateRecovery: // 回復
 		newPlayerState = new PlayerStateRecovery();
+		break;
+	case kPlayerStateGuard: // ガード
+		newPlayerState = new PlayerStateGuard();
 		break;
 	case kPlayerStateOfCount: // 使用不可
 	default:

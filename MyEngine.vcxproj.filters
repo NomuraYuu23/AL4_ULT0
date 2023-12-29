@@ -343,6 +343,9 @@
     <ClCompile Include="Application\Player\PlayerState\PlayerStateRecovery\PlayerStateRecovery.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Application\Player\PlayerState\PlayerStateGuard\PlayerStateGuard.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imgui.h">
@@ -634,6 +637,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Application\Player\PlayerState\PlayerStateRecovery\PlayerStateRecovery.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Player\PlayerState\PlayerStateGuard\PlayerStateGuard.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

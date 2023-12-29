@@ -3,7 +3,7 @@
 #include "../../../../Engine/Math/Vector3.h"
 #include "../../../../Engine/3D/WorldTransform.h"
 
-class PlayerStateRecovery : public IPlayerState
+class PlayerStateGuard : public IPlayerState
 {
 
 public: // メンバ関数
@@ -25,11 +25,6 @@ private:
 	/// </summary>
 	void Move(Vector3& move, WorldTransform* worldTransform);
 
-	/// <summary>
-	/// 回復
-	/// </summary>
-	void Recovery();
-
 private: // メンバ変数
 
 	// 移動速度
@@ -46,9 +41,6 @@ private: // メンバ変数
 
 	// 目指す向きへの補間係数
 	float targetAngleT_;
-
-	// 回復量
-	uint32_t recoverySpeed_;
 
 };
 
