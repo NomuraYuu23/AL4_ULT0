@@ -359,7 +359,7 @@ void GlobalVariables::LoadFile(const std::string& groupName) {
 			SetValue(groupName, itemName, value);
 		}
 		// uint32_t型の値を保持していれば
-		else if (itItem->is_number_float()) {
+		else if (itItem->is_number_unsigned()) {
 			// int型の値を登録
 			uint32_t value = itItem->get<uint32_t>();
 			SetValue(groupName, itemName, value);
