@@ -15,7 +15,7 @@ void PlayerStateGuard::Initialize()
 
 	targetAngleT_ = 0.1f;
 
-	plaryerStateNo_ = PlayerState::kPlayerStateGuard;
+	playerStateNo_ = PlayerState::kPlayerStateGuard;
 
 }
 

@@ -12,6 +12,7 @@ enum PlayerState {
 	kPlayerStateAvoidance, // 回避
 	kPlayerStateRecovery, // 回復
 	kPlayerStateGuard, // ガード
+	kPlayerStateAttack, // 攻撃
 	kPlayerStateOfCount // 数
 };
 
@@ -24,10 +25,10 @@ class IPlayerState
 protected:
 
 	// プレイヤーの状態番号
-	static uint32_t plaryerStateNo_;
+	static uint32_t playerStateNo_;
 
 	// プレイヤーのモーション番号
-	static uint32_t plaryerMotionNo_;
+	static uint32_t playerMotionNo_;
 
 	// プレイヤー
 	static Player* player_;
@@ -57,10 +58,10 @@ public: // メンバ関数
 	virtual ~IPlayerState() = default;
 
 	// プレイヤーの状態番号
-	uint32_t GetPlaryerStateNo() { return plaryerStateNo_; }
+	uint32_t GetPlaryerStateNo() { return playerStateNo_; }
 
 	// プレイヤーのモーション番号
-	uint32_t GetPlaryerMotionNo() { return plaryerMotionNo_; }
+	uint32_t GetPlaryerMotionNo() { return playerMotionNo_; }
 
 	// プレイヤーセット
 	void SetPlayer(Player* player) { player_ = player; }

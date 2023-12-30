@@ -17,7 +17,7 @@ void PlayerStateRecovery::Initialize()
 
 	recoverySpeed_ = 10;
 
-	plaryerStateNo_ = PlayerState::kPlayerStateRecovery;
+	playerStateNo_ = PlayerState::kPlayerStateRecovery;
 
 }
 
@@ -47,7 +47,7 @@ void PlayerStateRecovery::Update()
 	Recovery();
 
 	if (++frameCount_ >= frame_) {
-		plaryerStateNo_ = PlayerState::kPlayerStateRoot;
+		playerStateNo_ = PlayerState::kPlayerStateRoot;
 	}
 	player_->SetReceiveCommand(false);
 

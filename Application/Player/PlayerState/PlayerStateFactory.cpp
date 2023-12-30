@@ -3,6 +3,7 @@
 #include "../PlayerState/PlayerStateAvoidance/PlayerStateAvoidance.h"
 #include "../PlayerState/PlayerStateRecovery/PlayerStateRecovery.h"
 #include "../PlayerState/PlayerStateGuard/PlayerStateGuard.h"
+#include "../PlayerState/PlayerStateAttack/PlayerStateAttack.h"
 #include <cassert>
 
 PlayerStateFactory* PlayerStateFactory::GetInstance()
@@ -29,6 +30,9 @@ IPlayerState* PlayerStateFactory::CreatePlayerState(uint32_t playerStateName)
 		break;
 	case kPlayerStateGuard: // ガード
 		newPlayerState = new PlayerStateGuard();
+		break;
+	case kPlayerStateAttack: // 攻撃
+		newPlayerState = new PlayerStateAttack();
 		break;
 	case kPlayerStateOfCount: // 使用不可
 	default:

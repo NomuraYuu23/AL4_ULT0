@@ -86,6 +86,9 @@ void Player::ImGuiDraw()
 	case kPlayerStateGuard: // ガード
 		ImGui::Text("PlayerStateGuard");
 		break;
+	case kPlayerStateAttack: // 攻撃
+		ImGui::Text("PlayerStateAttack");
+		break;
 	}
 
 	ImGui::End();

@@ -11,7 +11,7 @@ void PlayerStateAvoidance::Initialize()
 
 	frameCount_ = 0;
 
-	plaryerStateNo_ = PlayerState::kPlayerStateAvoidance;
+	playerStateNo_ = PlayerState::kPlayerStateAvoidance;
 
 }
 
@@ -37,7 +37,7 @@ void PlayerStateAvoidance::Update()
 	worldTransform->transform_.translate = v3Calc_->Add(worldTransform->transform_.translate, velocity);
 
 	if (++frameCount_ >= frame_) {
-		plaryerStateNo_ = PlayerState::kPlayerStateRoot;
+		playerStateNo_ = PlayerState::kPlayerStateRoot;
 	}
 	player_->SetReceiveCommand(false);
 

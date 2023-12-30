@@ -15,7 +15,7 @@ void PlayerStateRoot::Initialize()
 
 	targetAngleT_ = 0.1f;
 
-	plaryerMotionNo_ = kPlayerMotionStand;
+	playerMotionNo_ = kPlayerMotionStand;
 
 }
 
