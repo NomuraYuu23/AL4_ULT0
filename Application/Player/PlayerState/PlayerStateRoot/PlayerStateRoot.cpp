@@ -38,19 +38,20 @@ void PlayerStateRoot::Update()
 			if (input_->PushJoystick(JoystickButton::kJoystickButtonB)) {
 				// ダッシュ
 				Move(move, worldTransform, dashSpeed_);
+				playerMotionNo_ = kPlayerMotionDash;
 			}
 			else {
 				//ランニング
 				Move(move, worldTransform, runningSpeed_);
+				playerMotionNo_ = kPlayerMotionRun;
 			}
-			playerMotionNo_ = kPlayerMotionRun;
 		}
 		else if (v3Calc_->Length(move) > kThresholdWalk) {
 			// walk
 			//Move(move, worldTransform, walkSpeed_);
 		}
 		else {
-			playerMotionNo_ = kPlayerMotionStand;
+			playerMotionNo_ = kPlayerMotionDash;
 		}
 
 		// 角度補間
