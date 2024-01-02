@@ -1,11 +1,11 @@
 {
     "Run": {
         "0": {
-            "easeType": 0,
+            "easeType": 30,
             "endFrame": 0,
             "transform": {
                 "rotate": [
-                    0.0,
+                    0.10000000149011612,
                     0.0,
                     0.0
                 ],
@@ -22,12 +22,12 @@
             }
         },
         "1": {
-            "easeType": 0,
-            "endFrame": 0,
+            "easeType": 30,
+            "endFrame": 10,
             "transform": {
                 "rotate": [
-                    0.0,
-                    0.0,
+                    0.10000000149011612,
+                    0.10000000149011612,
                     0.0
                 ],
                 "scale": [
@@ -37,17 +37,17 @@
                 ],
                 "translate": [
                     0.0,
-                    0.0,
+                    -0.800000011920929,
                     0.0
                 ]
             }
         },
         "2": {
-            "easeType": 0,
-            "endFrame": 0,
+            "easeType": 30,
+            "endFrame": 20,
             "transform": {
                 "rotate": [
-                    0.0,
+                    0.10000000149011612,
                     0.0,
                     0.0
                 ],
@@ -64,12 +64,12 @@
             }
         },
         "3": {
-            "easeType": 0,
-            "endFrame": 0,
+            "easeType": 30,
+            "endFrame": 30,
             "transform": {
                 "rotate": [
-                    0.0,
-                    0.0,
+                    0.10000000149011612,
+                    -0.10000000149011612,
                     0.0
                 ],
                 "scale": [
@@ -79,17 +79,17 @@
                 ],
                 "translate": [
                     0.0,
-                    0.0,
+                    -0.800000011920929,
                     0.0
                 ]
             }
         },
         "4": {
-            "easeType": 0,
-            "endFrame": 0,
+            "easeType": 30,
+            "endFrame": 40,
             "transform": {
                 "rotate": [
-                    0.0,
+                    0.10000000149011612,
                     0.0,
                     0.0
                 ],

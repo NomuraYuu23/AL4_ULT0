@@ -1,7 +1,7 @@
 {
     "Run": {
         "0": {
-            "easeType": 0,
+            "easeType": 30,
             "endFrame": 0,
             "transform": {
                 "rotate": [
@@ -15,18 +15,18 @@
                     1.0
                 ],
                 "translate": [
-                    0.0,
-                    0.0,
+                    -2.0,
+                    -2.0,
                     0.0
                 ]
             }
         },
         "1": {
-            "easeType": 0,
-            "endFrame": 0,
+            "easeType": 30,
+            "endFrame": 10,
             "transform": {
                 "rotate": [
-                    0.0,
+                    0.699999988079071,
                     0.0,
                     0.0
                 ],
@@ -36,15 +36,15 @@
                     1.0
                 ],
                 "translate": [
-                    0.0,
-                    0.0,
+                    -2.0,
+                    -2.0,
                     0.0
                 ]
             }
         },
         "2": {
-            "easeType": 0,
-            "endFrame": 0,
+            "easeType": 30,
+            "endFrame": 20,
             "transform": {
                 "rotate": [
                     0.0,
@@ -57,18 +57,18 @@
                     1.0
                 ],
                 "translate": [
-                    0.0,
-                    0.0,
+                    -2.0,
+                    -2.0,
                     0.0
                 ]
             }
         },
         "3": {
-            "easeType": 0,
-            "endFrame": 0,
+            "easeType": 30,
+            "endFrame": 30,
             "transform": {
                 "rotate": [
-                    0.0,
+                    -0.699999988079071,
                     0.0,
                     0.0
                 ],
@@ -78,15 +78,15 @@
                     1.0
                 ],
                 "translate": [
-                    0.0,
-                    0.0,
+                    -2.0,
+                    -2.0,
                     0.0
                 ]
             }
         },
         "4": {
-            "easeType": 0,
-            "endFrame": 0,
+            "easeType": 30,
+            "endFrame": 40,
             "transform": {
                 "rotate": [
                     0.0,
@@ -99,8 +99,8 @@
                     1.0
                 ],
                 "translate": [
-                    0.0,
-                    0.0,
+                    -2.0,
+                    -2.0,
                     0.0
                 ]
             }

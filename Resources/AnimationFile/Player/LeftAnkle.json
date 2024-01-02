@@ -16,14 +16,14 @@
                 ],
                 "translate": [
                     0.0,
-                    0.0,
+                    -7.0,
                     0.0
                 ]
             }
         },
         "1": {
             "easeType": 0,
-            "endFrame": 0,
+            "endFrame": 10,
             "transform": {
                 "rotate": [
                     0.0,
@@ -37,14 +37,14 @@
                 ],
                 "translate": [
                     0.0,
-                    0.0,
+                    -7.0,
                     0.0
                 ]
             }
         },
         "2": {
             "easeType": 0,
-            "endFrame": 0,
+            "endFrame": 20,
             "transform": {
                 "rotate": [
                     0.0,
@@ -58,14 +58,14 @@
                 ],
                 "translate": [
                     0.0,
-                    0.0,
+                    -7.0,
                     0.0
                 ]
             }
         },
         "3": {
             "easeType": 0,
-            "endFrame": 0,
+            "endFrame": 30,
             "transform": {
                 "rotate": [
                     0.0,
@@ -79,14 +79,14 @@
                 ],
                 "translate": [
                     0.0,
-                    0.0,
+                    -7.0,
                     0.0
                 ]
             }
         },
         "4": {
             "easeType": 0,
-            "endFrame": 0,
+            "endFrame": 40,
             "transform": {
                 "rotate": [
                     0.0,
@@ -100,7 +100,7 @@
                 ],
                 "translate": [
                     0.0,
-                    0.0,
+                    -7.0,
                     0.0
                 ]
             }

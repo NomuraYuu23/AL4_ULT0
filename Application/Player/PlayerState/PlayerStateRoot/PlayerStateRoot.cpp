@@ -43,10 +43,14 @@ void PlayerStateRoot::Update()
 				//ランニング
 				Move(move, worldTransform, runningSpeed_);
 			}
+			playerMotionNo_ = kPlayerMotionRun;
 		}
 		else if (v3Calc_->Length(move) > kThresholdWalk) {
 			// walk
 			//Move(move, worldTransform, walkSpeed_);
+		}
+		else {
+			playerMotionNo_ = kPlayerMotionStand;
 		}
 
 		// 角度補間
