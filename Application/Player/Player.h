@@ -58,6 +58,7 @@ enum PlayerMotionIndex {
 	kPlayerMotionStand, // 通常時
 	kPlayerMotionRun, // 走行時
 	kPlayerMotionDash, // ダッシュ時
+	kPlayerMotionWalk, // 歩行時
 	kPlayerMotionIndexOfCount // 数
 };
 
@@ -215,6 +216,7 @@ private:  // パーツ,アニメーション定数
 		"Stand",
 		"Run",
 		"Dash",
+		"Walk",
 	};
 
 private: // プレイヤーデータ

@@ -49,9 +49,10 @@ void PlayerStateRoot::Update()
 		else if (v3Calc_->Length(move) > kThresholdWalk) {
 			// walk
 			//Move(move, worldTransform, walkSpeed_);
+			playerMotionNo_ = kPlayerMotionWalk;
 		}
 		else {
-			playerMotionNo_ = kPlayerMotionDash;
+			playerMotionNo_ = kPlayerMotionStand;
 		}
 
 		// 角度補間
