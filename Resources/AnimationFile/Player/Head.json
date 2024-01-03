@@ -1,4 +1,111 @@
 {
+    "Attack1st": {
+        "0": {
+            "easeType": 30,
+            "endFrame": 0,
+            "transform": {
+                "rotate": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "translate": [
+                    0.0,
+                    15.0,
+                    0.0
+                ]
+            }
+        },
+        "1": {
+            "easeType": 30,
+            "endFrame": 16,
+            "transform": {
+                "rotate": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "translate": [
+                    0.0,
+                    15.0,
+                    0.0
+                ]
+            }
+        },
+        "2": {
+            "easeType": 30,
+            "endFrame": 32,
+            "transform": {
+                "rotate": [
+                    0.0,
+                    -0.3499999940395355,
+                    0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "translate": [
+                    0.0,
+                    15.0,
+                    0.0
+                ]
+            }
+        },
+        "3": {
+            "easeType": 30,
+            "endFrame": 42,
+            "transform": {
+                "rotate": [
+                    0.0,
+                    1.090000033378601,
+                    0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "translate": [
+                    0.0,
+                    15.0,
+                    0.0
+                ]
+            }
+        },
+        "4": {
+            "easeType": 30,
+            "endFrame": 52,
+            "transform": {
+                "rotate": [
+                    0.0,
+                    1.090000033378601,
+                    0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "translate": [
+                    0.0,
+                    15.0,
+                    0.0
+                ]
+            }
+        }
+    },
     "Avoidance": {
         "0": {
             "easeType": 30,

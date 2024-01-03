@@ -5,8 +5,8 @@
 // コンボ定数表
 const std::array<PlayerStateAttack::ConstAttack, PlayerStateAttack::kComboNum> PlayerStateAttack::kConstAttaks = {
 	{
-		{ { 20, 20, 20, 20}, { 0.0f, 0.0f, 0.2f, 0.0f} },
-		{ { 10, 10, 10, 10}, { 0.2f, 0.0f, 0.0f, 0.0f} },
+		{ { 16, 16, 10, 10}, { 2.0f, 0.0f, 0.0f, 0.0f} },
+		{ { 16, 16, 10, 10}, { 2.0f, 0.0f, 0.0f, 0.0f} },
 	}
 };
 
@@ -72,7 +72,9 @@ void PlayerStateAttack::Update()
 		AttackCombo2nd();
 	}
 
-	AttackComboContinuationJudgment();
+	if (parameter_ > step) {
+		AttackComboContinuationJudgment();
+	}
 	AttackComboPhaseFinished();
 
 	player_->SetReceiveCommand(false);
@@ -92,7 +94,7 @@ void PlayerStateAttack::AttackInitialize()
 
 	//モーションネーム
 	if (comboIndex_ == 0) {
-
+		playerMotionNo_ = kPlayerMotionAttack1st;
 	}
 	else {
 

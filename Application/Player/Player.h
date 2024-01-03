@@ -63,6 +63,7 @@ enum PlayerMotionIndex {
 	kPlayerMotionGuardWalk, // ガード歩行時
 	kPlayerMotionAvoidance, // 回避時
 	kPlayerMotionRecovery, // 回復時
+	kPlayerMotionAttack1st, // 攻撃時(1段目)
 	kPlayerMotionIndexOfCount // 数
 };
 
@@ -225,6 +226,7 @@ private:  // パーツ,アニメーション定数
 		"GuardWalk",
 		"Avoidance",
 		"Recovery",
+		"Attack1st",
 	};
 
 private: // プレイヤーデータ
