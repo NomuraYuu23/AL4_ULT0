@@ -19,6 +19,8 @@ void PlayerStateRecovery::Initialize()
 
 	playerStateNo_ = PlayerState::kPlayerStateRecovery;
 
+	playerMotionNo_ = kPlayerMotionRecovery;
+
 }
 
 void PlayerStateRecovery::Update()
