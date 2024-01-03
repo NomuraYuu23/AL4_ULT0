@@ -43,6 +43,8 @@ void Player::Update()
 
 	// ステート
 	StateUpdate();
+
+	worldTransform_.transform_.translate.y = height_;
 	worldTransform_.UpdateMatrix();
 
 	// パーツ,アニメーション

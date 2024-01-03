@@ -61,6 +61,7 @@ enum PlayerMotionIndex {
 	kPlayerMotionWalk, // 歩行時
 	kPlayerMotionGuard, // ガード時
 	kPlayerMotionGuardWalk, // ガード歩行時
+	kPlayerMotionAvoidance, // 回避時
 	kPlayerMotionIndexOfCount // 数
 };
 
@@ -221,6 +222,7 @@ private:  // パーツ,アニメーション定数
 		"Walk",
 		"Guard",
 		"GuardWalk",
+		"Avoidance",
 	};
 
 private: // プレイヤーデータ
@@ -240,5 +242,7 @@ public: // アクセッサ
 	BaseCamera* GetCamera() { return camera_; }
 
 	void SetReceiveCommand(bool receiveCommand) { receiveCommand_ = receiveCommand; }
+
+	void SetHeight(float height) { height_ = height; }
 
 };
