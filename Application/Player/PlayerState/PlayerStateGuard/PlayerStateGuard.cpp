@@ -35,6 +35,10 @@ void PlayerStateGuard::Update()
 		Vector3 move = { input_->GetLeftAnalogstick().x, 0.0f, -input_->GetLeftAnalogstick().y };
 		if (v3Calc_->Length(move) > kThresholdWalk) {
 			Move(move, worldTransform);
+			playerMotionNo_ = kPlayerMotionGuardWalk;
+		}
+		else {
+			playerMotionNo_ = kPlayerMotionGuard;
 		}
 
 		// 角度補間

@@ -52,7 +52,7 @@ void PlayerStateRoot::Update()
 			playerMotionNo_ = kPlayerMotionWalk;
 		}
 		else {
-			playerMotionNo_ = kPlayerMotionGuard;
+			playerMotionNo_ = kPlayerMotionStand;
 		}
 
 		// 角度補間

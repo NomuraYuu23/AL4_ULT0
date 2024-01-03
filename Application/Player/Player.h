@@ -60,6 +60,7 @@ enum PlayerMotionIndex {
 	kPlayerMotionDash, // ダッシュ時
 	kPlayerMotionWalk, // 歩行時
 	kPlayerMotionGuard, // ガード時
+	kPlayerMotionGuardWalk, // ガード歩行時
 	kPlayerMotionIndexOfCount // 数
 };
 
@@ -219,6 +220,7 @@ private:  // パーツ,アニメーション定数
 		"Dash",
 		"Walk",
 		"Guard",
+		"GuardWalk",
 	};
 
 private: // プレイヤーデータ
