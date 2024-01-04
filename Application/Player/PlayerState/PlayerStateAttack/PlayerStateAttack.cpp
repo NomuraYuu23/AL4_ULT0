@@ -97,7 +97,7 @@ void PlayerStateAttack::AttackInitialize()
 		playerMotionNo_ = kPlayerMotionAttack1st;
 	}
 	else {
-
+		playerMotionNo_ = kPlayerMotionAttack2nd;
 	}
 
 }

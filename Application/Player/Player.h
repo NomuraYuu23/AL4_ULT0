@@ -64,6 +64,7 @@ enum PlayerMotionIndex {
 	kPlayerMotionAvoidance, // 回避時
 	kPlayerMotionRecovery, // 回復時
 	kPlayerMotionAttack1st, // 攻撃時(1段目)
+	kPlayerMotionAttack2nd, // 攻撃時(2段目)
 	kPlayerMotionIndexOfCount // 数
 };
 
@@ -227,6 +228,7 @@ private:  // パーツ,アニメーション定数
 		"Avoidance",
 		"Recovery",
 		"Attack1st",
+		"Attack2nd",
 	};
 
 private: // プレイヤーデータ
