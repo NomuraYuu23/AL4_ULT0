@@ -1,5 +1,6 @@
 #include "EnemyStateFactory.h"
 #include <cassert>
+#include "EnemyStateRoot/EnemyStateRoot.h"
 
 EnemyStateFactory* EnemyStateFactory::GetInstance()
 {
@@ -15,7 +16,7 @@ IEnemyState* EnemyStateFactory::CreateEnemyState(uint32_t enemyStateName)
 	switch (enemyStateName)
 	{
 	case kEnemyStateRoot: // 通常
-		//newEnemyState = new ();
+		newEnemyState = new EnemyStateRoot();
 		break;
 	case kEnemyStateOfCount: // 使用不可
 	default:

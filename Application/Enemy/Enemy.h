@@ -56,15 +56,6 @@ enum EnemyColliderIndex {
 /// </summary>
 enum EnemyMotionIndex {
 	kEnemyMotionStand, // 通常時
-	kEnemyMotionRun, // 走行時
-	kEnemyMotionDash, // ダッシュ時
-	kEnemyMotionWalk, // 歩行時
-	kEnemyMotionGuard, // ガード時
-	kEnemyMotionGuardWalk, // ガード歩行時
-	kEnemyMotionAvoidance, // 回避時
-	kEnemyMotionRecovery, // 回復時
-	kEnemyMotionAttack1st, // 攻撃時(1段目)
-	kEnemyMotionAttack2nd, // 攻撃時(2段目)
 	kEnemyMotionIndexOfCount // 数
 };
 

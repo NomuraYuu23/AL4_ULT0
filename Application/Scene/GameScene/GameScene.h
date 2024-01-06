@@ -15,7 +15,8 @@
 #include "../../Skydome/Skydome.h"
 // 地面
 #include "../../Ground/Ground.h"
-
+// エネミー
+#include "../../Enemy/Enemy.h"
 
 class GameScene : public IScene
 {
@@ -113,4 +114,8 @@ private:
 	// 地面モデル
 	std::unique_ptr<Model> groundModel_;
 
+	// エネミー
+	std::unique_ptr<Enemy> enemy_;
+	// エネミーモデル
+	std::array<std::unique_ptr<Model>, EnemyPartIndex::kEnemyPartIndexOfCount> enemyModels_;
 };
