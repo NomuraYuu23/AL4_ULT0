@@ -42,14 +42,6 @@ public:
 	/// <param name="groupName">グループ名</param>
 	/// <param name="key">項目名</param>
 	/// <param name="value">値</param>
-	void SetValue(const std::string& groupName, const std::string& key, uint32_t value);
-
-	/// <summary>
-	/// 値のセット
-	/// </summary>
-	/// <param name="groupName">グループ名</param>
-	/// <param name="key">項目名</param>
-	/// <param name="value">値</param>
 	void SetValue(const std::string& groupName, const std::string& key, float value);
 
 	/// <summary>
@@ -86,8 +78,6 @@ public:
 
 	// 項目の追加(int)
 	void AddItem(const std::string& groupName, const std::string& key, int32_t value);
-	// 項目の追加(uint)
-	void AddItem(const std::string& groupName, const std::string& key, uint32_t value);
 	// 項目の追加(float)
 	void AddItem(const std::string& groupName, const std::string& key, float value);
 	// 項目の追加(Vector2)
@@ -97,8 +87,6 @@ public:
 
 	// 値の取得(int)
 	int32_t GetIntValue(const std::string& groupName, const std::string& key);
-	// 値の取得(uint)
-	uint32_t GetUIntValue(const std::string& groupName, const std::string& key);
 	// 値の取得(float)
 	float GetFloatValue(const std::string& groupName, const std::string& key);
 	// 値の取得(Vector2)
@@ -114,7 +102,7 @@ private:
 
 	//項目
 
-	using Item = std::variant<int32_t, uint32_t, float, Vector2, Vector3>;
+	using Item = std::variant<int32_t, float, Vector2, Vector3>;
 	using Group = std::map<std::string, Item>;
 
 	// 全データ

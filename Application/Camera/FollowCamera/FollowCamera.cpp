@@ -25,6 +25,8 @@ void FollowCamera::Initialize() {
 	globalVariables->AddItem(groupName, "rotateRate", rotateRate_);
 	globalVariables->AddItem(groupName, "offsetLength", offsetLength_);
 
+	ApplyGlobalVariables();
+
 }
 
 void FollowCamera::Update() {
@@ -109,4 +111,5 @@ void FollowCamera::ApplyGlobalVariables()
 	moveRate_ = globalVariables->GetFloatValue(groupName, "moveRate");
 	rotateRate_ = globalVariables->GetFloatValue(groupName, "rotateRate");
 	offsetLength_ = globalVariables->GetFloatValue(groupName, "offsetLength");
+
 }

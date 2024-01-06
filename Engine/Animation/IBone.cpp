@@ -36,6 +36,7 @@ void IBone::Update(uint32_t frameCount)
 void IBone::Update(uint32_t frameCount, const std::vector<std::string>& motionNames)
 {
 
+	//return;
 
 	Animation(frameCount);
 
@@ -89,7 +90,9 @@ void IBone::Animation(uint32_t frameCount)
 	//フレームカウント
 	endFrame = end.endFrame_ - start.endFrame_;
 	currentFrame = frameCount - start.endFrame_;
-	t = static_cast<float>(currentFrame) / static_cast<float>(endFrame);
+	if (endFrame != 0) {
+		t = static_cast<float>(currentFrame) / static_cast<float>(endFrame);
+	}
 
 	// イージング
 	worldTransform_.transform_.scale = Ease::Easing(static_cast<Ease::EaseName>(end.easeType_), start.transform_.scale, end.transform_.scale, t);
@@ -129,6 +132,8 @@ void IBone::ApplyAnimationFile(const std::vector<std::string>& motionNames)
 
 uint32_t IBone::animationTransformChange(const std::string& motionName)
 {
+
+	//return 0;
 
 	//各グループについて
 	for (std::map<std::string, std::vector<BoneData>>::iterator itData = animationTransformDatas_.begin(); itData != animationTransformDatas_.end();

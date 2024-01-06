@@ -1,9 +1,18 @@
 #pragma once
 #include <cstdint>
+#include "../../../Engine/Input/Input.h"
+#include "../../../Engine/Math/Vector3.h"
+#include "../../../Engine/Math/Matrix4x4.h"
+
+class Player;
 
 //プレイヤーの状態名
 enum PlayerState {
-	kPlayerStateStand, // 立っている状態
+	kPlayerStateRoot, // 通常
+	kPlayerStateAvoidance, // 回避
+	kPlayerStateRecovery, // 回復
+	kPlayerStateGuard, // ガード
+	kPlayerStateAttack, // 攻撃
 	kPlayerStateOfCount // 数
 };
 
@@ -16,10 +25,20 @@ class IPlayerState
 protected:
 
 	// プレイヤーの状態番号
-	static uint32_t plaryerStateNo_;
+	static uint32_t playerStateNo_;
 
 	// プレイヤーのモーション番号
-	static uint32_t plaryerMotionNo_;
+	static uint32_t playerMotionNo_;
+
+	// プレイヤー
+	static Player* player_;
+
+	//インスタンス
+	static Input* input_;
+
+	static Vector3Calc* v3Calc_;
+	
+	static Matrix4x4Calc* m4Calc_;
 
 public: // メンバ関数
 
@@ -39,10 +58,13 @@ public: // メンバ関数
 	virtual ~IPlayerState() = default;
 
 	// プレイヤーの状態番号
-	uint32_t GetPlaryerStateNo() { return plaryerStateNo_; }
+	uint32_t GetPlaryerStateNo() { return playerStateNo_; }
 
 	// プレイヤーのモーション番号
-	uint32_t GetPlaryerMotionNo() { return plaryerMotionNo_; }
+	uint32_t GetPlaryerMotionNo() { return playerMotionNo_; }
+
+	// プレイヤーセット
+	void SetPlayer(Player* player) { player_ = player; }
 
 };
 

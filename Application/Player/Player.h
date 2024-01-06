@@ -3,14 +3,15 @@
 #include "../../Engine/Collider/Collider.h"
 #include "PlayerState/IPlayerState.h"
 #include "PlayerState/PlayerStateFactory.h"
+#include "PlayerCommand/PlayerCommand.h"
 
 /// <summary>
 /// プレイヤーの部位一覧
 /// </summary>
 enum PlayerPartIndex {
-	kPlayerPartHead, // 頭
 	kPlayerPartTorso, // 胴
 	kPlayerPartLowerBack, // 腰
+	kPlayerPartHead, // 頭
 
 	kPlayerPartLeftUpperArm, // 左上腕
 	kPlayerPartLeftForearm, // 左前腕 
@@ -54,7 +55,16 @@ enum PlayerColliderIndex {
 /// プレイヤーのモーション一覧
 /// </summary>
 enum PlayerMotionIndex {
-	kPlayerMotionNormal, // 通常時
+	kPlayerMotionStand, // 通常時
+	kPlayerMotionRun, // 走行時
+	kPlayerMotionDash, // ダッシュ時
+	kPlayerMotionWalk, // 歩行時
+	kPlayerMotionGuard, // ガード時
+	kPlayerMotionGuardWalk, // ガード歩行時
+	kPlayerMotionAvoidance, // 回避時
+	kPlayerMotionRecovery, // 回復時
+	kPlayerMotionAttack1st, // 攻撃時(1段目)
+	kPlayerMotionAttack2nd, // 攻撃時(2段目)
 	kPlayerMotionIndexOfCount // 数
 };
 
@@ -82,6 +92,11 @@ public: // ベースのメンバ関数
 	/// <param name="viewProjection">ビュープロジェクション(参照渡し)</param>
 	void Draw(BaseCamera& camera);
 
+	/// <summary>
+	/// ImGui描画
+	/// </summary>
+	void ImGuiDraw();
+
 private: // ベースのメンバ変数
 
 	// マテリアル
@@ -89,6 +104,12 @@ private: // ベースのメンバ変数
 
 	// ワールドトランスフォーム
 	WorldTransform worldTransform_;
+
+	// コマンド
+	PlayerCommand* playerCommand_;
+
+	// コマンドを受け取るか
+	bool receiveCommand_;
 
 private: // ステート関数
 
@@ -112,6 +133,9 @@ private: // ステート変数
 
 	// 前のステート番号
 	uint32_t prevStateNo_;
+
+	// 次のステート番号
+	uint32_t nextStateNo_;
 	
 	// ステートファクトリー
 	PlayerStateFactory* playerStateFactory_;
@@ -127,6 +151,11 @@ private: // パーツ構成関数
 	/// パーツ更新
 	/// </summary>
 	void PartUpdate();
+
+	/// <summary>
+	/// パーツの親子付け
+	/// </summary>
+	void PartParent();
 
 	/// <summary>
 	/// コライダー初期化
@@ -171,9 +200,9 @@ private:  // パーツ,アニメーション定数
 
 	// パーツ名
 	const std::array<const std::string, PlayerPartIndex::kPlayerPartIndexOfCount> partNames_ = {
-		"Head",
 		"Torso",
 		"LowerBack",
+		"Head",
 		"LeftUpperArm",
 		"LeftForearm",
 		"LeftHand",
@@ -190,7 +219,36 @@ private:  // パーツ,アニメーション定数
 
 	// モーション名
 	const std::array<const std::string, PlayerMotionIndex::kPlayerMotionIndexOfCount> motionNames_ = {
-		"Normal",
+		"Stand",
+		"Run",
+		"Dash",
+		"Walk",
+		"Guard",
+		"GuardWalk",
+		"Avoidance",
+		"Recovery",
+		"Attack1st",
+		"Attack2nd",
 	};
+
+private: // プレイヤーデータ
+
+	// 高さ
+	float height_ = 20.0f;
+
+	// カメラ
+	BaseCamera* camera_ = nullptr;
+
+public: // アクセッサ
+
+	WorldTransform* GetWorldTransformAdress() { return &worldTransform_; }
+
+	void SetCamera(BaseCamera* camera) { camera_ = camera; }
+
+	BaseCamera* GetCamera() { return camera_; }
+
+	void SetReceiveCommand(bool receiveCommand) { receiveCommand_ = receiveCommand; }
+
+	void SetHeight(float height) { height_ = height; }
 
 };
