@@ -124,6 +124,19 @@ void GlobalVariables::SetValue(
 
 }
 
+void GlobalVariables::SetValue(const std::string& groupName, const std::string& key, uint32_t value)
+{
+
+	// グループの参照を取得
+	Group& group = datas_[groupName];
+	// 新しい項目のデータを設定
+	Item newItem{};
+	newItem = value;
+	// 設定した項目をstd::mapに追加
+	group[key] = newItem;
+
+}
+
 /// <summary>
 /// 値のセット
 /// </summary>
@@ -375,6 +388,14 @@ void GlobalVariables::AddItem(const std::string& groupName, const std::string& k
 
 }
 
+void GlobalVariables::AddItem(const std::string& groupName, const std::string& key, uint32_t value){
+
+	// 項目が未登録なら
+	if (datas_[groupName].find(key) == datas_[groupName].end()) {
+		SetValue(groupName, key, value);
+	}
+}
+
 // 項目の追加(float)
 void GlobalVariables::AddItem(const std::string& groupName, const std::string& key, float value) {
 
@@ -412,6 +433,17 @@ int32_t GlobalVariables::GetIntValue(const std::string& groupName, const std::st
 	assert(group.find(key) != group.end());
 
 	return std::get<0>(group[key]);
+}
+
+uint32_t GlobalVariables::GetUIntValue(const std::string& groupName, const std::string& key){
+
+	assert(datas_.find(groupName) != datas_.end());
+	//グループの参照を取得
+	Group& group = datas_[groupName];
+
+	assert(group.find(key) != group.end());
+
+	return std::get<1>(group[key]);
 }
 
 // 値の取得(float)
