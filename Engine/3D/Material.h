@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 #include <DirectXMath.h>
 #include <Windows.h>
 #include <d3d12.h>

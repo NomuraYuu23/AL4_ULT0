@@ -42,7 +42,7 @@ protected:
 	uint32_t collisionMask_ = 0xffffffff;
 
 	// 親オブジェクト
-	ColliderParentObject parentObject_ = nullptr;
+	ColliderParentObject parentObject_;
 
 };
 
