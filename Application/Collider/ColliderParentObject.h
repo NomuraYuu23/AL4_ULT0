@@ -2,5 +2,6 @@
 #include <variant>
 
 class Player;
+class Enemy;
 
-using ColliderParentObject = std::variant<Player*>;
+using ColliderParentObject = std::variant<Player*, Enemy*>;

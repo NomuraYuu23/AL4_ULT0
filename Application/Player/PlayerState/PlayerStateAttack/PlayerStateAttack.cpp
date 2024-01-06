@@ -30,7 +30,7 @@ void PlayerStateAttack::Initialize()
 	prevAttackCenter_ = { -10000.0f,-10000.0f,-10000.0f };
 
 	// あたり判定コライダー初期化
-	attackCollider_->Initialize(Segment{ attackCenter_ , {0.0f,0.0f,0.0f} }, attackRadius_, nullptr);
+	attackCollider_->Initialize(Segment{ attackCenter_ , {0.0f,0.0f,0.0f} }, attackRadius_, static_cast<Player*>(nullptr));
 
 	// あたり判定を取るか
 	isAttackJudgment_ = false;
