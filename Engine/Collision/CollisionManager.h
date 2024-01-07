@@ -11,13 +11,10 @@
 #include "../Collider/Sphere/Sphere.h"
 #include "../Collider/Triangle/Triangle.h"
 #include "../Collider/Capsule/Capsule.h"
+#include "../Collider/ColliderShape.h"
 
 class CollisionManager
 {
-
-public:
-
-	using ColliderShape = std::variant<AABB*, OBB*, Sphere*, Capsule* >;
 
 public: // メンバ関数
 

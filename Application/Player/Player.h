@@ -4,6 +4,8 @@
 #include "PlayerState/IPlayerState.h"
 #include "PlayerState/PlayerStateFactory.h"
 #include "PlayerCommand/PlayerCommand.h"
+#include "../../Engine/Collider/ColliderShape.h"
+#include "../../Engine/Collision/CollisionData.h"
 
 /// <summary>
 /// プレイヤーの部位一覧
@@ -97,6 +99,13 @@ public: // ベースのメンバ関数
 	/// </summary>
 	void ImGuiDraw();
 
+	/// <summary>
+	/// 衝突処理
+	/// </summary>
+	/// <param name="colliderPartner"></param>
+	/// <param name="collisionData"></param>
+	void OnCollision(ColliderParentObject colliderPartner, CollisionData collisionData);
+
 private: // ベースのメンバ変数
 
 	// マテリアル
@@ -110,6 +119,13 @@ private: // ベースのメンバ変数
 
 	// コマンドを受け取るか
 	bool receiveCommand_;
+
+	//衝突属性(自分)
+	uint32_t collisionAttribute_ = 0x00000001;
+
+	// 衝突マスク(相手)
+	uint32_t collisionMask_ = 0xfffffffe;
+
 
 private: // ステート関数
 
@@ -176,7 +192,7 @@ private: // パーツ,アニメーション変数
 	std::array<Model*, PlayerPartIndex::kPlayerPartIndexOfCount> models_;
 
 	// コライダー (ダメージを受ける側、位置が被らない用)
-	std::array<std::unique_ptr<Collider>, PlayerColliderIndex::kPlayerColliderIndexOfCount> colliders_;
+	std::array<std::unique_ptr<Capsule>, PlayerColliderIndex::kPlayerColliderIndexOfCount> colliders_;
 
 	// コライダー用半径
 	std::array<float, PlayerColliderIndex::kPlayerColliderIndexOfCount> colliderRadiuses_;
@@ -252,5 +268,7 @@ public: // アクセッサ
 	void SetHeight(float height) { height_ = height; }
 
 	IBone* GetPart(uint32_t num) { return parts_[num].get(); }
+
+	std::array<ColliderShape, PlayerColliderIndex::kPlayerColliderIndexOfCount> GetCollider();
 
 };

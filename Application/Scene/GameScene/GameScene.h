@@ -55,6 +55,11 @@ public: //メンバ関数
 	/// </summary>
 	void GoToTheTitle();
 
+	/// <summary>
+	/// コリジョンマネージャー更新
+	/// </summary>
+	void CollisonUpdate();
+
 private: // メンバ関数
 
 	/// <summary>
@@ -95,6 +100,9 @@ private:
 
 	// オーディオマネージャー
 	std::unique_ptr<GameAudioManager> audioManager_;
+
+	// コリジョンマネージャー
+	std::unique_ptr<CollisionManager> collisionManager_;
 
 	// プレイヤー
 	std::unique_ptr<Player> player_;	

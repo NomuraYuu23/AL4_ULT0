@@ -1,6 +1,9 @@
 #include "CollisionManager.h"
 #include "Collision.h"
 #include "CollisionData.h"
+#include "../../Application/Player/Player.h"
+#include "../../Application/Enemy/Enemy.h"
+
 
 void CollisionManager::Initialize()
 {
@@ -51,7 +54,7 @@ void CollisionManager::CheckCollisionPair(ColliderShape colliderA, ColliderShape
 		// 衝突フィルタリング
 		if (!(a->GetCollisionAttribute() & b->GetCollisionMask()) ||
 			!(b->GetCollisionAttribute() & a->GetCollisionMask())) {
-			return ;
+			return;
 		}
 		Vector3 p1 = {};
 		Vector3 p2 = {};
@@ -60,11 +63,13 @@ void CollisionManager::CheckCollisionPair(ColliderShape colliderA, ColliderShape
 		float pushBackDist = 0.0f;
 		if (Collision::IsCollision(*a, *b, p1, p2, t1, t2, pushBackDist)) {
 			// 衝突処理
-			CollisionData collisionData = {p1, t1, pushBackDist };
-			//a->GetParentObject().OnCollision(b, collisionData);
-			collisionData = { p2, t2, pushBackDist };
-			//b->GetParentObject().OnCollision(a, collisionData);
+			std::visit([=](const auto& x, const auto& y) {
+				CollisionData collisionData = { p1, t1, pushBackDist };
+				x->OnCollision(y, collisionData);
+				collisionData = { p2, t2, pushBackDist };
+				y->OnCollision(x, collisionData);
+				}, a->GetParentObject(), b->GetParentObject());
 		}
-		}, colliderA, colliderB);
+	}, colliderA, colliderB);
 
 }

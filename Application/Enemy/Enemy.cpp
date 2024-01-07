@@ -68,6 +68,10 @@ void Enemy::ImGuiDraw()
 {
 }
 
+void Enemy::OnCollision(ColliderParentObject colliderPartner, CollisionData collisionData)
+{
+}
+
 void Enemy::StateInitialize()
 {
 
@@ -209,6 +213,8 @@ void Enemy::ColliderInitialize()
 	// コライダー
 	for (uint32_t i = 0; i < EnemyColliderIndex::kEnemyColliderIndexOfCount; ++i) {
 		colliders_[i] = std::make_unique<Capsule>();
+		colliders_[i]->SetCollisionAttribute(collisionAttribute_);
+		colliders_[i]->SetCollisionMask(collisionMask_);
 		colliderRadiuses_[i] = 1.0f;
 	}
 
@@ -350,5 +356,18 @@ void Enemy::ColliderUpdate()
 	static_cast<Capsule*>(colliders_[kEnemyColliderRightShin].get())->segment_ = segment;
 	static_cast<Capsule*>(colliders_[kEnemyColliderRightShin].get())->radius_ = colliderRadiuses_[kEnemyColliderRightShin];
 	static_cast<Capsule*>(colliders_[kEnemyColliderRightShin].get())->worldTransformUpdate();
+
+}
+
+std::array<ColliderShape, EnemyColliderIndex::kEnemyColliderIndexOfCount> Enemy::GetCollider()
+{
+
+	std::array<ColliderShape, EnemyColliderIndex::kEnemyColliderIndexOfCount> result;
+
+	for (uint32_t i = 0; i < EnemyColliderIndex::kEnemyColliderIndexOfCount; ++i) {
+		result[i] = colliders_[i].get();
+	}
+
+	return result;
 
 }

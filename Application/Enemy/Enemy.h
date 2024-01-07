@@ -4,9 +4,12 @@
 #include "EnemyState/IEnemyState.h"
 #include "EnemyState/EnemyStateFactory.h"
 #include "EnemyCommand/EnemyCommand.h"
+#include "../Collider/ColliderParentObject.h"
+#include "../../Engine/Collision/CollisionData.h"
+#include "../../Engine/Collider/ColliderShape.h"
 
 /// <summary>
-/// プレイヤーの部位一覧
+/// エネミーの部位一覧
 /// </summary>
 enum EnemyPartIndex {
 	kEnemyPartTorso, // 胴
@@ -31,7 +34,7 @@ enum EnemyPartIndex {
 };
 
 /// <summary>
-/// プレイヤーのコライダー一覧
+/// エネミーのコライダー一覧
 /// </summary>
 enum EnemyColliderIndex {
 
@@ -52,7 +55,7 @@ enum EnemyColliderIndex {
 };
 
 /// <summary>
-/// プレイヤーのモーション一覧
+/// エネミーのモーション一覧
 /// </summary>
 enum EnemyMotionIndex {
 	kEnemyMotionStand, // 通常時
@@ -85,6 +88,13 @@ public: // ベースのメンバ関数
 	/// </summary>
 	void ImGuiDraw();
 
+	/// <summary>
+	/// 衝突処理
+	/// </summary>
+	/// <param name="colliderPartner"></param>
+	/// <param name="collisionData"></param>
+	void OnCollision(ColliderParentObject colliderPartner, CollisionData collisionData);
+
 private: // ベースのメンバ変数
 
 	// マテリアル
@@ -98,6 +108,12 @@ private: // ベースのメンバ変数
 
 	// コマンドを受け取るか
 	bool receiveCommand_;
+
+	//衝突属性(自分)
+	uint32_t collisionAttribute_ = 0x00000002;
+
+	// 衝突マスク(相手)
+	uint32_t collisionMask_ = 0xfffffffd;
 
 private: // ステート関数
 
@@ -164,7 +180,7 @@ private: // パーツ,アニメーション変数
 	std::array<Model*, EnemyPartIndex::kEnemyPartIndexOfCount> models_;
 
 	// コライダー (ダメージを受ける側、位置が被らない用)
-	std::array<std::unique_ptr<Collider>, EnemyColliderIndex::kEnemyColliderIndexOfCount> colliders_;
+	std::array<std::unique_ptr<Capsule>, EnemyColliderIndex::kEnemyColliderIndexOfCount> colliders_;
 
 	// コライダー用半径
 	std::array<float, EnemyColliderIndex::kEnemyColliderIndexOfCount> colliderRadiuses_;
@@ -229,6 +245,8 @@ public: // アクセッサ
 	void SetReceiveCommand(bool receiveCommand) { receiveCommand_ = receiveCommand; }
 
 	void SetHeight(float height) { height_ = height; }
+
+	std::array<ColliderShape, EnemyColliderIndex::kEnemyColliderIndexOfCount> GetCollider();
 
 };
 

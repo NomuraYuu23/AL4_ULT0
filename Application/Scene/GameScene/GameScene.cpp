@@ -49,6 +49,10 @@ void GameScene::Initialize() {
 	audioManager_->StaticInitialize();
 	audioManager_->Initialize();
 
+	// コリジョンマネージャー
+	collisionManager_ = std::make_unique<CollisionManager>();
+	collisionManager_->Initialize();
+
 	// ライト
 	directionalLightData_.color = { 1.0f,1.0f,1.0f,1.0f };
 	directionalLightData_.direction = Vector3Calc::Normalize(directionalLightData_.direction);
@@ -119,6 +123,9 @@ void GameScene::Update(){
 
 	// エネミー
 	enemy_->Update();
+
+	// コリジョンマネージャー
+	CollisonUpdate();
 
 }
 
@@ -244,6 +251,23 @@ void GameScene::GoToTheTitle()
 	if (pause_->GoToTheTitle()) {
 		requestSceneNo = kTitle;
 	}
+
+}
+
+void GameScene::CollisonUpdate()
+{
+
+	collisionManager_->ListClear();
+	std::array<ColliderShape, PlayerColliderIndex::kPlayerColliderIndexOfCount> playerCollider = player_->GetCollider();
+	for (uint32_t i = 0; i < playerCollider.size(); ++i) {
+		collisionManager_->ListRegister(playerCollider[i]);
+	}
+	std::array<ColliderShape, EnemyColliderIndex::kEnemyColliderIndexOfCount> enemyCollider = enemy_->GetCollider();
+	for (uint32_t i = 0; i < enemyCollider.size(); ++i) {
+		collisionManager_->ListRegister(enemyCollider[i]);
+	}
+
+	collisionManager_->CheakAllCollision();
 
 }
 
