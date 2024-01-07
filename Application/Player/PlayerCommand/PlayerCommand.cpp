@@ -50,7 +50,7 @@ uint32_t PlayerCommand::Command()
 		resultState = PlayerState::kPlayerStateGuard;
 	}	
 	// 攻撃
-	else if (input_->PushJoystick(JoystickButton::kJoystickButtonRB)) {
+	else if (input_->TriggerJoystick(JoystickButton::kJoystickButtonRB)) {
 		resultState = PlayerState::kPlayerStateAttack;
 	}
 

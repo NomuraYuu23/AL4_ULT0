@@ -20,8 +20,16 @@ void PlayerStateAttack::Initialize()
 	// あたり判定コライダー
 	attackCollider_ = std::make_unique<Capsule>();
 
+	// あたり判定ワールドトランスフォーム
+	attackWorldTransform_.Initialize();
+	attackWorldTransform_.parent_ = player_->GetPart(kPlayerPartRightHand)->GetWorldTransformAdress();
+	attackWorldTransform_.UpdateMatrix();
+
 	// 攻撃球の半径
 	attackRadius_ = 1.0f;
+
+	// 攻撃球と手の距離
+	attackLength_ = { 0.0f, 0.0f, 2.0f };
 
 	// 攻撃球のプレイヤーからのローカル位置
 	attackCenter_ = { -10000.0f,-10000.0f,-10000.0f };
@@ -162,6 +170,22 @@ void PlayerStateAttack::AttackCombo1st()
 	Move();
 
 	// コライダー更新
+	if (inComboPhase_ >= static_cast<uint32_t>(ComboPhase::kSwing)) {
+		attackWorldTransform_.transform_.translate = attackLength_;
+		attackWorldTransform_.UpdateMatrix();
+		if (attackCenter_.x <= -10000.0f) {
+			prevAttackCenter_ = attackWorldTransform_.GetWorldPosition();
+		}
+		else {
+			prevAttackCenter_ = attackCenter_;
+		}
+		attackCenter_ = attackWorldTransform_.GetWorldPosition();
+		Segment segment;
+		segment.origin_ = attackCenter_;
+		segment.diff_ = v3Calc_->Subtract(prevAttackCenter_, attackCenter_);
+		attackCollider_->segment_ = segment;
+		attackCollider_->radius_ = attackRadius_;
+	}
 
 }
 
@@ -222,6 +246,9 @@ void PlayerStateAttack::Move()
 	// あたん
 	targetDirection_.x = v3Calc_->Normalize(move).x;
 	targetDirection_.z = v3Calc_->Normalize(move).z;
+
+	// 角度補間
+	worldTransform->direction_ = Ease::Easing(Ease::EaseName::Lerp, worldTransform->direction_, targetDirection_, targetAngleT_);
 
 	worldTransform->transform_.translate = v3Calc_->Add(worldTransform->transform_.translate, velocity);
 

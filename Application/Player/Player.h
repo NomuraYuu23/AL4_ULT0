@@ -251,4 +251,6 @@ public: // アクセッサ
 
 	void SetHeight(float height) { height_ = height; }
 
+	IBone* GetPart(uint32_t num) { return parts_[num].get(); }
+
 };
