@@ -1,8 +1,8 @@
 #include "IScene.h"
 
 //タイトルシーンで初期化
-int IScene::sceneNo = kTitle;
-int IScene::requestSceneNo = kTitle;
+int IScene::sceneNo = kGame;
+int IScene::requestSceneNo = kGame;
 
 DirectXCommon* IScene::dxCommon_ = nullptr;
 Input* IScene::input_ = nullptr;
