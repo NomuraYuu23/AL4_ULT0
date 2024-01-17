@@ -338,4 +338,3 @@ void GameScene::TextureLoad()
 	};
 
 }
-
