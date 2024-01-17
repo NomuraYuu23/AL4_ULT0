@@ -1,79 +1,68 @@
 #pragma once
 #include "../../Engine/Animation/IBone.h"
 #include "../../Engine/Collider/Collider.h"
-#include "PlayerState/IPlayerState.h"
-#include "PlayerState/PlayerStateFactory.h"
-#include "PlayerCommand/PlayerCommand.h"
-#include "../../Engine/Collider/ColliderShape.h"
+#include "EnemyState/IEnemyState.h"
+#include "EnemyState/EnemyStateFactory.h"
+#include "EnemyCommand/EnemyCommand.h"
+#include "../Collider/ColliderParentObject.h"
 #include "../../Engine/Collision/CollisionData.h"
+#include "../../Engine/Collider/ColliderShape.h"
 
 /// <summary>
-/// プレイヤーの部位一覧
+/// エネミーの部位一覧
 /// </summary>
-enum PlayerPartIndex {
-	kPlayerPartTorso, // 胴
-	kPlayerPartLowerBack, // 腰
-	kPlayerPartHead, // 頭
+enum EnemyPartIndex {
+	kEnemyPartTorso, // 胴
+	kEnemyPartLowerBack, // 腰
+	kEnemyPartHead, // 頭
 
-	kPlayerPartLeftUpperArm, // 左上腕
-	kPlayerPartLeftForearm, // 左前腕 
-	kPlayerPartLeftHand, // 左手
-	kPlayerPartRightUpperArm, // 右上腕
-	kPlayerPartRightForearm, // 右前腕 
-	kPlayerPartRightHand, // 右手
+	kEnemyPartLeftUpperArm, // 左上腕
+	kEnemyPartLeftForearm, // 左前腕 
+	kEnemyPartLeftHand, // 左手
+	kEnemyPartRightUpperArm, // 右上腕
+	kEnemyPartRightForearm, // 右前腕 
+	kEnemyPartRightHand, // 右手
 
-	kPlayerPartLeftThigh, // 左太もも
-	kPlayerPartLeftShin, // 左すね
-	kPlayerPartLeftAnkle, // 左足首
-	kPlayerPartRightThigh, // 右太もも
-	kPlayerPartRightShin, // 右すね
-	kPlayerPartRightAnkle, // 右足首
+	kEnemyPartLeftThigh, // 左太もも
+	kEnemyPartLeftShin, // 左すね
+	kEnemyPartLeftAnkle, // 左足首
+	kEnemyPartRightThigh, // 右太もも
+	kEnemyPartRightShin, // 右すね
+	kEnemyPartRightAnkle, // 右足首
 
-	kPlayerPartIndexOfCount // 数
+	kEnemyPartIndexOfCount // 数
 };
 
 /// <summary>
-/// プレイヤーのコライダー一覧
+/// エネミーのコライダー一覧
 /// </summary>
-enum PlayerColliderIndex {
+enum EnemyColliderIndex {
 
-	kPlayerColliderHead, // 頭
-	kPlayerColliderTorso, // 胴
+	kEnemyColliderHead, // 頭
+	kEnemyColliderTorso, // 胴
 
-	kPlayerColliderLeftUpperArm, // 左上腕
-	kPlayerColliderLeftForearm, // 左前腕 
-	kPlayerColliderRightUpperArm, // 右上腕
-	kPlayerColliderRightForearm, // 右前腕 
+	kEnemyColliderLeftUpperArm, // 左上腕
+	kEnemyColliderLeftForearm, // 左前腕 
+	kEnemyColliderRightUpperArm, // 右上腕
+	kEnemyColliderRightForearm, // 右前腕 
 
-	kPlayerColliderLeftThigh, // 左太もも
-	kPlayerColliderLeftShin, // 左すね
-	kPlayerColliderRightThigh, // 右太もも
-	kPlayerColliderRightShin, // 右すね
+	kEnemyColliderLeftThigh, // 左太もも
+	kEnemyColliderLeftShin, // 左すね
+	kEnemyColliderRightThigh, // 右太もも
+	kEnemyColliderRightShin, // 右すね
 
-	kPlayerColliderIndexOfCount // 数
+	kEnemyColliderIndexOfCount // 数
 };
 
 /// <summary>
-/// プレイヤーのモーション一覧
+/// エネミーのモーション一覧
 /// </summary>
-enum PlayerMotionIndex {
-	kPlayerMotionStand, // 通常時
-	kPlayerMotionRun, // 走行時
-	kPlayerMotionDash, // ダッシュ時
-	kPlayerMotionWalk, // 歩行時
-	kPlayerMotionGuard, // ガード時
-	kPlayerMotionGuardWalk, // ガード歩行時
-	kPlayerMotionAvoidance, // 回避時
-	kPlayerMotionRecovery, // 回復時
-	kPlayerMotionAttack1st, // 攻撃時(1段目)
-	kPlayerMotionAttack2nd, // 攻撃時(2段目)
-	kPlayerMotionIndexOfCount // 数
+enum EnemyMotionIndex {
+	kEnemyMotionStand, // 通常時
+	kEnemyMotionIndexOfCount // 数
 };
 
-/// <summary>
-/// プレイヤー
-/// </summary>
-class Player
+class Enemy
 {
 
 public: // ベースのメンバ関数
@@ -81,7 +70,7 @@ public: // ベースのメンバ関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(const std::array<Model*, PlayerPartIndex::kPlayerPartIndexOfCount>& models);
+	void Initialize(const std::array<Model*, EnemyPartIndex::kEnemyPartIndexOfCount>& models);
 
 	/// <summary>
 	/// 更新
@@ -115,17 +104,16 @@ private: // ベースのメンバ変数
 	WorldTransform worldTransform_;
 
 	// コマンド
-	PlayerCommand* playerCommand_;
+	EnemyCommand* enemyCommand_;
 
 	// コマンドを受け取るか
 	bool receiveCommand_;
 
 	//衝突属性(自分)
-	uint32_t collisionAttribute_ = 0x00000001;
+	uint32_t collisionAttribute_ = 0x00000002;
 
 	// 衝突マスク(相手)
-	uint32_t collisionMask_ = 0xfffffffe;
-
+	uint32_t collisionMask_ = 0xfffffffd;
 
 private: // ステート関数
 
@@ -133,7 +121,7 @@ private: // ステート関数
 	/// ステート初期化
 	/// </summary>
 	void StateInitialize();
-	
+
 	/// <summary>
 	/// ステート更新
 	/// </summary>
@@ -142,7 +130,7 @@ private: // ステート関数
 private: // ステート変数
 
 	// ステート
-	std::unique_ptr<IPlayerState> playerState_;
+	std::unique_ptr<IEnemyState> enemyState_;
 
 	// 現在のステート番号
 	uint32_t currentStateNo_;
@@ -152,9 +140,9 @@ private: // ステート変数
 
 	// 次のステート番号
 	uint32_t nextStateNo_;
-	
+
 	// ステートファクトリー
-	PlayerStateFactory* playerStateFactory_;
+	EnemyStateFactory* enemyStateFactory_;
 
 private: // パーツ構成関数
 
@@ -186,16 +174,16 @@ private: // パーツ構成関数
 private: // パーツ,アニメーション変数
 
 	// 骨
-	std::array<std::unique_ptr<IBone>, PlayerPartIndex::kPlayerPartIndexOfCount> parts_;
+	std::array<std::unique_ptr<IBone>, EnemyPartIndex::kEnemyPartIndexOfCount> parts_;
 
 	// モデル
-	std::array<Model*, PlayerPartIndex::kPlayerPartIndexOfCount> models_;
+	std::array<Model*, EnemyPartIndex::kEnemyPartIndexOfCount> models_;
 
 	// コライダー (ダメージを受ける側、位置が被らない用)
-	std::array<std::unique_ptr<Capsule>, PlayerColliderIndex::kPlayerColliderIndexOfCount> colliders_;
+	std::array<std::unique_ptr<Capsule>, EnemyColliderIndex::kEnemyColliderIndexOfCount> colliders_;
 
 	// コライダー用半径
-	std::array<float, PlayerColliderIndex::kPlayerColliderIndexOfCount> colliderRadiuses_;
+	std::array<float, EnemyColliderIndex::kEnemyColliderIndexOfCount> colliderRadiuses_;
 
 	// 現在のモーション番号
 	uint32_t currentMotionNo_;
@@ -209,13 +197,13 @@ private: // パーツ,アニメーション変数
 	// アニメーションカウント上限
 	uint32_t animationCountLimit_;
 
-private:  // パーツ,アニメーション定数
+	private:  // パーツ,アニメーション定数
 
 	// オブジェクト名
-	const std::string objectName_ = "Player";
+	const std::string objectName_ = "Enemy";
 
 	// パーツ名
-	const std::array<const std::string, PlayerPartIndex::kPlayerPartIndexOfCount> partNames_ = {
+	const std::array<const std::string, EnemyPartIndex::kEnemyPartIndexOfCount> partNames_ = {
 		"Torso",
 		"LowerBack",
 		"Head",
@@ -234,17 +222,8 @@ private:  // パーツ,アニメーション定数
 	};
 
 	// モーション名
-	const std::array<const std::string, PlayerMotionIndex::kPlayerMotionIndexOfCount> motionNames_ = {
-		"Stand",
-		"Run",
-		"Dash",
-		"Walk",
-		"Guard",
-		"GuardWalk",
-		"Avoidance",
-		"Recovery",
-		"Attack1st",
-		"Attack2nd",
+	const std::array<const std::string, EnemyMotionIndex::kEnemyMotionIndexOfCount> motionNames_ = {
+		"Stand"
 	};
 
 private: // プレイヤーデータ
@@ -267,8 +246,7 @@ public: // アクセッサ
 
 	void SetHeight(float height) { height_ = height; }
 
-	IBone* GetPart(uint32_t num) { return parts_[num].get(); }
-
-	std::array<ColliderShape, PlayerColliderIndex::kPlayerColliderIndexOfCount> GetCollider();
+	std::array<ColliderShape, EnemyColliderIndex::kEnemyColliderIndexOfCount> GetCollider();
 
 };
+
