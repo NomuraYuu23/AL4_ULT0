@@ -44,7 +44,7 @@ private:
 
 	Vector3 destinationAngle_ = { 0.0f,0.0f,0.0f };
 
-	float moveRate_ = 0.1f;
+	float moveRate_ = 0.2f;
 	float rotateRate_ = 0.1f;
 
 	float offsetLength_ = -100.0f;

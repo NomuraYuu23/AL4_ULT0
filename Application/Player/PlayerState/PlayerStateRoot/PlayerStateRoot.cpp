@@ -11,7 +11,7 @@ void PlayerStateRoot::Initialize()
 
 	dashSpeed_ = 7.0f;
 
-	targetDirection_ = { 0.0f, 0.0f, 0.0f };
+	targetDirection_ = { 0.0f, 0.0f, 1.0f };
 
 	targetAngleT_ = 0.1f;
 
