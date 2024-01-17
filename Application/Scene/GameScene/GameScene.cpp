@@ -49,6 +49,10 @@ void GameScene::Initialize() {
 	audioManager_->StaticInitialize();
 	audioManager_->Initialize();
 
+	// コリジョンマネージャー
+	collisionManager_ = std::make_unique<CollisionManager>();
+	collisionManager_->Initialize();
+
 	// ライト
 	directionalLightData_.color = { 1.0f,1.0f,1.0f,1.0f };
 	directionalLightData_.direction = Vector3Calc::Normalize(directionalLightData_.direction);
@@ -56,11 +60,11 @@ void GameScene::Initialize() {
 
 	// プレイヤー
 	player_ = std::make_unique<Player>();
-	std::array<Model*, PlayerPartIndex::kPlayerPartIndexOfCount> models;
+	std::array<Model*, PlayerPartIndex::kPlayerPartIndexOfCount> playerModels;
 	for (uint32_t i = 0; i < playerModels_.size(); ++i) {
-		models[i] = playerModels_[i].get();
+		playerModels[i] = playerModels_[i].get();
 	}
-	player_->Initialize(models);
+	player_->Initialize(playerModels);
 
 	// 追従カメラ
 	followCamera_ = std::make_unique<FollowCamera>();
@@ -76,12 +80,20 @@ void GameScene::Initialize() {
 	ground_ = std::make_unique<Ground>();
 	ground_->Initialize(groundModel_.get());
 
+	// エネミー
+	enemy_ = std::make_unique<Enemy>();
+	std::array<Model*, EnemyPartIndex::kEnemyPartIndexOfCount> EnemyModels;
+	for (uint32_t i = 0; i < enemyModels_.size(); ++i) {
+		EnemyModels[i] = enemyModels_[i].get();
+	}
+	enemy_->Initialize(EnemyModels);
+
 }
 
 /// <summary>
 /// 更新処理
 /// </summary>
-void GameScene::Update(){
+void GameScene::Update() {
 	ImguiDraw();
 	//光源
 	directionalLight_->Update(directionalLightData_);
@@ -93,10 +105,10 @@ void GameScene::Update(){
 
 	// デバッグカメラ
 	DebugCameraUpdate();
-	
+
 	// デバッグ描画
 	colliderDebugDraw_->Update();
-	
+
 	//パーティクル
 	particleManager_->Update(followCamera_->GetTransformMatrix());
 
@@ -108,6 +120,12 @@ void GameScene::Update(){
 
 	// プレイヤー
 	player_->Update();
+
+	// エネミー
+	enemy_->Update();
+
+	// コリジョンマネージャー
+	CollisonUpdate();
 
 }
 
@@ -139,6 +157,7 @@ void GameScene::Draw() {
 	player_->Draw(camera_);
 	skyDome_->Draw(camera_);
 	ground_->Draw(camera_);
+	enemy_->Draw(camera_);
 
 #ifdef _DEBUG
 
@@ -165,7 +184,7 @@ void GameScene::Draw() {
 #pragma region 前景スプライト描画
 	// 前景スプライト描画前処理
 	Sprite::PreDraw(dxCommon_->GetCommadList());
-	
+
 
 	//背景
 	//前景スプライト描画
@@ -179,7 +198,7 @@ void GameScene::Draw() {
 
 }
 
-void GameScene::ImguiDraw(){
+void GameScene::ImguiDraw() {
 #ifdef _DEBUG
 
 	ImGui::Begin("Light");
@@ -194,6 +213,7 @@ void GameScene::ImguiDraw(){
 	debugCamera_->ImGuiDraw();
 
 	player_->ImGuiDraw();
+	enemy_->ImGuiDraw();
 
 #endif // _DEBUG
 
@@ -234,6 +254,23 @@ void GameScene::GoToTheTitle()
 
 }
 
+void GameScene::CollisonUpdate()
+{
+
+	collisionManager_->ListClear();
+	std::array<ColliderShape, PlayerColliderIndex::kPlayerColliderIndexOfCount> playerCollider = player_->GetCollider();
+	for (uint32_t i = 0; i < playerCollider.size(); ++i) {
+		collisionManager_->ListRegister(playerCollider[i]);
+	}
+	std::array<ColliderShape, EnemyColliderIndex::kEnemyColliderIndexOfCount> enemyCollider = enemy_->GetCollider();
+	for (uint32_t i = 0; i < enemyCollider.size(); ++i) {
+		collisionManager_->ListRegister(enemyCollider[i]);
+	}
+
+	collisionManager_->CheakAllCollision();
+
+}
+
 void GameScene::ModelCreate()
 {
 
@@ -264,6 +301,23 @@ void GameScene::ModelCreate()
 	// 地面モデル
 	groundModel_.reset(Model::Create("Resources/Ground/", "Ground.obj", dxCommon_, textureHandleManager_.get()));
 
+	// エネミー
+	enemyModels_[kEnemyPartHead].reset(Model::Create("Resources/Enemy/", "EnemyHead.obj", dxCommon_, textureHandleManager_.get()));
+	enemyModels_[kEnemyPartTorso].reset(Model::Create("Resources/Enemy/", "EnemyTorso.obj", dxCommon_, textureHandleManager_.get()));
+	enemyModels_[kEnemyPartLowerBack].reset(Model::Create("Resources/Enemy/", "EnemyLowerBack.obj", dxCommon_, textureHandleManager_.get()));
+	enemyModels_[kEnemyPartLeftUpperArm].reset(Model::Create("Resources/Enemy/", "EnemyLeftUpperArm.obj", dxCommon_, textureHandleManager_.get()));
+	enemyModels_[kEnemyPartLeftForearm].reset(Model::Create("Resources/Enemy/", "EnemyLeftForearm.obj", dxCommon_, textureHandleManager_.get()));
+	enemyModels_[kEnemyPartLeftHand].reset(Model::Create("Resources/Enemy/", "EnemyLeftHand.obj", dxCommon_, textureHandleManager_.get()));
+	enemyModels_[kEnemyPartRightUpperArm].reset(Model::Create("Resources/Enemy/", "EnemyRightUpperArm.obj", dxCommon_, textureHandleManager_.get()));
+	enemyModels_[kEnemyPartRightForearm].reset(Model::Create("Resources/Enemy/", "EnemyRightForearm.obj", dxCommon_, textureHandleManager_.get()));
+	enemyModels_[kEnemyPartRightHand].reset(Model::Create("Resources/Enemy/", "EnemyRightHand.obj", dxCommon_, textureHandleManager_.get()));
+	enemyModels_[kEnemyPartLeftThigh].reset(Model::Create("Resources/Enemy/", "EnemyLeftThigh.obj", dxCommon_, textureHandleManager_.get()));
+	enemyModels_[kEnemyPartLeftShin].reset(Model::Create("Resources/Enemy/", "EnemyLeftShin.obj", dxCommon_, textureHandleManager_.get()));
+	enemyModels_[kEnemyPartLeftAnkle].reset(Model::Create("Resources/Enemy/", "EnemyLeftAnkle.obj", dxCommon_, textureHandleManager_.get()));
+	enemyModels_[kEnemyPartRightThigh].reset(Model::Create("Resources/Enemy/", "EnemyRightThigh.obj", dxCommon_, textureHandleManager_.get()));
+	enemyModels_[kEnemyPartRightShin].reset(Model::Create("Resources/Enemy/", "EnemyRightShin.obj", dxCommon_, textureHandleManager_.get()));
+	enemyModels_[kEnemyPartRightAnkle].reset(Model::Create("Resources/Enemy/", "EnemyRightAnkle.obj", dxCommon_, textureHandleManager_.get()));
+
 }
 
 void GameScene::MaterialCreate()
@@ -284,3 +338,4 @@ void GameScene::TextureLoad()
 	};
 
 }
+
