@@ -15,7 +15,8 @@
 #include "../../Skydome/Skydome.h"
 // 地面
 #include "../../Ground/Ground.h"
-
+// エネミー
+#include "../../Enemy/Enemy.h"
 
 class GameScene : public IScene
 {
@@ -53,6 +54,11 @@ public: //メンバ関数
 	/// タイトルへ行く
 	/// </summary>
 	void GoToTheTitle();
+
+	/// <summary>
+	/// コリジョンマネージャー更新
+	/// </summary>
+	void CollisonUpdate();
 
 private: // メンバ関数
 
@@ -95,14 +101,17 @@ private:
 	// オーディオマネージャー
 	std::unique_ptr<GameAudioManager> audioManager_;
 
+	// コリジョンマネージャー
+	std::unique_ptr<CollisionManager> collisionManager_;
+
 	// プレイヤー
-	std::unique_ptr<Player> player_;	
+	std::unique_ptr<Player> player_;
 	// プレイヤーモデル
 	std::array<std::unique_ptr<Model>, PlayerPartIndex::kPlayerPartIndexOfCount> playerModels_;
-	
+
 	// 追加カメラ
 	std::unique_ptr<FollowCamera> followCamera_;
-	
+
 	// スカイドーム
 	std::unique_ptr<Skydome> skyDome_;
 	// スカイドームモデル
@@ -113,4 +122,8 @@ private:
 	// 地面モデル
 	std::unique_ptr<Model> groundModel_;
 
+	// エネミー
+	std::unique_ptr<Enemy> enemy_;
+	// エネミーモデル
+	std::array<std::unique_ptr<Model>, EnemyPartIndex::kEnemyPartIndexOfCount> enemyModels_;
 };
