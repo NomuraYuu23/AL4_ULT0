@@ -93,7 +93,7 @@ void GameScene::Initialize() {
 /// <summary>
 /// 更新処理
 /// </summary>
-void GameScene::Update(){
+void GameScene::Update() {
 	ImguiDraw();
 	//光源
 	directionalLight_->Update(directionalLightData_);
@@ -105,10 +105,10 @@ void GameScene::Update(){
 
 	// デバッグカメラ
 	DebugCameraUpdate();
-	
+
 	// デバッグ描画
 	colliderDebugDraw_->Update();
-	
+
 	//パーティクル
 	particleManager_->Update(followCamera_->GetTransformMatrix());
 
@@ -184,7 +184,7 @@ void GameScene::Draw() {
 #pragma region 前景スプライト描画
 	// 前景スプライト描画前処理
 	Sprite::PreDraw(dxCommon_->GetCommadList());
-	
+
 
 	//背景
 	//前景スプライト描画
@@ -198,7 +198,7 @@ void GameScene::Draw() {
 
 }
 
-void GameScene::ImguiDraw(){
+void GameScene::ImguiDraw() {
 #ifdef _DEBUG
 
 	ImGui::Begin("Light");

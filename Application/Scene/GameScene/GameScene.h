@@ -105,13 +105,13 @@ private:
 	std::unique_ptr<CollisionManager> collisionManager_;
 
 	// プレイヤー
-	std::unique_ptr<Player> player_;	
+	std::unique_ptr<Player> player_;
 	// プレイヤーモデル
 	std::array<std::unique_ptr<Model>, PlayerPartIndex::kPlayerPartIndexOfCount> playerModels_;
-	
+
 	// 追加カメラ
 	std::unique_ptr<FollowCamera> followCamera_;
-	
+
 	// スカイドーム
 	std::unique_ptr<Skydome> skyDome_;
 	// スカイドームモデル
