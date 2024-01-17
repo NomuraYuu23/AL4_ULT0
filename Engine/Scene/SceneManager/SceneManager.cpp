@@ -1,5 +1,14 @@
 #include "SceneManager.h"
 
+SceneManager::~SceneManager()
+{
+
+	if (initializing_) {
+		sceneInitialize_.join();
+	}
+
+}
+
 void SceneManager::Initialize(uint32_t earlySceneNo)
 {
 
@@ -11,7 +20,7 @@ void SceneManager::Initialize(uint32_t earlySceneNo)
 	// シーンの静的初期化
 	scene_->StaticInitialize();
 	// シーンの初期化
-	scene_->Initialize();
+	sceneInitialize_ = std::thread(std::bind(&SceneManager::InitializeThread, this));
 
 	// 初期シーン
 	currentSceneNo_ = earlySceneNo;
@@ -31,10 +40,12 @@ void SceneManager::Update()
 {
 
 	// シーンのチェック
-	currentSceneNo_ = scene_->GetSceneNo();
+	if (!initializing_) {
+		currentSceneNo_ = scene_->GetSceneNo();
 
-	prevRequestSeneNo_ = requestSeneNo_; // 前のリクエストシーン
-	requestSeneNo_ = scene_->GetRequestSceneNo(); // リクエストシーン
+		prevRequestSeneNo_ = requestSeneNo_; // 前のリクエストシーン
+		requestSeneNo_ = scene_->GetRequestSceneNo(); // リクエストシーン
+	}
 
 	// リクエストシーンが変わったか
 	if (requestSeneNo_ != prevRequestSeneNo_) {
@@ -51,8 +62,11 @@ void SceneManager::Update()
 			// シーン切り替え
 			currentSceneNo_ = requestSeneNo_;
 			scene_.reset(sceneFacyory_->CreateScene(currentSceneNo_));
-			scene_->Initialize();
+			// シーンの初期化
+			sceneInitialize_ = std::thread(std::bind(&SceneManager::InitializeThread, this));
+			initializing_ = true;
 			sceneTransition_->SetSwitchScene(false);
+			sceneTransition_->SetStoppingUpdates(true);
 		}
 		else if (!sceneTransition_->GetTransitioning()) {
 			sceneTransition_.reset(nullptr);
@@ -60,16 +74,39 @@ void SceneManager::Update()
 	}
 
 	// 更新処理
-	scene_->Update();
+	if (!initializing_) {
+		scene_->Update();
+	}
+
+	// 初期化終了
+	if (initializeEnd_) {
+		initializeEnd_ = false;
+		sceneInitialize_.detach();
+		if (sceneTransition_) {
+			sceneTransition_->SetStoppingUpdates(false);
+		}
+	}
 
 }
 
 void SceneManager::Draw()
 {
 	// 描画処理
-	scene_->Draw();
+	if (!initializing_) {
+		scene_->Draw();
+	}
 	if (sceneTransition_) {
 		sceneTransition_->Draw();
 	}
+
+}
+
+void SceneManager::InitializeThread()
+{
+	initializeEnd_ = false;
+	initializing_ = true;
+	scene_->Initialize();
+	initializeEnd_ = true;
+	initializing_ = false;
 
 }

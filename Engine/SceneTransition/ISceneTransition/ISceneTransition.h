@@ -37,6 +37,10 @@ public: // アクセッサ
 
 	void SetSwitchScene(bool switchScene) { switchScene_ = switchScene; }
 
+	bool GetStoppingUpdates() { return stoppingUpdates_; }
+
+	void SetStoppingUpdates(bool stoppingUpdates) { stoppingUpdates_ = stoppingUpdates; }
+
 protected: // メンバ変数
 
 	// フェード時間
@@ -47,6 +51,8 @@ protected: // メンバ変数
 	bool transitioning_; //遷移しているか
 	bool isFadeIn_; // フェードインか
 	bool switchScene_; //シーンを切り替える
+
+	bool stoppingUpdates_; // 更新を停止する
 
 	std::unique_ptr<ITextureHandleManager> textureHandleManager_;
 

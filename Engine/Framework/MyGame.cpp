@@ -10,6 +10,8 @@ void MyGame::Initialize()
 	sceneManager = std::make_unique<SceneManager>();
 	sceneManager->Initialize(kTitle);
 
+	imGuiDraw = sceneManager->GetInitializing();
+
 }
 
 void MyGame::Finalize()
@@ -28,6 +30,8 @@ void MyGame::Update()
 	// ゲームシーン更新
 	sceneManager->Update();
 
+	imGuiDraw = !sceneManager->GetInitializing();
+
 }
 
 void MyGame::Draw()
@@ -41,10 +45,12 @@ void MyGame::Draw()
 
 	imGuiManager->End();
 
-	// シェーダーリソースビューをセット
-	TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(dxCommon->GetCommadList(), 2, 0);
-	//実際のcommandListのImGuiの描画コマンドを積む
-	imGuiManager->Draw();
+	if (imGuiDraw) {
+		// シェーダーリソースビューをセット
+		TextureManager::GetInstance()->SetGraphicsRootDescriptorTable(dxCommon->GetCommadList(), 2, 0);
+		//実際のcommandListのImGuiの描画コマンドを積む
+		imGuiManager->Draw();
+	}
 
 	//描画後処理
 	dxCommon->PostDraw();

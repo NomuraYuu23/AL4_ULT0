@@ -28,5 +28,10 @@ private:
 	uint32_t textureHandle_;
 	Vector4 color_;
 
+	std::unique_ptr<Sprite> loadSprite_;
+	uint32_t loadTextureHandle_;
+
+	uint32_t loadCount_;
+
 };
 

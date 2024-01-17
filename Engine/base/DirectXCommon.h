@@ -56,7 +56,11 @@ public:
 
 	ID3D12GraphicsCommandList* GetCommadList() const { return commandList_.Get(); }
 
+	ID3D12GraphicsCommandList* GetCommadListLoad() const { return commandListLoad_.Get(); }
+
 	ID3D12CommandAllocator* GetCommandAllocator() const { return commandAllocator_.Get(); }
+
+	ID3D12CommandAllocator* GetCommandAllocatorLoad() const { return commandAllocatorLoad_.Get(); }
 
 	ID3D12CommandQueue* GetCommandQueue() const { return commandQueue_.Get(); }
 
@@ -78,7 +82,9 @@ private:
 	Microsoft::WRL::ComPtr<IDXGIFactory7> dxgiFactory_;
 	Microsoft::WRL::ComPtr<ID3D12Device> device_;
 	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> commandList_;
+	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList> commandListLoad_;
 	Microsoft::WRL::ComPtr<ID3D12CommandAllocator> commandAllocator_;
+	Microsoft::WRL::ComPtr<ID3D12CommandAllocator> commandAllocatorLoad_;
 	Microsoft::WRL::ComPtr<ID3D12CommandQueue> commandQueue_;
 	Microsoft::WRL::ComPtr<IDXGISwapChain4> swapChain_;
 	Microsoft::WRL::ComPtr<ID3D12Resource> swapChainResources[2];
