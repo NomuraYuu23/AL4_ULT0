@@ -1,14 +1,12 @@
 #pragma once
 #include "Vector3.h"
 
-
 //行列4x4
 struct Matrix4x4 {
 
 	float m[4][4];
 
 };
-
 
 class Matrix4x4Calc
 {
@@ -26,6 +24,8 @@ public:
     static Matrix4x4 Subtract(const Matrix4x4& m1, const Matrix4x4& m2);
     //積
     static Matrix4x4 Multiply(const Matrix4x4& m1, const Matrix4x4& m2);
+    // スカラー積
+    static Matrix4x4 Multiply(float scalar, const Matrix4x4& m);
     //逆行列
     static Matrix4x4 Inverse(const Matrix4x4& m);
     //転置行列
@@ -51,7 +51,6 @@ public:
     // 回転行列
     static Matrix4x4 MakeRotateXYZMatrix(Vector3 rotate);
 
-
     //3次元アフィン変換行列
     static Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate);
 
@@ -66,6 +65,9 @@ public:
     static Matrix4x4 MakeViewportMatrix(
         float left, float top, float width, float height, float minDepth, float maxDepth);
 
+    // 任意軸回転行列の作成関数
+    Matrix4x4 MakeRotateAxisAngle(const Vector3& axis, float angle);
+
     // atan2みたいなもの
     static Matrix4x4 DirectionToDirection(const Vector3& from, const Vector3& to);
 
@@ -74,4 +76,5 @@ private:
     ~Matrix4x4Calc() = default;
     Matrix4x4Calc(const Matrix4x4Calc&) = delete;
     Matrix4x4Calc& operator=(const Matrix4x4Calc&) = delete;
+
 };

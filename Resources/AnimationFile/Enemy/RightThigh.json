@@ -1,5 +1,5 @@
 {
-    "Attack1st": {
+    "DashSwingDown": {
         "0": {
             "easeType": 30,
             "endFrame": 0,
@@ -15,8 +15,8 @@
                     1.0
                 ],
                 "translate": [
-                    2.0,
-                    -2.0,
+                    3.0,
+                    -3.0,
                     0.0
                 ]
             }
@@ -26,9 +26,9 @@
             "endFrame": 16,
             "transform": {
                 "rotate": [
-                    -0.75,
+                    0.28999999165534973,
                     0.0,
-                    0.0
+                    0.38999998569488525
                 ],
                 "scale": [
                     1.0,
@@ -36,8 +36,8 @@
                     1.0
                 ],
                 "translate": [
-                    2.0,
-                    -2.0,
+                    3.0,
+                    -3.0,
                     0.0
                 ]
             }
@@ -47,7 +47,7 @@
             "endFrame": 32,
             "transform": {
                 "rotate": [
-                    -0.75,
+                    0.0,
                     0.0,
                     0.0
                 ],
@@ -57,8 +57,8 @@
                     1.0
                 ],
                 "translate": [
-                    2.0,
-                    -2.0,
+                    3.0,
+                    -3.0,
                     0.0
                 ]
             }
@@ -68,7 +68,7 @@
             "endFrame": 42,
             "transform": {
                 "rotate": [
-                    -0.75,
+                    0.0,
                     0.0,
                     0.0
                 ],
@@ -78,8 +78,8 @@
                     1.0
                 ],
                 "translate": [
-                    2.0,
-                    -2.0,
+                    3.0,
+                    -3.0,
                     0.0
                 ]
             }
@@ -89,29 +89,6 @@
             "endFrame": 52,
             "transform": {
                 "rotate": [
-                    -0.75,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        }
-    },
-    "Attack2nd": {
-        "0": {
-            "easeType": 30,
-            "endFrame": 0,
-            "transform": {
-                "rotate": [
                     0.0,
                     0.0,
                     0.0
@@ -122,587 +99,8 @@
                     1.0
                 ],
                 "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        },
-        "1": {
-            "easeType": 30,
-            "endFrame": 16,
-            "transform": {
-                "rotate": [
-                    0.7799999713897705,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        },
-        "2": {
-            "easeType": 30,
-            "endFrame": 32,
-            "transform": {
-                "rotate": [
-                    0.7799999713897705,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        },
-        "3": {
-            "easeType": 30,
-            "endFrame": 42,
-            "transform": {
-                "rotate": [
-                    0.7799999713897705,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        },
-        "4": {
-            "easeType": 30,
-            "endFrame": 52,
-            "transform": {
-                "rotate": [
-                    0.7799999713897705,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        }
-    },
-    "Avoidance": {
-        "0": {
-            "easeType": 30,
-            "endFrame": 0,
-            "transform": {
-                "rotate": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        },
-        "1": {
-            "easeType": 30,
-            "endFrame": 10,
-            "transform": {
-                "rotate": [
-                    -2.5999999046325684,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        },
-        "2": {
-            "easeType": 30,
-            "endFrame": 20,
-            "transform": {
-                "rotate": [
-                    -2.5999999046325684,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        },
-        "3": {
-            "easeType": 30,
-            "endFrame": 30,
-            "transform": {
-                "rotate": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        }
-    },
-    "Dash": {
-        "0": {
-            "easeType": 30,
-            "endFrame": 0,
-            "transform": {
-                "rotate": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        },
-        "1": {
-            "easeType": 30,
-            "endFrame": 10,
-            "transform": {
-                "rotate": [
-                    -1.2000000476837158,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        },
-        "2": {
-            "easeType": 30,
-            "endFrame": 20,
-            "transform": {
-                "rotate": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        },
-        "3": {
-            "easeType": 30,
-            "endFrame": 30,
-            "transform": {
-                "rotate": [
-                    1.2000000476837158,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        },
-        "4": {
-            "easeType": 30,
-            "endFrame": 40,
-            "transform": {
-                "rotate": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        }
-    },
-    "Guard": {
-        "0": {
-            "easeType": 0,
-            "endFrame": 0,
-            "transform": {
-                "rotate": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        }
-    },
-    "GuardWalk": {
-        "0": {
-            "easeType": 30,
-            "endFrame": 0,
-            "transform": {
-                "rotate": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        },
-        "1": {
-            "easeType": 30,
-            "endFrame": 15,
-            "transform": {
-                "rotate": [
-                    -0.4000000059604645,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        },
-        "2": {
-            "easeType": 30,
-            "endFrame": 30,
-            "transform": {
-                "rotate": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        },
-        "3": {
-            "easeType": 30,
-            "endFrame": 45,
-            "transform": {
-                "rotate": [
-                    0.4000000059604645,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        },
-        "4": {
-            "easeType": 30,
-            "endFrame": 60,
-            "transform": {
-                "rotate": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        }
-    },
-    "Recovery": {
-        "0": {
-            "easeType": 30,
-            "endFrame": 0,
-            "transform": {
-                "rotate": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        },
-        "1": {
-            "easeType": 30,
-            "endFrame": 10,
-            "transform": {
-                "rotate": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        },
-        "2": {
-            "easeType": 30,
-            "endFrame": 20,
-            "transform": {
-                "rotate": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        }
-    },
-    "Run": {
-        "0": {
-            "easeType": 30,
-            "endFrame": 0,
-            "transform": {
-                "rotate": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        },
-        "1": {
-            "easeType": 30,
-            "endFrame": 10,
-            "transform": {
-                "rotate": [
-                    -0.699999988079071,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        },
-        "2": {
-            "easeType": 30,
-            "endFrame": 20,
-            "transform": {
-                "rotate": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        },
-        "3": {
-            "easeType": 30,
-            "endFrame": 30,
-            "transform": {
-                "rotate": [
-                    0.699999988079071,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        },
-        "4": {
-            "easeType": 30,
-            "endFrame": 40,
-            "transform": {
-                "rotate": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
+                    3.0,
+                    -3.0,
                     0.0
                 ]
             }
@@ -724,115 +122,8 @@
                     1.0
                 ],
                 "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        }
-    },
-    "Walk": {
-        "0": {
-            "easeType": 30,
-            "endFrame": 0,
-            "transform": {
-                "rotate": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        },
-        "1": {
-            "easeType": 30,
-            "endFrame": 15,
-            "transform": {
-                "rotate": [
-                    -0.4000000059604645,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        },
-        "2": {
-            "easeType": 30,
-            "endFrame": 30,
-            "transform": {
-                "rotate": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        },
-        "3": {
-            "easeType": 30,
-            "endFrame": 45,
-            "transform": {
-                "rotate": [
-                    0.4000000059604645,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
-                    0.0
-                ]
-            }
-        },
-        "4": {
-            "easeType": 30,
-            "endFrame": 60,
-            "transform": {
-                "rotate": [
-                    0.0,
-                    0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translate": [
-                    2.0,
-                    -2.0,
+                    3.0,
+                    -3.0,
                     0.0
                 ]
             }

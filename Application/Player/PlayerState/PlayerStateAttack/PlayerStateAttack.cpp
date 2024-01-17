@@ -195,6 +195,22 @@ void PlayerStateAttack::AttackCombo2nd()
 	Move();
 
 	// コライダー更新
+	if (inComboPhase_ >= static_cast<uint32_t>(ComboPhase::kSwing)) {
+		attackWorldTransform_.transform_.translate = attackLength_;
+		attackWorldTransform_.UpdateMatrix();
+		if (attackCenter_.x <= -10000.0f) {
+			prevAttackCenter_ = attackWorldTransform_.GetWorldPosition();
+		}
+		else {
+			prevAttackCenter_ = attackCenter_;
+		}
+		attackCenter_ = attackWorldTransform_.GetWorldPosition();
+		Segment segment;
+		segment.origin_ = attackCenter_;
+		segment.diff_ = v3Calc_->Subtract(prevAttackCenter_, attackCenter_);
+		attackCollider_->segment_ = segment;
+		attackCollider_->radius_ = attackRadius_;
+	}
 
 }
 

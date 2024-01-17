@@ -70,6 +70,8 @@ void Enemy::ImGuiDraw()
 
 void Enemy::OnCollision(ColliderParentObject colliderPartner, CollisionData collisionData)
 {
+
+
 }
 
 void Enemy::StateInitialize()
@@ -176,6 +178,8 @@ void Enemy::PartUpdate()
 	// アニメーションカウント
 	if (animationCountLimit_ > 0) {
 		animationCount_ = (animationCount_ + 1) % animationCountLimit_;
+		//でばっぐ
+		animationCount_ = 16;
 	}
 
 }

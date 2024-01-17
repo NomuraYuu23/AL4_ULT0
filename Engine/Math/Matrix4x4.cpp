@@ -71,6 +71,22 @@ Matrix4x4 Matrix4x4Calc::Multiply(const Matrix4x4& m1, const Matrix4x4& m2) {
 
 }
 
+// スカラー積
+Matrix4x4 Matrix4x4Calc::Multiply(float scalar, const Matrix4x4& m)
+{
+
+	Matrix4x4 result;
+
+	for (int y = 0; y < 4; y++) {
+		for (int x = 0; x < 4; x++) {
+			result.m[y][x] = scalar * m.m[y][x];
+		}
+	}
+
+	return result;
+
+}
+
 //逆行列
 Matrix4x4 Matrix4x4Calc::Inverse(const Matrix4x4& m) {
 
@@ -351,10 +367,17 @@ Vector3 Matrix4x4Calc::Transform(const Vector3& vector, const Matrix4x4& matrix)
 	result.z = vector.x * matrix.m[0][2] + vector.y * matrix.m[1][2] + vector.z * matrix.m[2][2] + 1.0f * matrix.m[3][2];
 
 	float w = vector.x * matrix.m[0][3] + vector.y * matrix.m[1][3] + vector.z * matrix.m[2][3] + 1.0f * matrix.m[3][3];
-	assert(w != 0.0f);
-	result.x /= w;
-	result.y /= w;
-	result.z /= w;
+	//assert(w != 0.0f);
+	if (w != 0.0f) {
+		result.x /= w;
+		result.y /= w;
+		result.z /= w;
+	}
+	else {
+		result.x = 0.0f;
+		result.y = 0.0f;
+		result.z = 0.0f;
+	}
 	return result;
 
 }
@@ -497,6 +520,50 @@ Matrix4x4 Matrix4x4Calc::MakeViewportMatrix(
 	result.m[3][3] = 1.0f;
 
 	return result;
+
+}
+
+Matrix4x4 Matrix4x4Calc::MakeRotateAxisAngle(const Vector3& axis, float angle)
+{
+
+	//S
+	Matrix4x4 matrixS = MakeIdentity4x4();
+	matrixS.m[0][0] = std::cosf(angle);
+	matrixS.m[1][1] = std::cosf(angle);
+	matrixS.m[2][2] = std::cosf(angle);
+
+	//P
+	Matrix4x4 matrixP = MakeIdentity4x4();
+	matrixP.m[0][0] = axis.x * axis.x;
+	matrixP.m[0][1] = axis.x * axis.y;
+	matrixP.m[0][2] = axis.x * axis.z;
+	matrixP.m[1][0] = axis.y * axis.x;
+	matrixP.m[1][1] = axis.y * axis.y;
+	matrixP.m[1][2] = axis.y * axis.z;
+	matrixP.m[2][0] = axis.z * axis.x;
+	matrixP.m[2][1] = axis.z * axis.y;
+	matrixP.m[2][2] = axis.z * axis.z;
+	matrixP.m[3][3] = 0.0f;
+	matrixP = Multiply((1.0f - std::cosf(angle)), matrixP);
+
+	//C
+	Matrix4x4 matrixC = MakeIdentity4x4();
+	matrixC.m[0][0] = 0.0f;
+	matrixC.m[0][1] = -axis.z;
+	matrixC.m[0][2] = axis.y;
+	matrixC.m[1][0] = axis.z;
+	matrixC.m[1][1] = 0.0f;
+	matrixC.m[1][2] = -axis.x;
+	matrixC.m[2][0] = -axis.y;
+	matrixC.m[2][1] = axis.x;
+	matrixC.m[2][2] = 0.0f;
+	matrixC.m[3][3] = 0.0f;
+	matrixC = Multiply(-std::sinf(angle), matrixC);
+
+	// result
+	Matrix4x4 resultMatrix = Add(Add(matrixS, matrixP), matrixC);
+
+	return resultMatrix;
 
 }
 

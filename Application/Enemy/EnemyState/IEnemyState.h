@@ -9,6 +9,7 @@ class Enemy;
 // エネミーの状態名
 enum EnemyState {
 	kEnemyStateRoot, // 通常
+	kEnemyStateDashSwingDown, // ダッシュ振り下ろし
 	kEnemyStateOfCount // 数
 };
 
@@ -61,6 +62,8 @@ public: // メンバ関数
 
 	// プレイヤーセット
 	void SetEnemy(Enemy* enemy) { enemy_ = enemy; }
+
+
 
 };
 

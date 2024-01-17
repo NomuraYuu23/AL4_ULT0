@@ -59,6 +59,7 @@ enum EnemyColliderIndex {
 /// </summary>
 enum EnemyMotionIndex {
 	kEnemyMotionStand, // 通常時
+	kEnemyMotionDashSwingDown, // ダッシュ振り下ろし
 	kEnemyMotionIndexOfCount // 数
 };
 
@@ -223,30 +224,31 @@ private: // パーツ,アニメーション変数
 
 	// モーション名
 	const std::array<const std::string, EnemyMotionIndex::kEnemyMotionIndexOfCount> motionNames_ = {
-		"Stand"
+		"Stand",
+		"DashSwingDown"
 	};
 
-private: // プレイヤーデータ
+private: // エネミーデータ
 
 	// 高さ
-	float height_ = 20.0f;
+	float height_ = 30.0f;
 
-	// カメラ
-	BaseCamera* camera_ = nullptr;
+	// プレイヤー
+	Player* player_ = nullptr;
 
 public: // アクセッサ
 
 	WorldTransform* GetWorldTransformAdress() { return &worldTransform_; }
-
-	void SetCamera(BaseCamera* camera) { camera_ = camera; }
-
-	BaseCamera* GetCamera() { return camera_; }
 
 	void SetReceiveCommand(bool receiveCommand) { receiveCommand_ = receiveCommand; }
 
 	void SetHeight(float height) { height_ = height; }
 
 	std::array<ColliderShape, EnemyColliderIndex::kEnemyColliderIndexOfCount> GetCollider();
+
+	void SetPlayer(Player* player) { player_ = player; }
+
+	Player* GetPlayer() { return player_; }
 
 };
 

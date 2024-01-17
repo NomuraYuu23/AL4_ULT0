@@ -3,7 +3,7 @@
 void Collider::Initialize(ColliderParentObject parentObject)
 {
 
-	worldTransform_.Initialize();
+	//worldTransform_.Initialize();
 
 	parentObject_ = parentObject;
 

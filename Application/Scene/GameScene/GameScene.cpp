@@ -87,6 +87,7 @@ void GameScene::Initialize() {
 		EnemyModels[i] = enemyModels_[i].get();
 	}
 	enemy_->Initialize(EnemyModels);
+	enemy_->SetPlayer(player_.get());
 
 }
 
