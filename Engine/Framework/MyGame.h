@@ -21,5 +21,8 @@ private: // メンバ変数
 	// シーンマネージャー
 	std::unique_ptr<SceneManager> sceneManager = nullptr;
 
+	// imGui表示
+	bool imGuiDraw;
+
 };
 

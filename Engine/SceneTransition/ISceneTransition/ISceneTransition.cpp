@@ -19,6 +19,8 @@ void ISceneTransition::Initialize()
 	isFadeIn_ = true; // フェードインか
 	switchScene_ = false; //シーンを切り替える
 
+	stoppingUpdates_ = false; // 更新を停止する
+
 	textureHandleManager_ = std::make_unique<ITextureHandleManager>();
 	textureHandleManager_->Initialize();
 
@@ -26,6 +28,10 @@ void ISceneTransition::Initialize()
 
 void ISceneTransition::Update()
 {
+
+	if (stoppingUpdates_) {
+		return;
+	}
 
 	fadeTimer_ += kDeltaTime_;
 

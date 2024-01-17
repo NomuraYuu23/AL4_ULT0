@@ -4,6 +4,7 @@
 #include "../../../Application/Scene/SceneFactory/SceneFactory.h"
 #include "../../SceneTransition/ISceneTransition/ISceneTransition.h"
 #include "../../../Application/SceneTransition/SceneTransitionFactory/SceneTransitionFactory.h"
+#include <thread>
 
 /// <summary>
 /// シーンマネージャー
@@ -12,6 +13,12 @@ class SceneManager
 {
 
 public: // メンバ関数
+
+
+	/// <summary>
+	/// デストラクタ
+	/// </summary>
+	~SceneManager();
 
 	/// <summary>
 	/// 初期化
@@ -27,6 +34,11 @@ public: // メンバ関数
 	/// 描画
 	/// </summary>
 	void Draw();
+
+	/// <summary>
+	/// 初期化を回す関数
+	/// </summary>
+	void InitializeThread();
 
 private: // メンバ変数
 
@@ -48,5 +60,17 @@ private: // メンバ変数
 	// シーン遷移を保持するメンバ変数
 	std::unique_ptr<ISceneTransition> sceneTransition_;
 
+	// 初期化用スレッド
+	std::thread sceneInitialize_;
+
+	// 初期化中か
+	bool initializing_;
+
+	// 初期化が終わったか
+	bool initializeEnd_;
+
+public:
+
+	bool GetInitializing() { return initializing_; };
 };
 
