@@ -23,7 +23,7 @@
         },
         "1": {
             "easeType": 30,
-            "endFrame": 16,
+            "endFrame": 10,
             "transform": {
                 "rotate": [
                     0.0,
@@ -44,12 +44,12 @@
         },
         "2": {
             "easeType": 30,
-            "endFrame": 32,
+            "endFrame": 25,
             "transform": {
                 "rotate": [
+                    -0.6700000166893005,
                     0.0,
-                    0.0,
-                    0.0
+                    0.5600000023841858
                 ],
                 "scale": [
                     1.0,
@@ -65,12 +65,12 @@
         },
         "3": {
             "easeType": 30,
-            "endFrame": 42,
+            "endFrame": 30,
             "transform": {
                 "rotate": [
+                    -0.6700000166893005,
                     0.0,
-                    0.0,
-                    0.0
+                    0.5600000023841858
                 ],
                 "scale": [
                     1.0,

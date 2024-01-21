@@ -4,7 +4,7 @@
 #include "../../../../Engine/Math/Ease.h"
 
 const EnemyStateDashSwingDown::ConstAttack EnemyStateDashSwingDown::kConstAttak = {
-		{ 10, 100, 10, 40, 20}, { 0.0f, 8.0f, 0.0f, 0.0f, 0.0f} 
+		{ 10, 20, 10, 40, 20}, { 0.0f, 8.0f, 0.0f, 0.0f, 0.0f} 
 };
 
 void EnemyStateDashSwingDown::Initialize()
