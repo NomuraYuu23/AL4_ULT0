@@ -126,4 +126,5 @@ private:
 	std::unique_ptr<Enemy> enemy_;
 	// エネミーモデル
 	std::array<std::unique_ptr<Model>, EnemyPartIndex::kEnemyPartIndexOfCount> enemyModels_;
+	std::unique_ptr<Model> enemyWeaponModel_;
 };

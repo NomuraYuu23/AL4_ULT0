@@ -2,7 +2,7 @@
 #include "../../Engine/Collider/Capsule/Capsule.h"
 #include "../../Engine/2D/ImguiManager.h"
 
-void Enemy::Initialize(const std::array<Model*, EnemyPartIndex::kEnemyPartIndexOfCount>& models)
+void Enemy::Initialize(const std::array<Model*, EnemyPartIndex::kEnemyPartIndexOfCount>& models, Model* weaponModel)
 {
 
 	// マテリアル
@@ -32,6 +32,14 @@ void Enemy::Initialize(const std::array<Model*, EnemyPartIndex::kEnemyPartIndexO
 	// コライダー
 	ColliderInitialize();
 
+	// 武器
+	weaponModel_ = weaponModel;
+	weaponWorldTransfrom_.Initialize();
+	weaponWorldTransfrom_.parent_ = parts_[kEnemyPartRightHand]->GetWorldTransformAdress();
+	weaponWorldTransfrom_.transform_.rotate.x = 1.57f;
+	weaponWorldTransfrom_.transform_.rotate.z = 1.57f;
+	weaponWorldTransfrom_.UpdateMatrix();
+
 }
 
 void Enemy::Update()
@@ -53,6 +61,9 @@ void Enemy::Update()
 	// コライダー
 	ColliderUpdate();
 
+	// 武器
+	weaponWorldTransfrom_.UpdateMatrix();
+
 }
 
 void Enemy::Draw(BaseCamera& camera)
@@ -61,6 +72,8 @@ void Enemy::Draw(BaseCamera& camera)
 	for (uint32_t i = 0; i < EnemyPartIndex::kEnemyPartIndexOfCount; ++i) {
 		parts_[i]->Draw(camera, material_.get());
 	}
+
+	weaponModel_->Draw(weaponWorldTransfrom_, camera);
 
 }
 
@@ -177,9 +190,9 @@ void Enemy::PartUpdate()
 
 	// アニメーションカウント
 	if (animationCountLimit_ > 0) {
-		animationCount_ = (animationCount_ + 1) % animationCountLimit_;
+		animationCount_ = (animationCount_ + 1) % (animationCountLimit_ + 1);
 		//でばっぐ
-		//animationCount_ = 30;
+		//animationCount_ = 70;
 	}
 
 }

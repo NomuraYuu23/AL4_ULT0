@@ -4,7 +4,7 @@
 #include "../../../../Engine/Math/Ease.h"
 
 const EnemyStateDashSwingDown::ConstAttack EnemyStateDashSwingDown::kConstAttak = {
-		{ 10, 20, 10, 40, 20}, { 0.0f, 8.0f, 0.0f, 0.0f, 0.0f} 
+		{ 10, 20, 30, 10, 35}, { 0.0f, 6.0f, 0.0f, 0.2f, 0.0f} 
 };
 
 void EnemyStateDashSwingDown::Initialize()
@@ -91,7 +91,7 @@ void EnemyStateDashSwingDown::AttackInitialize()
 void EnemyStateDashSwingDown::Attack()
 {
 
-	//Move();
+	Move();
 
 }
 
@@ -119,34 +119,37 @@ void EnemyStateDashSwingDown::Move()
 
 	WorldTransform* playerWorldTransform = player->GetWorldTransformAdress();
 
+	Vector3 direction = worldTransform->direction_;
 	// 向き
-	Vector3 direction = v3Calc_->Normalize(v3Calc_->Subtract(playerWorldTransform->GetWorldPosition(), worldTransform->GetWorldPosition()));
-	Vector3 directionCheck = {
-		std::fabsf(std::fabsf(direction.x) - std::fabsf(worldTransform->direction_.x)),
-		std::fabsf(std::fabsf(direction.y) - std::fabsf(worldTransform->direction_.y)),
-		std::fabsf(std::fabsf(direction.z) - std::fabsf(worldTransform->direction_.z)) };
-	if (directionCheck.x > directionLimit.x) {
-		if (direction.x < 0.0f) {
-			direction.x = -directionLimit.x;
+	if (inPhase_ <= kCharge) {
+		direction = v3Calc_->Normalize(v3Calc_->Subtract(playerWorldTransform->GetWorldPosition(), worldTransform->GetWorldPosition()));
+		Vector3 directionCheck = {
+			std::fabsf(std::fabsf(direction.x) - std::fabsf(worldTransform->direction_.x)),
+			std::fabsf(std::fabsf(direction.y) - std::fabsf(worldTransform->direction_.y)),
+			std::fabsf(std::fabsf(direction.z) - std::fabsf(worldTransform->direction_.z)) };
+		if (directionCheck.x > directionLimit.x) {
+			if (direction.x < 0.0f) {
+				direction.x = -directionLimit.x;
+			}
+			else {
+				direction.x = directionLimit.x;
+			}
 		}
-		else {
-			direction.x = directionLimit.x;
+		if (directionCheck.y > directionLimit.y) {
+			if (direction.y < 0.0f) {
+				direction.y = -directionLimit.y;
+			}
+			else {
+				direction.y = directionLimit.y;
+			}
 		}
-	}
-	if (directionCheck.y > directionLimit.y) {
-		if (direction.y < 0.0f) {
-			direction.y = -directionLimit.y;
-		}
-		else {
-			direction.y = directionLimit.y;
-		}
-	}
-	if (directionCheck.z > directionLimit.z) {
-		if (direction.z < 0.0f) {
-			direction.z = -directionLimit.z;
-		}
-		else {
-			direction.z = directionLimit.z;
+		if (directionCheck.z > directionLimit.z) {
+			if (direction.z < 0.0f) {
+				direction.z = -directionLimit.z;
+			}
+			else {
+				direction.z = directionLimit.z;
+			}
 		}
 	}
 
@@ -181,8 +184,8 @@ void EnemyStateDashSwingDown::AttackPhaseFinished()
 {
 
 	if (parameter_ >= 1.0f) {
-		AttackInitialize();
 		inPhase_++;
+		AttackInitialize();
 		if (inPhase_ == static_cast<uint32_t>(ComboPhase::kCountOfComboPhase)) {
 			enemyStateNo_ = EnemyState::kEnemyStateRoot;
 			DontAttack();

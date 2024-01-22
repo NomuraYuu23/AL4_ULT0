@@ -86,7 +86,7 @@ void GameScene::Initialize() {
 	for (uint32_t i = 0; i < enemyModels_.size(); ++i) {
 		EnemyModels[i] = enemyModels_[i].get();
 	}
-	enemy_->Initialize(EnemyModels);
+	enemy_->Initialize(EnemyModels, enemyWeaponModel_.get());
 	enemy_->SetPlayer(player_.get());
 
 }
@@ -318,6 +318,7 @@ void GameScene::ModelCreate()
 	enemyModels_[kEnemyPartRightThigh].reset(Model::Create("Resources/Enemy/", "EnemyRightThigh.obj", dxCommon_, textureHandleManager_.get()));
 	enemyModels_[kEnemyPartRightShin].reset(Model::Create("Resources/Enemy/", "EnemyRightShin.obj", dxCommon_, textureHandleManager_.get()));
 	enemyModels_[kEnemyPartRightAnkle].reset(Model::Create("Resources/Enemy/", "EnemyRightAnkle.obj", dxCommon_, textureHandleManager_.get()));
+	enemyWeaponModel_.reset(Model::Create("Resources/EnemyWeapon/", "EnemyWeapon.obj", dxCommon_, textureHandleManager_.get()));
 
 }
 

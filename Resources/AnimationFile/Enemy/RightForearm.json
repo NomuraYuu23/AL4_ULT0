@@ -68,9 +68,9 @@
             "endFrame": 30,
             "transform": {
                 "rotate": [
-                    -0.6700000166893005,
                     0.0,
-                    0.5600000023841858
+                    0.0,
+                    0.0
                 ],
                 "scale": [
                     1.0,
@@ -85,8 +85,71 @@
             }
         },
         "4": {
+            "easeType": 9,
+            "endFrame": 60,
+            "transform": {
+                "rotate": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "translate": [
+                    0.0,
+                    -12.0,
+                    0.0
+                ]
+            }
+        },
+        "5": {
             "easeType": 30,
-            "endFrame": 52,
+            "endFrame": 70,
+            "transform": {
+                "rotate": [
+                    -0.5400000214576721,
+                    0.0,
+                    0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "translate": [
+                    0.0,
+                    -12.0,
+                    0.0
+                ]
+            }
+        },
+        "6": {
+            "easeType": 30,
+            "endFrame": 85,
+            "transform": {
+                "rotate": [
+                    -0.5400000214576721,
+                    0.0,
+                    0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "translate": [
+                    0.0,
+                    -12.0,
+                    0.0
+                ]
+            }
+        },
+        "7": {
+            "easeType": 30,
+            "endFrame": 105,
             "transform": {
                 "rotate": [
                     0.0,

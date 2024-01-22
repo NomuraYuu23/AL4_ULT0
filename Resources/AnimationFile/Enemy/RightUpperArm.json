@@ -64,7 +64,7 @@
             }
         },
         "3": {
-            "easeType": 30,
+            "easeType": 9,
             "endFrame": 30,
             "transform": {
                 "rotate": [
@@ -86,10 +86,73 @@
         },
         "4": {
             "easeType": 30,
-            "endFrame": 52,
+            "endFrame": 60,
             "transform": {
                 "rotate": [
+                    0.7200000286102295,
                     0.0,
+                    0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "translate": [
+                    7.5,
+                    21.0,
+                    0.0
+                ]
+            }
+        },
+        "5": {
+            "easeType": 30,
+            "endFrame": 70,
+            "transform": {
+                "rotate": [
+                    3.5799999237060547,
+                    0.8600000143051147,
+                    0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "translate": [
+                    7.5,
+                    21.0,
+                    0.0
+                ]
+            }
+        },
+        "6": {
+            "easeType": 30,
+            "endFrame": 85,
+            "transform": {
+                "rotate": [
+                    3.5799999237060547,
+                    0.8600000143051147,
+                    0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "translate": [
+                    7.5,
+                    21.0,
+                    0.0
+                ]
+            }
+        },
+        "7": {
+            "easeType": 30,
+            "endFrame": 105,
+            "transform": {
+                "rotate": [
+                    6.28000020980835,
                     0.0,
                     0.0
                 ],

@@ -71,7 +71,7 @@ public: // ベースのメンバ関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(const std::array<Model*, EnemyPartIndex::kEnemyPartIndexOfCount>& models);
+	void Initialize(const std::array<Model*, EnemyPartIndex::kEnemyPartIndexOfCount>& models, Model* weaponModel);
 
 	/// <summary>
 	/// 更新
@@ -198,7 +198,13 @@ private: // パーツ,アニメーション変数
 	// アニメーションカウント上限
 	uint32_t animationCountLimit_;
 
-	private:  // パーツ,アニメーション定数
+	// 武器モデル
+	Model* weaponModel_ = nullptr;
+
+	// 武器ワールドトランスフォーム
+	WorldTransform weaponWorldTransfrom_;
+
+private:  // パーツ,アニメーション定数
 
 	// オブジェクト名
 	const std::string objectName_ = "Enemy";
