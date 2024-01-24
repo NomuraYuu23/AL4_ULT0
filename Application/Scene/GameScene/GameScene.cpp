@@ -4,6 +4,8 @@
 #include "../../../Engine/2D/ImguiManager.h"
 #include "../../../Engine/base/D3DResourceLeakChecker.h"
 
+#include "../../Player/PlayerState/PlayerStateAttack/PlayerStateAttack.h"
+
 /// <summary>
 /// 初期化
 /// </summary>
@@ -263,6 +265,13 @@ void GameScene::CollisonUpdate()
 	for (uint32_t i = 0; i < playerCollider.size(); ++i) {
 		collisionManager_->ListRegister(playerCollider[i]);
 	}
+	// プレイヤーの攻撃
+	if (player_->GetCurrentStateNo() == kPlayerStateAttack) {
+		if (static_cast<PlayerStateAttack*>(player_->GetPlayerState())->GetIsAttackJudgment()) {
+			collisionManager_->ListRegister(static_cast<PlayerStateAttack*>(player_->GetPlayerState())->GetCollider());
+		}
+	}
+
 	std::array<ColliderShape, EnemyColliderIndex::kEnemyColliderIndexOfCount> enemyCollider = enemy_->GetCollider();
 	for (uint32_t i = 0; i < enemyCollider.size(); ++i) {
 		collisionManager_->ListRegister(enemyCollider[i]);

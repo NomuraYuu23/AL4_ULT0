@@ -85,6 +85,9 @@ void Enemy::ImGuiDraw()
 void Enemy::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
 {
 
+	if (std::holds_alternative<PlayerAttack*>(colliderPartner)) {
+		OnCollisionPlayerAttack(colliderPartner, collisionData);
+	}
 
 }
 
@@ -374,6 +377,13 @@ void Enemy::ColliderUpdate()
 	static_cast<Capsule*>(colliders_[kEnemyColliderRightShin].get())->segment_ = segment;
 	static_cast<Capsule*>(colliders_[kEnemyColliderRightShin].get())->radius_ = colliderRadiuses_[kEnemyColliderRightShin];
 	static_cast<Capsule*>(colliders_[kEnemyColliderRightShin].get())->worldTransformUpdate();
+
+}
+
+void Enemy::OnCollisionPlayerAttack(ColliderParentObject colliderPartner, const CollisionData& collisionData)
+{
+
+
 
 }
 

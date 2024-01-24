@@ -283,4 +283,8 @@ public: // アクセッサ
 
 	std::array<ColliderShape, PlayerColliderIndex::kPlayerColliderIndexOfCount> GetCollider();
 
+	IPlayerState* GetPlayerState() { return playerState_.get(); }
+
+	uint32_t GetCurrentStateNo() { return currentStateNo_; }
+
 };

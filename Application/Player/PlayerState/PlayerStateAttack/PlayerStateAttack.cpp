@@ -29,7 +29,7 @@ void PlayerStateAttack::Initialize()
 	attackRadius_ = 1.0f;
 
 	// 攻撃球と手の距離
-	attackLength_ = { 0.0f, 0.0f, 2.0f };
+	attackLength_ = { 0.0f, 0.0f, 10.0f };
 
 	// 攻撃球のプレイヤーからのローカル位置
 	attackCenter_ = { -10000.0f,-10000.0f,-10000.0f };
@@ -37,8 +37,12 @@ void PlayerStateAttack::Initialize()
 	// 前フレームの攻撃球
 	prevAttackCenter_ = { -10000.0f,-10000.0f,-10000.0f };
 
+	playerAttack_ = std::make_unique<PlayerAttack>();
+
 	// あたり判定コライダー初期化
-	attackCollider_->Initialize(Segment{ attackCenter_ , {0.0f,0.0f,0.0f} }, attackRadius_, static_cast<Player*>(nullptr));
+	attackCollider_->Initialize(Segment{ attackCenter_ , {0.0f,0.0f,0.0f} }, attackRadius_, playerAttack_.get());
+	attackCollider_->SetCollisionAttribute(0x00000001);
+	attackCollider_->SetCollisionMask(0xfffffffe);
 
 	// あたり判定を取るか
 	isAttackJudgment_ = false;

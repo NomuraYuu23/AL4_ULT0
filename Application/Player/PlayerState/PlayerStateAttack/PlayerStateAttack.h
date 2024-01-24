@@ -4,6 +4,7 @@
 #include "../../../../Engine/Math/Vector3.h"
 #include "../../../../Engine/3D/WorldTransform.h"
 #include "../../../../Engine/Collider/Capsule/Capsule.h"
+#include "../../PlayerAttack/PlayerAttack.h"
 
 class PlayerStateAttack : public IPlayerState
 {
@@ -129,6 +130,15 @@ private: // メンバ変数
 
 	// コンボネクスト
 	bool comboNext_;
+
+	// プレイヤーの攻撃情報
+	std::unique_ptr<PlayerAttack> playerAttack_;
+
+public:
+
+	Capsule* GetCollider() { return attackCollider_.get(); }
+
+	bool GetIsAttackJudgment() { return isAttackJudgment_; }
 
 };
 

@@ -3,6 +3,7 @@
 #include "CollisionData.h"
 #include "../../Application/Player/Player.h"
 #include "../../Application/Enemy/Enemy.h"
+#include "../../Application/Player/PlayerAttack/PlayerAttack.h"
 
 
 void CollisionManager::Initialize()

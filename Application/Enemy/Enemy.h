@@ -245,6 +245,10 @@ private: // エネミーデータ
 	// プレイヤー
 	Player* player_ = nullptr;
 
+private: // 衝突処理
+
+	void OnCollisionPlayerAttack(ColliderParentObject colliderPartner, const CollisionData& collisionData);
+
 public: // アクセッサ
 
 	WorldTransform* GetWorldTransformAdress() { return &worldTransform_; }
