@@ -3,6 +3,7 @@
 #include <cmath>
 
 #pragma comment(lib, "dinput8.lib")
+#pragma comment(lib, "xinput.lib")
 
 //インスタンス
 Input* Input::GetInstance() {
@@ -54,24 +55,7 @@ void Input::Initialize(HINSTANCE hInstance, HWND hwnd) {
 	assert(SUCCEEDED(result));
 
 	// ジョイスティックの生成
-	result = directInput_->CreateDevice(GUID_Joystick, &directJoystick_, NULL);
-	if (SUCCEEDED(result)) {
-	
-		// 入力デ―タ形式のセット
-		result = directJoystick_->SetDataFormat(&c_dfDIJoystick2);//標準形式
-		assert(SUCCEEDED(result));
-
-		// 排他制御レベルのセット
-		result = directJoystick_->SetCooperativeLevel(
-			hwnd, DISCL_FOREGROUND | DISCL_NONEXCLUSIVE);
-		assert(SUCCEEDED(result));
-	
-		joystickConnected = true;
-
-	}
-	else {
-		joystickConnected = false;
-	}
+	JoystickConnected(hwnd);
 
 	//デッドゾーン設定
 	deadZone = 15000.0f;
@@ -294,161 +278,321 @@ const Vector2& Input::GetMousePosition(HWND hwnd) {
 
 }
 
-/// <summary>
-/// ジョイスティック関連更新
-/// </summary>
 void Input::JoystickUpdate() {
-
-	//ジョイスティック動作開始
-	directJoystick_->Acquire();
-
-	//前回のジョイスティック入力を保存
-	joystickPre_ = joystick_;
-
-	// ジョイスティックの入力状態を取得する
-	directJoystick_->GetDeviceState(sizeof(joystick_), &joystick_);
-
-}
-
-/// <summary>
-/// ジョイスティックボタンを押した状態か
-/// </summary>
-/// <param name="buttonNumber"></param>
-/// <returns>ジョイスティックボタンを押した状態か</returns>
-bool Input::PushJoystick(uint8_t joystickNumber) const {
 	
-	if (!joystickConnected) {
-		return false;
+	if (usedXInput_) {
+		XJoystickUpdate();
 	}
+	else {
+		DirectJoystickUpdate();
+	}
+
+}
+
+bool Input::PushJoystick(uint8_t joystickNumber) {
 	
-	if (joystick_.rgbButtons[joystickNumber]) {
-		return true;
+	if (usedXInput_) {
+		return XPushJoystick(joystickNumber);
 	}
-
-	return false;
+	else {
+		return DirectPushJoystick(joystickNumber);
+	}
 
 }
 
-/// <summary>
-/// ジョイスティックボタンを離した状態か
-/// </summary>
-/// <param name="buttonNumber"></param>
-/// <returns>ジョイスティックボタンを離した状態か</returns>
-bool Input::NoPushJoystick(uint8_t joystickNumber) const {
-
-	if (!joystickConnected) {
-		return false;
+bool Input::NoPushJoystick(uint8_t joystickNumber) {
+	
+	if (usedXInput_) {
+		return XNoPushJoystick(joystickNumber);
 	}
-
-	if (joystick_.rgbButtons[joystickNumber]) {
-		return false;
+	else {
+		return DirectNoPushJoystick(joystickNumber);
 	}
-
-	return true;
 
 }
 
-/// <summary>
-/// ジョイスティックボタンを押した瞬間か
-/// </summary>
-/// <param name="buttonNumber"></param>
-/// <returns>ジョイスティックボタンを押した瞬間か</returns>
-bool Input::TriggerJoystick(uint8_t joystickNumber) const {
-
-	if (!joystickConnected) {
-		return false;
+bool Input::TriggerJoystick(uint8_t joystickNumber) {
+	
+	if (usedXInput_) {
+		return XTriggerJoystick(joystickNumber);
 	}
-
-	if (joystick_.rgbButtons[joystickNumber] && !joystickPre_.rgbButtons[joystickNumber]) {
-		return true;
+	else {
+		return DirectTriggerJoystick(joystickNumber);
 	}
-
-	return false;
 
 }
 
-/// <summary>
-/// ジョイスティックボタンを離した瞬間か
-/// </summary>
-/// <param name="buttonNumber"></param>
-/// <returns>ジョイスティックボタンを離した瞬間か</returns>
-bool Input::ReleaseJoystick(uint8_t joystickNumber) const {
-
-	if (!joystickConnected) {
-		return false;
+bool Input::ReleaseJoystick(uint8_t joystickNumber) {
+	
+	if (usedXInput_) {
+		return XReleaseJoystick(joystickNumber);
 	}
-
-	if (!joystick_.rgbButtons[joystickNumber] && joystickPre_.rgbButtons[joystickNumber]) {
-		return true;
+	else {
+		return DirectReleaseJoystick(joystickNumber);
 	}
-
-	return false;
 
 }
 
-/// <summary>
-/// 左のアナログスティックの状態を取得
-/// </summary>
-/// <returns></returns>
-Vector2 Input::GetLeftAnalogstick() const {
-
-	if (!joystickConnected) {
-		return Vector2(0.0f,0.0f);
+Vector2 Input::GetLeftAnalogstick() {
+	
+	if (usedXInput_) {
+		return XGetLeftAnalogstick();
 	}
-
-	Vector2 result = { float(joystick_.lX) -32767.0f, float(joystick_.lY) - 32767.0f };
-
-	if (std::fabsf(result.x) < deadZone) {
-		result.x = 0.0f;
+	else {
+		return DirectGetLeftAnalogstick();
 	}
-	if (std::fabsf(result.y) < deadZone) {
-		result.y = 0.0f;
-	}
-
-	return result;
 
 }
 
-/// <summary>
-/// 左のアナログスティックの状態を取得
-/// </summary>
-/// <returns></returns>
-Vector2 Input::GetRightAnalogstick() const {
-
-	if (!joystickConnected) {
-		return Vector2(0.0f, 0.0f);
+Vector2 Input::GetRightAnalogstick() {
+	
+	if (usedXInput_) {
+		return XGetRightAnalogstick();
 	}
-
-	Vector2 result = { float(joystick_.lRx) - 32767.0f, float(joystick_.lRy) - 32767.0f };
-
-	if (std::fabsf(result.x) < deadZone) {
-		result.x = 0.0f;
+	else {
+		return DirectGetRightAnalogstick();
 	}
-	if (std::fabsf(result.y) < deadZone) {
-		result.y = 0.0f;
-	}
-
-	return result;
 
 }
 
-/// <summary>
-/// 左右のトリガーの状態を取得()
-/// </summary>
-/// <returns></returns>
-float Input::GetLRTrrigger() const {
+float Input::GetLRTrrigger() {
 
-	if (!joystickConnected) {
+	if (usedXInput_) {
+		// 出来てない
+		assert(0);
 		return 0.0f;
 	}
+	else {
+		return DirectGetLRTrrigger();
+	}
 
-	return float(joystick_.lZ); 
 }
 
-/// <summary>
-/// ジョイスティック接続
-/// </summary>
+bool Input::GetLTrrigger()
+{
+
+	if (usedXInput_) {
+		return XGetLTrrigger();
+	}
+	else {
+		// 出来てない
+		assert(0);
+		return false;
+	}
+
+}
+
+bool Input::GetRTrrigger()
+{
+
+	if (usedXInput_) {
+		return XGetRTrrigger();
+	}
+	else {
+		// 出来てない
+		assert(0);
+		return false;
+	}
+
+}
+
 void Input::JoystickConnected(HWND hwnd) {
+
+	if (usedXInput_) {
+		XJoystickConnected();
+	}
+	else {
+		DirectJoystickConnected(hwnd);
+	}
+
+}
+
+void Input::XJoystickConnected()
+{
+
+	ZeroMemory(&xJoystickState_, sizeof(XINPUT_STATE));
+
+	xJoystick_ = XInputGetState(0, &xJoystickState_);
+	
+	if(xJoystick_ == ERROR_SUCCESS) {
+		joystickConnected = true;
+	}
+	else {
+		joystickConnected = false;
+	}
+
+}
+
+void Input::XJoystickUpdate()
+{
+
+	xJoystickPreState_ = xJoystickState_;
+
+	XJoystickConnected();
+
+}
+
+bool Input::XPushJoystick(uint8_t joystickNumber)
+{
+
+	uint32_t button = XInputButtonConverter(joystickNumber);
+
+	if (xJoystickState_.Gamepad.wButtons & button) {
+		return true;
+	}
+
+	return false;
+
+}
+
+bool Input::XNoPushJoystick(uint8_t joystickNumber)
+{
+
+	uint32_t button = XInputButtonConverter(joystickNumber);
+
+	if (!(xJoystickState_.Gamepad.wButtons & button)) {
+		return true;
+	}
+
+	return false;
+
+}
+
+bool Input::XTriggerJoystick(uint8_t joystickNumber)
+{
+
+	uint32_t button = XInputButtonConverter(joystickNumber);
+
+	if ((xJoystickState_.Gamepad.wButtons & button) && 
+		!(xJoystickPreState_.Gamepad.wButtons & button)) {
+		return true;
+	}
+
+	return false;
+
+}
+
+bool Input::XReleaseJoystick(uint8_t joystickNumber)
+{
+
+	uint32_t button = XInputButtonConverter(joystickNumber);
+
+	if (!(xJoystickState_.Gamepad.wButtons & button) &&
+		(xJoystickPreState_.Gamepad.wButtons & button)) {
+		return true;
+	}
+
+	return false;
+
+}
+
+Vector2 Input::XGetLeftAnalogstick()
+{
+
+	Vector2 sThumbL = { float(xJoystickState_.Gamepad.sThumbLX), float(-xJoystickState_.Gamepad.sThumbLY) };
+
+	if (sThumbL.x < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
+		sThumbL.x > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
+		sThumbL.x = 0.0f;
+	}
+	if (sThumbL.y < XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE &&
+		sThumbL.y > -XINPUT_GAMEPAD_LEFT_THUMB_DEADZONE) {
+		sThumbL.y = 0.0f;
+	}
+
+	return sThumbL;
+
+}
+
+Vector2 Input::XGetRightAnalogstick()
+{
+
+	Vector2 sThumbR = { float(xJoystickState_.Gamepad.sThumbRX), float(-xJoystickState_.Gamepad.sThumbRY) };
+
+	if (sThumbR.x < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE && 
+		sThumbR.x > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) {
+		sThumbR.x = 0.0f;
+	}
+	if (sThumbR.y < XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE &&
+		sThumbR.y > -XINPUT_GAMEPAD_RIGHT_THUMB_DEADZONE) {
+		sThumbR.y = 0.0f;
+	}
+
+	return sThumbR;
+
+}
+
+bool Input::XGetLTrrigger()
+{
+	
+	if (xJoystickState_.Gamepad.bLeftTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) {
+		return true;
+	}
+
+	return false;
+
+}
+
+bool Input::XGetRTrrigger()
+{
+
+	if (xJoystickState_.Gamepad.bRightTrigger > XINPUT_GAMEPAD_TRIGGER_THRESHOLD) {
+		return true;
+	}
+
+	return false;
+
+}
+
+uint32_t Input::XInputButtonConverter(uint8_t joystickNumber)
+{
+	
+	JoystickButton button = static_cast<JoystickButton>(joystickNumber);
+
+	uint32_t result = 0u;
+
+	switch (button)
+	{
+	case kJoystickButtonA:
+		result = 0x1000;
+		break;
+	case kJoystickButtonB:
+		result = 0x2000;
+		break;
+	case kJoystickButtonX:
+		result = 0x4000;
+		break;
+	case kJoystickButtonY:
+		result = 0x8000;
+		break;
+	case kJoystickButtonLB:
+		result = 0x0100;
+		break;
+	case kJoystickButtonRB:
+		result = 0x0200;
+		break;
+	case kJoystickButtonBACK:
+		result = 0x0020;
+		break;
+	case kJoystickButtonSTART:
+		result = 0x0010;
+		break;
+	case kJoystickButtonLST:
+		result = 0x0040;
+		break;
+	case kJoystickButtonRST:
+		result = 0x0080;
+		break;
+	default:
+		break;
+	}
+
+	return result;
+
+}
+
+void Input::DirectJoystickConnected(HWND hwnd)
+{
 
 	// ジョイスティックの生成
 	HRESULT result = directInput_->CreateDevice(GUID_Joystick, &directJoystick_, NULL);
@@ -470,4 +614,114 @@ void Input::JoystickConnected(HWND hwnd) {
 		joystickConnected = false;
 	}
 
+}
+
+void Input::DirectJoystickUpdate()
+{
+	//ジョイスティック動作開始
+	directJoystick_->Acquire();
+
+	//前回のジョイスティック入力を保存
+	directJoystickPreState_ = directJoystickState_;
+
+	// ジョイスティックの入力状態を取得する
+	directJoystick_->GetDeviceState(sizeof(directJoystickState_), &directJoystickState_);
+}
+
+bool Input::DirectPushJoystick(uint8_t joystickNumber) const
+{
+	if (!joystickConnected) {
+		return false;
+	}
+
+	if (directJoystickState_.rgbButtons[joystickNumber]) {
+		return true;
+	}
+
+	return false;
+}
+
+bool Input::DirectNoPushJoystick(uint8_t joystickNumber) const
+{
+	if (!joystickConnected) {
+		return false;
+	}
+
+	if (directJoystickState_.rgbButtons[joystickNumber]) {
+		return false;
+	}
+
+	return true;
+}
+
+bool Input::DirectTriggerJoystick(uint8_t joystickNumber) const
+{
+	if (!joystickConnected) {
+		return false;
+	}
+
+	if (directJoystickState_.rgbButtons[joystickNumber] && !directJoystickPreState_.rgbButtons[joystickNumber]) {
+		return true;
+	}
+
+	return false;
+}
+
+bool Input::DirectReleaseJoystick(uint8_t joystickNumber) const
+{
+	if (!joystickConnected) {
+		return false;
+	}
+
+	if (!directJoystickState_.rgbButtons[joystickNumber] && directJoystickPreState_.rgbButtons[joystickNumber]) {
+		return true;
+	}
+
+	return false;
+}
+
+Vector2 Input::DirectGetLeftAnalogstick() const
+{
+	if (!joystickConnected) {
+		return Vector2(0.0f, 0.0f);
+	}
+
+	Vector2 result = { float(directJoystickState_.lX) - 32767.0f, float(directJoystickState_.lY) - 32767.0f };
+
+	if (std::fabsf(result.x) < deadZone) {
+		result.x = 0.0f;
+	}
+	if (std::fabsf(result.y) < deadZone) {
+		result.y = 0.0f;
+	}
+
+	return result;
+}
+
+Vector2 Input::DirectGetRightAnalogstick() const
+{
+	if (!joystickConnected) {
+		return Vector2(0.0f, 0.0f);
+	}
+
+	Vector2 result = { float(directJoystickState_.lRx) - 32767.0f, float(directJoystickState_.lRy) - 32767.0f };
+
+	if (std::fabsf(result.x) < deadZone) {
+		result.x = 0.0f;
+	}
+	if (std::fabsf(result.y) < deadZone) {
+		result.y = 0.0f;
+	}
+
+	return result;
+
+}
+
+float Input::DirectGetLRTrrigger() const
+{
+	if (!joystickConnected) {
+		return 0.0f;
+	}
+
+	return float(directJoystickState_.lZ);
 }
