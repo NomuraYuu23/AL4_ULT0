@@ -14,6 +14,13 @@ class IParticle
 
 public: // サブクラス
 
+	enum BillBoardNameIndex {
+		kBillBoardNameIndexAllAxis,	// 全軸
+		kBillBoardNameIndexYAxis,	// y軸
+		kBillBoardNameIndexOfCount
+	};
+
+
 public:
 
 	/// <summary>
@@ -65,6 +72,12 @@ public: // アクセッサ
 	/// <returns></returns>
 	bool IsDead() { return isDead_; }
 
+	/// <summary>
+	///	使うビルボード
+	/// </summary>
+	/// <returns></returns>
+	BillBoardNameIndex GetBillBoardName() { return billBoardName_; }
+
 protected: // メンバ変数
 
 	// 基本的な変数
@@ -83,6 +96,9 @@ protected: // メンバ変数
 
 	// ビルボードを使うか
 	bool useBillBoard_;
+
+	// 使うビルボード
+	BillBoardNameIndex billBoardName_;
 
 	// 死んでいるか
 	bool isDead_;

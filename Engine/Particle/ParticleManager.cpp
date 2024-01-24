@@ -33,6 +33,7 @@ void ParticleManager::Initialize()
 	SRVCreate();
 
 	billBoardMatrix_ = matrix4x4Calc->MakeIdentity4x4();
+	billBoardMatrixY_ = matrix4x4Calc->MakeIdentity4x4();
 
 	for (size_t i = 0; i < particleDatas_.size(); i++) {
 		particleDatas_[i].instanceIndex_ = 0;
@@ -62,12 +63,12 @@ void ParticleManager::SRVCreate()
 
 }
 
-void ParticleManager::Update(const Matrix4x4& cameraMatrix4x4)
+void ParticleManager::Update(BaseCamera& camera)
 {
 
 	DeadDelete();
 
-	BillBoardUpdate(cameraMatrix4x4);
+	BillBoardUpdate(camera);
 
 	EmitterUpdate();
 
@@ -126,16 +127,25 @@ void ParticleManager::ModelCreate(std::array<Model*, kCountofParticleModelIndex>
 
 }
 
-void ParticleManager::BillBoardUpdate(const Matrix4x4& cameraMatrix4x4)
+void ParticleManager::BillBoardUpdate(BaseCamera& camera)
 {
 
 	Matrix4x4Calc* matrix4x4Calc = Matrix4x4Calc::GetInstance();
 
 	Matrix4x4 backToFrontMatrix = matrix4x4Calc->MakeRotateXYZMatrix({ 0.0f, 3.14f, 0.0f });
-	billBoardMatrix_ = matrix4x4Calc->Multiply(backToFrontMatrix, cameraMatrix4x4);
+	billBoardMatrix_ = matrix4x4Calc->Multiply(backToFrontMatrix, camera.GetTransformMatrix());
 	billBoardMatrix_.m[3][0] = 0.0f;
 	billBoardMatrix_.m[3][1] = 0.0f;
 	billBoardMatrix_.m[3][2] = 0.0f;
+
+	Matrix4x4 cameraTransformMatrix = matrix4x4Calc->MakeAffineMatrix(
+		{ 1.0f, 1.0f, 1.0f },
+		{ 0.0f, camera.GetRotate().y, 0.0f},
+		camera.GetTransform());
+	billBoardMatrixY_ = matrix4x4Calc->Multiply(backToFrontMatrix, cameraTransformMatrix);
+	billBoardMatrixY_.m[3][0] = 0.0f;
+	billBoardMatrixY_.m[3][1] = 0.0f;
+	billBoardMatrixY_.m[3][2] = 0.0f;
 
 }
 
@@ -174,7 +184,17 @@ void ParticleManager::ParticlesUpdate()
 
 	for (uint32_t i = 0; i < kCountofParticleModelIndex; i++) {
 		for (IParticle* particle : particleDatas_[i].particles_) {
-			particle->Update(billBoardMatrix_);
+			switch (particle->GetBillBoardName())
+			{
+			case IParticle::kBillBoardNameIndexAllAxis:
+				particle->Update(billBoardMatrix_);
+				break;
+			case IParticle::kBillBoardNameIndexYAxis:
+				particle->Update(billBoardMatrixY_);
+				break;
+			default:
+				break;
+			}
 		}
 	}
 }

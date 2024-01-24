@@ -11,6 +11,7 @@
 #include "../../Application/Particle/ParticleModelIndex.h"
 
 class Model;
+class BaseCamera;
 
 class ParticleManager
 {
@@ -63,7 +64,7 @@ public: // メンバ関数
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update(const Matrix4x4& cameraMatrix4x4);
+	void Update(BaseCamera& camera);
 
 	/// <summary>
 	/// 描画
@@ -91,7 +92,7 @@ public: // メンバ関数
 	/// ビルボード更新
 	/// </summary>
 	/// <param name="cameraMatrix4x4"></param>
-	void BillBoardUpdate(const Matrix4x4& cameraMatrix4x4);
+	void BillBoardUpdate(BaseCamera& camera);
 
 	/// <summary>
 	/// エミッタ生成
@@ -159,6 +160,7 @@ private: // メンバ変数
 
 	// ビルボード
 	Matrix4x4 billBoardMatrix_;
+	Matrix4x4 billBoardMatrixY_;
 
 	// エミッタ
 	std::list<IEmitter*> emitters_;
