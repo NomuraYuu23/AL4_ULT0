@@ -7,6 +7,8 @@ class SceneTransitionBlackOut : public ISceneTransition{
 
 public: // メンバ関数
 
+	~SceneTransitionBlackOut() override;
+
 	/// <summary>
 	/// 初期化
 	/// </summary>

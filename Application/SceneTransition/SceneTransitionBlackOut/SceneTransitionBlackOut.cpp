@@ -3,6 +3,13 @@
 #include "../../../Engine/base/DirectXCommon.h"
 #include "../../../Engine/base/WinApp.h"
 
+SceneTransitionBlackOut::~SceneTransitionBlackOut()
+{
+
+	//ISceneTransition::~ISceneTransition();
+
+}
+
 void SceneTransitionBlackOut::Initialize()
 {
 

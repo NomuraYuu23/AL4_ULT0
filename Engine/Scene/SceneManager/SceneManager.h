@@ -38,7 +38,12 @@ public: // メンバ関数
 	/// <summary>
 	/// 初期化を回す関数
 	/// </summary>
-	void InitializeThread();
+	void SceneInitializeThread();
+
+	/// <summary>
+	/// 初期化を回す関数
+	/// </summary>
+	void SceneTransitionInitializeThread();
 
 private: // メンバ変数
 
@@ -62,15 +67,22 @@ private: // メンバ変数
 
 	// 初期化用スレッド
 	std::thread sceneInitialize_;
-
 	// 初期化中か
-	bool initializing_;
-
+	bool sceneInitializing_;
 	// 初期化が終わったか
-	bool initializeEnd_;
+	bool sceneInitializeEnd_;
+
+	// シーン遷移用初期化用スレッド
+	std::thread sceneTransitionInitialize_;
+	// 初期化中か
+	bool sceneTransitionInitializing_;
+	// 初期化が終わったか
+	bool sceneTransitionInitializeEnd_;
+	// 最初か
+	bool isFirstLoad_;
 
 public:
 
-	bool GetInitializing() { return initializing_; };
+	bool GetInitializing() { return sceneInitializing_; };
 };
 

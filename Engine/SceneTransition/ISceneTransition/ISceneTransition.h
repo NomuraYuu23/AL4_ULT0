@@ -10,7 +10,7 @@ class ISceneTransition
 
 public: // メンバ関数
 
-	~ISceneTransition();
+	virtual ~ISceneTransition();
 
 	/// <summary>
 	/// 初期化
@@ -40,6 +40,8 @@ public: // アクセッサ
 	bool GetStoppingUpdates() { return stoppingUpdates_; }
 
 	void SetStoppingUpdates(bool stoppingUpdates) { stoppingUpdates_ = stoppingUpdates; }
+
+	void SetIsFadeIn(bool isFadeIn) { isFadeIn_ = isFadeIn; }
 
 protected: // メンバ変数
 
