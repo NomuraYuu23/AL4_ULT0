@@ -111,7 +111,7 @@ void GameScene::Update() {
 	colliderDebugDraw_->Update();
 
 	//パーティクル
-	particleManager_->Update(followCamera_->GetTransformMatrix());
+	particleManager_->Update(camera_);
 
 	// ポーズ機能
 	pause_->Update();
