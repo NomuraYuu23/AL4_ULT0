@@ -140,48 +140,58 @@ public:
 	/// </summary>
 	/// <param name="buttonNumber"></param>
 	/// <returns>ジョイスティックボタンを押した状態か</returns>
-	bool PushJoystick(uint8_t joystickNumber) const;
+	bool PushJoystick(uint8_t joystickNumber);
 
 	/// <summary>
 	/// ジョイスティックボタンを離した状態か
 	/// </summary>
 	/// <param name="buttonNumber"></param>
 	/// <returns>ジョイスティックボタンを離した状態か</returns>
-	bool NoPushJoystick(uint8_t joystickNumber) const;
+	bool NoPushJoystick(uint8_t joystickNumber);
 
 	/// <summary>
 	/// ジョイスティックボタンを押した瞬間か
 	/// </summary>
 	/// <param name="buttonNumber"></param>
 	/// <returns>ジョイスティックボタンを押した瞬間か</returns>
-	bool TriggerJoystick(uint8_t joystickNumber) const;
+	bool TriggerJoystick(uint8_t joystickNumber);
 
 	/// <summary>
 	/// ジョイスティックボタンを離した瞬間か
 	/// </summary>
 	/// <param name="buttonNumber"></param>
 	/// <returns>ジョイスティックボタンを離した瞬間か</returns>
-	bool ReleaseJoystick(uint8_t mousjoystickNumbereNumber) const;
+	bool ReleaseJoystick(uint8_t joystickNumber);
 
 	/// <summary>
 	/// 左のアナログスティックの状態を取得
 	/// </summary>
 	/// <returns>0~</returns>
-	Vector2 GetLeftAnalogstick() const;
+	Vector2 GetLeftAnalogstick();
 
 	/// <summary>
 	/// 右のアナログスティックの状態を取得
 	/// </summary>
 	/// <returns></returns>
-	Vector2 GetRightAnalogstick() const;
+	Vector2 GetRightAnalogstick();
 
 	/// <summary>
 	/// 左右のトリガーの状態を取得()
 	/// </summary>
 	/// <returns></returns>
-	float GetLRTrrigger() const;
+	float GetLRTrrigger();
 
-	const DIJOYSTATE2& GetJoystickState() const { return joystick_; }
+	/// <summary>
+	/// 左のトリガーの状態を取得()
+	/// </summary>
+	/// <returns></returns>
+	bool GetLTrrigger();
+
+	/// <summary>
+	/// 右のトリガーの状態を取得()
+	/// </summary>
+	/// <returns></returns>
+	bool GetRTrrigger();
 
 	/// <summary>
 	/// ジョイスティック接続
@@ -190,6 +200,138 @@ public:
 
 	bool GetJoystickConnected() { return joystickConnected; }
 
+private: //XInput
+
+	/// <summary>
+	/// ジョイスティック接続
+	/// </summary>
+	void XJoystickConnected();
+
+	/// <summary>
+	/// ジョイスティック関連更新
+	/// </summary>
+	void XJoystickUpdate();
+
+	/// <summary>
+	/// ジョイスティックボタンを押した状態か
+	/// </summary>
+	/// <param name="buttonNumber"></param>
+	/// <returns>ジョイスティックボタンを押した状態か</returns>
+	bool XPushJoystick(uint8_t joystickNumber);
+
+	/// <summary>
+	/// ジョイスティックボタンを離した状態か
+	/// </summary>
+	/// <param name="buttonNumber"></param>
+	/// <returns>ジョイスティックボタンを離した状態か</returns>
+	bool XNoPushJoystick(uint8_t joystickNumber);
+
+	/// <summary>
+	/// ジョイスティックボタンを押した瞬間か
+	/// </summary>
+	/// <param name="buttonNumber"></param>
+	/// <returns>ジョイスティックボタンを押した瞬間か</returns>
+	bool XTriggerJoystick(uint8_t joystickNumber);
+
+	/// <summary>
+	/// ジョイスティックボタンを離した瞬間か
+	/// </summary>
+	/// <param name="buttonNumber"></param>
+	/// <returns>ジョイスティックボタンを離した瞬間か</returns>
+	bool XReleaseJoystick(uint8_t joystickNumber);
+
+	/// <summary>
+	/// 左のアナログスティックの状態を取得
+	/// </summary>
+	/// <returns>0~</returns>
+	Vector2 XGetLeftAnalogstick();
+
+	/// <summary>
+	/// 右のアナログスティックの状態を取得
+	/// </summary>
+	/// <returns></returns>
+	Vector2 XGetRightAnalogstick();
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <returns></returns>
+	bool XGetLTrrigger();
+	
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <returns></returns>
+	bool XGetRTrrigger();
+
+	const XINPUT_STATE& GetXJoystickState() const { return xJoystickState_; }
+
+	/// <summary>
+	/// XInputの入力情報に変換
+	/// </summary>
+	/// <param name="joystickNumber"></param>
+	/// <returns></returns>
+	uint32_t XInputButtonConverter(uint8_t joystickNumber);
+
+private: //directInput
+
+	/// <summary>
+	/// ジョイスティック接続
+	/// </summary>
+	void DirectJoystickConnected(HWND hwnd);
+	
+	/// <summary>
+	/// ジョイスティック関連更新
+	/// </summary>
+	void DirectJoystickUpdate();
+
+	/// <summary>
+	/// ジョイスティックボタンを押した状態か
+	/// </summary>
+	/// <param name="buttonNumber"></param>
+	/// <returns>ジョイスティックボタンを押した状態か</returns>
+	bool DirectPushJoystick(uint8_t joystickNumber) const;
+
+	/// <summary>
+	/// ジョイスティックボタンを離した状態か
+	/// </summary>
+	/// <param name="buttonNumber"></param>
+	/// <returns>ジョイスティックボタンを離した状態か</returns>
+	bool DirectNoPushJoystick(uint8_t joystickNumber) const;
+
+	/// <summary>
+	/// ジョイスティックボタンを押した瞬間か
+	/// </summary>
+	/// <param name="buttonNumber"></param>
+	/// <returns>ジョイスティックボタンを押した瞬間か</returns>
+	bool DirectTriggerJoystick(uint8_t joystickNumber) const;
+
+	/// <summary>
+	/// ジョイスティックボタンを離した瞬間か
+	/// </summary>
+	/// <param name="buttonNumber"></param>
+	/// <returns>ジョイスティックボタンを離した瞬間か</returns>
+	bool DirectReleaseJoystick(uint8_t joystickNumber) const;
+
+	/// <summary>
+	/// 左のアナログスティックの状態を取得
+	/// </summary>
+	/// <returns>0~</returns>
+	Vector2 DirectGetLeftAnalogstick() const;
+
+	/// <summary>
+	/// 右のアナログスティックの状態を取得
+	/// </summary>
+	/// <returns></returns>
+	Vector2 DirectGetRightAnalogstick() const;
+
+	/// <summary>
+	/// 左右のトリガーの状態を取得()
+	/// </summary>
+	/// <returns></returns>
+	float DirectGetLRTrrigger() const;
+
+	const DIJOYSTATE2& GetDirectJoystickState() const { return directJoystickState_; }
 
 private:
 
@@ -215,8 +357,16 @@ private:
 
 	// ジョイスティック
 	Microsoft::WRL::ComPtr<IDirectInputDevice8> directJoystick_ = nullptr;
-	DIJOYSTATE2 joystick_;
-	DIJOYSTATE2 joystickPre_;
+	DIJOYSTATE2 directJoystickState_;
+	DIJOYSTATE2 directJoystickPreState_;
+	
+	//XInput
+	DWORD xJoystick_;
+	XINPUT_STATE xJoystickState_;
+	XINPUT_STATE xJoystickPreState_;
+
+	// DIJOYSTATE2かXInputか
+	bool usedXInput_ = true;
 	//つながっているかどうか
 	bool joystickConnected;
 	//スティックのデッドゾーン
