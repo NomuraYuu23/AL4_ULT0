@@ -140,8 +140,8 @@ void ParticleManager::BillBoardUpdate(BaseCamera& camera)
 
 	Matrix4x4 cameraTransformMatrix = matrix4x4Calc->MakeAffineMatrix(
 		{ 1.0f, 1.0f, 1.0f },
-		{ 0.0f, camera.GetRotate().y, 0.0f},
-		camera.GetTransform());
+		{ 0.0f, camera.GetTransform().rotate.y, 0.0f},
+		camera.GetTransform().translate);
 	billBoardMatrixY_ = matrix4x4Calc->Multiply(backToFrontMatrix, cameraTransformMatrix);
 	billBoardMatrixY_.m[3][0] = 0.0f;
 	billBoardMatrixY_.m[3][1] = 0.0f;
