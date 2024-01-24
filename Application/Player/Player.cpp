@@ -1,6 +1,7 @@
 #include "Player.h"
 #include "../../Engine/Collider/Capsule/Capsule.h"
 #include "../../Engine/2D/ImguiManager.h"
+#include "../Enemy/Enemy.h"
 
 void Player::Initialize(const std::array<Model*, PlayerPartIndex::kPlayerPartIndexOfCount>& models)
 {
@@ -97,10 +98,12 @@ void Player::ImGuiDraw()
 
 }
 
-void Player::OnCollision(ColliderParentObject colliderPartner, CollisionData collisionData)
+void Player::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
 {
 
-
+	if (std::holds_alternative<Enemy*>(colliderPartner)) {
+		OnCollisionEnemy(colliderPartner, collisionData);
+	}
 
 }
 
@@ -389,6 +392,33 @@ void Player::ColliderUpdate()
 	static_cast<Capsule*>(colliders_[kPlayerColliderRightShin].get())->segment_ = segment;
 	static_cast<Capsule*>(colliders_[kPlayerColliderRightShin].get())->radius_ = colliderRadiuses_[kPlayerColliderRightShin];
 	static_cast<Capsule*>(colliders_[kPlayerColliderRightShin].get())->worldTransformUpdate();
+
+}
+
+void Player::OnCollisionEnemy(ColliderParentObject colliderPartner, const CollisionData& collisionData)
+{
+
+	Enemy* enemy = std::get<Enemy*>(colliderPartner);
+
+	// 位置
+	Vector3 playerPosition = worldTransform_.GetWorldPosition();
+	playerPosition.y = 0.0f;
+
+	Vector3 enemyPosition = enemy->GetWorldTransformAdress()->GetWorldPosition();
+	enemyPosition.y = 0.0f;
+
+	// 向き
+	Vector3 direction = Vector3Calc::Normalize(Vector3Calc::Subtract(playerPosition, enemyPosition));
+
+	// 距離
+	float distance = width_ + enemy->GetWidth();
+
+	// 移動
+	Vector3 move = Vector3Calc::Multiply(distance, direction);
+
+	worldTransform_.transform_.translate = Vector3Calc::Add(enemyPosition, move);
+	worldTransform_.transform_.translate.y = height_;
+	worldTransform_.UpdateMatrix();
 
 }
 

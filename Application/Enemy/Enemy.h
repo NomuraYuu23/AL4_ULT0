@@ -94,7 +94,7 @@ public: // ベースのメンバ関数
 	/// </summary>
 	/// <param name="colliderPartner"></param>
 	/// <param name="collisionData"></param>
-	void OnCollision(ColliderParentObject colliderPartner, CollisionData collisionData);
+	void OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData);
 
 private: // ベースのメンバ変数
 
@@ -239,6 +239,9 @@ private: // エネミーデータ
 	// 高さ
 	float height_ = 30.0f;
 
+	// 幅
+	float width_ = 20.0f;
+
 	// プレイヤー
 	Player* player_ = nullptr;
 
@@ -249,6 +252,8 @@ public: // アクセッサ
 	void SetReceiveCommand(bool receiveCommand) { receiveCommand_ = receiveCommand; }
 
 	void SetHeight(float height) { height_ = height; }
+
+	float GetWidth() { return width_; }
 
 	std::array<ColliderShape, EnemyColliderIndex::kEnemyColliderIndexOfCount> GetCollider();
 

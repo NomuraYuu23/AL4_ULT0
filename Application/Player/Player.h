@@ -104,7 +104,7 @@ public: // ベースのメンバ関数
 	/// </summary>
 	/// <param name="colliderPartner"></param>
 	/// <param name="collisionData"></param>
-	void OnCollision(ColliderParentObject colliderPartner, CollisionData collisionData);
+	void OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData);
 
 private: // ベースのメンバ変数
 
@@ -252,8 +252,20 @@ private: // プレイヤーデータ
 	// 高さ
 	float height_ = 20.0f;
 
+	// 幅
+	float width_ = 10.0f;
+
 	// カメラ
 	BaseCamera* camera_ = nullptr;
+
+private: // 衝突処理
+
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="colliderPartner"></param>
+	/// <param name="collisionData"></param>
+	void OnCollisionEnemy(ColliderParentObject colliderPartner, const CollisionData& collisionData);
 
 public: // アクセッサ
 

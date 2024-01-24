@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include "../../Engine/Collider/Capsule/Capsule.h"
 #include "../../Engine/2D/ImguiManager.h"
+#include "../Player/Player.h"
 
 void Enemy::Initialize(const std::array<Model*, EnemyPartIndex::kEnemyPartIndexOfCount>& models, Model* weaponModel)
 {
@@ -81,7 +82,7 @@ void Enemy::ImGuiDraw()
 {
 }
 
-void Enemy::OnCollision(ColliderParentObject colliderPartner, CollisionData collisionData)
+void Enemy::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
 {
 
 
