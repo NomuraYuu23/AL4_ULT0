@@ -116,6 +116,9 @@ private: // ベースのメンバ変数
 	// 衝突マスク(相手)
 	uint32_t collisionMask_ = 0xfffffffd;
 
+	// シリアルナンバー
+	uint32_t serialNumber_ = 0;
+
 private: // ステート関数
 
 	/// <summary>
@@ -264,6 +267,8 @@ public: // アクセッサ
 	void SetPlayer(Player* player) { player_ = player; }
 
 	Player* GetPlayer() { return player_; }
+
+	uint32_t GetSerialNumber() { return serialNumber_; }
 
 };
 

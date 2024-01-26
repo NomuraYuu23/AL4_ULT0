@@ -112,6 +112,8 @@ void PlayerStateAttack::AttackInitialize()
 		playerMotionNo_ = kPlayerMotionAttack2nd;
 	}
 
+	playerAttack_->ClearContactRecord();
+
 }
 
 void PlayerStateAttack::AttackComboContinuationJudgment()
