@@ -5,6 +5,7 @@
 #include "../../../Engine/base/D3DResourceLeakChecker.h"
 
 #include "../../Player/PlayerState/PlayerStateAttack/PlayerStateAttack.h"
+#include "../../Enemy/EnemyState/EnemyStateDashSwingDown/EnemyStateDashSwingDown.h"
 
 /// <summary>
 /// 初期化
@@ -21,6 +22,7 @@ void GameScene::Initialize() {
 	colliderDebugDraw_ = std::make_unique<ColliderDebugDraw>();
 	std::vector<Model*> colliderModels = { colliderSphereModel_.get(),colliderBoxModel_.get(),colliderBoxModel_.get() };
 	colliderDebugDraw_->Initialize(colliderModels, colliderMaterial_.get());
+	debugWorldTransform_.Initialize();
 
 	pause_ = std::make_unique<Pause>();
 	pause_->Initialize(pauseTextureHandles_);
@@ -130,6 +132,15 @@ void GameScene::Update() {
 	// コリジョンマネージャー
 	CollisonUpdate();
 
+	// デバッグ
+	if (enemy_->GetCurrentStateNo() == kEnemyStateDashSwingDown) {
+		debugWorldTransform_.transform_.translate = static_cast<Capsule*>(static_cast<EnemyStateDashSwingDown*>(enemy_->GetEnemyState())->GetCollider())->segment_.origin_;
+		debugWorldTransform_.transform_.scale.x = static_cast<Capsule*>(static_cast<EnemyStateDashSwingDown*>(enemy_->GetEnemyState())->GetCollider())->radius_;
+		debugWorldTransform_.transform_.scale.y = static_cast<Capsule*>(static_cast<EnemyStateDashSwingDown*>(enemy_->GetEnemyState())->GetCollider())->radius_;
+		debugWorldTransform_.transform_.scale.z = static_cast<Capsule*>(static_cast<EnemyStateDashSwingDown*>(enemy_->GetEnemyState())->GetCollider())->radius_;
+		debugWorldTransform_.UpdateMatrix();
+	}
+
 }
 
 /// <summary>
@@ -166,6 +177,8 @@ void GameScene::Draw() {
 
 	// デバッグ描画
 	colliderDebugDraw_->Draw(camera_);
+
+	colliderSphereModel_->Draw(debugWorldTransform_, camera_);
 
 #endif // _DEBUG
 
@@ -275,6 +288,12 @@ void GameScene::CollisonUpdate()
 	std::array<ColliderShape, EnemyColliderIndex::kEnemyColliderIndexOfCount> enemyCollider = enemy_->GetCollider();
 	for (uint32_t i = 0; i < enemyCollider.size(); ++i) {
 		collisionManager_->ListRegister(enemyCollider[i]);
+	}	
+	// エネミーの攻撃
+	if (enemy_->GetCurrentStateNo() == kEnemyStateDashSwingDown) {
+		if (static_cast<EnemyStateDashSwingDown*>(enemy_->GetEnemyState())->GetIsAttackJudgment()) {
+			collisionManager_->ListRegister(static_cast<EnemyStateDashSwingDown*>(enemy_->GetEnemyState())->GetCollider());
+		}
 	}
 
 	collisionManager_->CheakAllCollision();

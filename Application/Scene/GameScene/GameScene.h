@@ -84,6 +84,8 @@ private:
 	std::unique_ptr<Model> colliderSphereModel_ = nullptr;
 	std::unique_ptr<Model> colliderBoxModel_ = nullptr;
 	std::unique_ptr<Material> colliderMaterial_ = nullptr;
+	WorldTransform debugWorldTransform_;
+
 
 	// ポーズ
 	// テクスチャハンドル

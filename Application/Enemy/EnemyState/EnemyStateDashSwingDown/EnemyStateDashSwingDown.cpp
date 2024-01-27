@@ -19,14 +19,14 @@ void EnemyStateDashSwingDown::Initialize()
 
 	// あたり判定ワールドトランスフォーム
 	attackWorldTransform_.Initialize();
-	//attackWorldTransform_.parent_ = ;
+	attackWorldTransform_.parent_ = enemy_->GetPart(kEnemyPartRightHand)->GetWorldTransformAdress();
 	attackWorldTransform_.UpdateMatrix();
 
 	// 攻撃球の半径
-	attackRadius_ = 1.0f;
+	attackRadius_ = 30.0f;
 
 	// 攻撃球と手の距離
-	attackLength_ = { 0.0f, 0.0f, 2.0f };
+	attackLength_ = { 0.0f, 0.0f, 10.0f };
 
 	// 攻撃球のプレイヤーからのローカル位置
 	attackCenter_ = { -10000.0f,-10000.0f,-10000.0f };
@@ -34,8 +34,13 @@ void EnemyStateDashSwingDown::Initialize()
 	// 前フレームの攻撃球
 	prevAttackCenter_ = { -10000.0f,-10000.0f,-10000.0f };
 
+	// 攻撃
+	enemyAttack_ = std::make_unique<EnemyAttack>();
+
 	// あたり判定コライダー初期化
-	attackCollider_->Initialize(Segment{ attackCenter_ , {0.0f,0.0f,0.0f} }, attackRadius_, static_cast<Player*>(nullptr));
+	attackCollider_->Initialize(Segment{ attackCenter_ , {0.0f,0.0f,0.0f} }, attackRadius_, enemyAttack_.get());
+	attackCollider_->SetCollisionAttribute(0x00000002);
+	attackCollider_->SetCollisionMask(0xfffffffd);
 
 	// あたり判定を取るか
 	isAttackJudgment_ = false;
@@ -52,6 +57,8 @@ void EnemyStateDashSwingDown::Initialize()
 	AttackInitialize();
 
 	enemyStateNo_ = EnemyState::kEnemyStateDashSwingDown;
+	
+	enemyAttack_->ClearContactRecord();
 
 }
 
@@ -92,6 +99,29 @@ void EnemyStateDashSwingDown::Attack()
 {
 
 	Move();
+
+	// コライダー更新
+	if (inPhase_ == static_cast<uint32_t>(ComboPhase::kSwing) ||
+		(inPhase_ == static_cast<uint32_t>(ComboPhase::kRecovery) && parameter_ <= 0.4f) ) {
+		attackWorldTransform_.parent_ = enemy_->GetPart(kEnemyPartRightHand)->GetWorldTransformAdress();
+		attackWorldTransform_.transform_.translate = attackLength_;
+		attackWorldTransform_.UpdateMatrix();
+		if (attackCenter_.x <= -10000.0f) {
+			prevAttackCenter_ = attackWorldTransform_.GetWorldPosition();
+		}
+		else {
+			prevAttackCenter_ = attackCenter_;
+		}
+		attackCenter_ = attackWorldTransform_.GetWorldPosition();
+		Segment segment;
+		segment.origin_ = attackCenter_;
+		segment.diff_ = v3Calc_->Subtract(prevAttackCenter_, attackCenter_);
+		attackCollider_->segment_ = segment;
+		attackCollider_->radius_ = attackRadius_;
+	}
+	else {
+		DontAttack();
+	}
 
 }
 

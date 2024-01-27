@@ -103,6 +103,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\AudioManager\GameAudioManager.cpp" />
     <ClCompile Include="Application\Camera\FollowCamera\FollowCamera.cpp" />
     <ClCompile Include="Application\ContactRecord\ContactRecord.cpp" />
+    <ClCompile Include="Application\Enemy\EnemyAttack\EnemyAttack.cpp" />
     <ClCompile Include="Application\Enemy\EnemyCommand\EnemyCommand.cpp" />
     <ClCompile Include="Application\Enemy\EnemyState\EnemyStateFactory.cpp" />
     <ClCompile Include="Application\Enemy\EnemyState\EnemyStateRoot\EnemyStateRoot.cpp" />
@@ -193,6 +194,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Camera\FollowCamera\FollowCamera.h" />
     <ClInclude Include="Application\Collider\ColliderParentObject.h" />
     <ClInclude Include="Application\ContactRecord\ContactRecord.h" />
+    <ClInclude Include="Application\Enemy\EnemyAttack\EnemyAttack.h" />
     <ClInclude Include="Application\Enemy\EnemyCommand\EnemyCommand.h" />
     <ClInclude Include="Application\Enemy\EnemyState\EnemyStateDashSwingDown\EnemyStateDashSwingDown.h" />
     <ClInclude Include="Application\Enemy\EnemyState\EnemyStateFactory.h" />

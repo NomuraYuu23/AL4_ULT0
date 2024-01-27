@@ -126,6 +126,8 @@ private: // ベースのメンバ変数
 	// 衝突マスク(相手)
 	uint32_t collisionMask_ = 0xfffffffe;
 
+	// シリアルナンバー
+	uint32_t serialNumber_ = 0;
 
 private: // ステート関数
 
@@ -286,5 +288,7 @@ public: // アクセッサ
 	IPlayerState* GetPlayerState() { return playerState_.get(); }
 
 	uint32_t GetCurrentStateNo() { return currentStateNo_; }
+
+	uint32_t GetSerialNumber() { return serialNumber_; }
 
 };

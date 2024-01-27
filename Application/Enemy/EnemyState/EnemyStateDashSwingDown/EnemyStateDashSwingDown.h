@@ -1,6 +1,8 @@
 #pragma once
 #include "../IEnemyState.h"
 #include "../../../../Engine/Collider/Capsule/Capsule.h"
+#include "../../EnemyAttack/EnemyAttack.h"
+
 class EnemyStateDashSwingDown : public IEnemyState
 {
 
@@ -106,6 +108,15 @@ private: // メンバ変数
 
 	// 向き制限
 	Vector3 directionLimit = { 0.4f,0.4f,0.4f };
+
+	// 攻撃
+	std::unique_ptr<EnemyAttack> enemyAttack_;
+
+public:
+
+	Capsule* GetCollider() { return attackCollider_.get(); }
+
+	bool GetIsAttackJudgment() { return isAttackJudgment_; }
 
 };
 

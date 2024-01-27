@@ -268,7 +268,13 @@ public: // アクセッサ
 
 	Player* GetPlayer() { return player_; }
 
+	IEnemyState* GetEnemyState() { return enemyState_.get(); }
+
+	uint32_t GetCurrentStateNo() { return currentStateNo_; }
+
 	uint32_t GetSerialNumber() { return serialNumber_; }
+
+	IBone* GetPart(uint32_t num) { return parts_[num].get(); }
 
 };
 

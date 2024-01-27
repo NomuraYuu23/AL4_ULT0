@@ -176,7 +176,7 @@ void PlayerStateAttack::AttackCombo1st()
 	Move();
 
 	// コライダー更新
-	if (inComboPhase_ >= static_cast<uint32_t>(ComboPhase::kSwing)) {
+	if (inComboPhase_ == static_cast<uint32_t>(ComboPhase::kSwing)) {
 		attackWorldTransform_.transform_.translate = attackLength_;
 		attackWorldTransform_.UpdateMatrix();
 		if (attackCenter_.x <= -10000.0f) {
@@ -201,7 +201,7 @@ void PlayerStateAttack::AttackCombo2nd()
 	Move();
 
 	// コライダー更新
-	if (inComboPhase_ >= static_cast<uint32_t>(ComboPhase::kSwing)) {
+	if (inComboPhase_ == static_cast<uint32_t>(ComboPhase::kSwing)) {
 		attackWorldTransform_.transform_.translate = attackLength_;
 		attackWorldTransform_.UpdateMatrix();
 		if (attackCenter_.x <= -10000.0f) {
