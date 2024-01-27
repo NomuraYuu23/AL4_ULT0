@@ -25,6 +25,7 @@ void PlayerStateRoot::Update()
 	WorldTransform* worldTransform = player_->GetWorldTransformAdress();
 
 	worldTransform->usedDirection_ = true;
+	targetDirection_ = worldTransform->direction_;
 
 	//移動
 	if (input_->GetJoystickConnected()) {

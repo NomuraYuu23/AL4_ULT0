@@ -26,7 +26,7 @@ void PlayerStateAttack::Initialize()
 	attackWorldTransform_.UpdateMatrix();
 
 	// 攻撃球の半径
-	attackRadius_ = 1.0f;
+	attackRadius_ = 10.0f;
 
 	// 攻撃球と手の距離
 	attackLength_ = { 0.0f, 0.0f, 10.0f };
@@ -176,7 +176,8 @@ void PlayerStateAttack::AttackCombo1st()
 	Move();
 
 	// コライダー更新
-	if (inComboPhase_ == static_cast<uint32_t>(ComboPhase::kSwing)) {
+	if (inComboPhase_ == static_cast<uint32_t>(ComboPhase::kSwing) || 
+		(inComboPhase_ == static_cast<uint32_t>(ComboPhase::kRecovery) && parameter_ <= 0.2f)) {
 		attackWorldTransform_.transform_.translate = attackLength_;
 		attackWorldTransform_.UpdateMatrix();
 		if (attackCenter_.x <= -10000.0f) {
@@ -201,7 +202,8 @@ void PlayerStateAttack::AttackCombo2nd()
 	Move();
 
 	// コライダー更新
-	if (inComboPhase_ == static_cast<uint32_t>(ComboPhase::kSwing)) {
+	if (inComboPhase_ == static_cast<uint32_t>(ComboPhase::kSwing) ||
+		(inComboPhase_ == static_cast<uint32_t>(ComboPhase::kRecovery) && parameter_ <= 0.2f)) {
 		attackWorldTransform_.transform_.translate = attackLength_;
 		attackWorldTransform_.UpdateMatrix();
 		if (attackCenter_.x <= -10000.0f) {
@@ -243,22 +245,22 @@ void PlayerStateAttack::Move()
 	Vector3 velocity = { 0.0f, 0.0f, 0.0f };
 
 	// 移動量
-	Vector3 move = { 0.0f, 0.0f, 1.0f };
+	Vector3 move = worldTransform->direction_;
 
 	// 移動量に速さを反映
 	move = v3Calc_->Multiply(kConstAttaks[comboIndex_].speed_[inComboPhase_], v3Calc_->Normalize(move));
 
 	// カメラの角度から回転行列を計算する
-	Matrix4x4 rotateMatrix = m4Calc_->MakeRotateXYZMatrix(camera->GetTransform().rotate);
+	//Matrix4x4 rotateMatrix = m4Calc_->MakeRotateXYZMatrix(camera->GetTransform().rotate);
 
 	// 移動ベクトルをカメラの角度だけ回転する
-	move = m4Calc_->TransformNormal(move, rotateMatrix);
+	//move = m4Calc_->TransformNormal(move, rotateMatrix);
 
 	//　親がいれば
-	if (worldTransform->parent_) {
-		rotateMatrix = m4Calc_->Inverse(worldTransform->parent_->rotateMatrix_);
-		move = m4Calc_->TransformNormal(move, rotateMatrix);
-	}
+	//if (worldTransform->parent_) {
+		//rotateMatrix = m4Calc_->Inverse(worldTransform->parent_->rotateMatrix_);
+		//move = m4Calc_->TransformNormal(move, rotateMatrix);
+	//}
 
 	// 移動
 	velocity.x = move.x;

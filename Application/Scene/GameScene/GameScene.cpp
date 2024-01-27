@@ -133,11 +133,11 @@ void GameScene::Update() {
 	CollisonUpdate();
 
 	// デバッグ
-	if (enemy_->GetCurrentStateNo() == kEnemyStateDashSwingDown) {
-		debugWorldTransform_.transform_.translate = static_cast<Capsule*>(static_cast<EnemyStateDashSwingDown*>(enemy_->GetEnemyState())->GetCollider())->segment_.origin_;
-		debugWorldTransform_.transform_.scale.x = static_cast<Capsule*>(static_cast<EnemyStateDashSwingDown*>(enemy_->GetEnemyState())->GetCollider())->radius_;
-		debugWorldTransform_.transform_.scale.y = static_cast<Capsule*>(static_cast<EnemyStateDashSwingDown*>(enemy_->GetEnemyState())->GetCollider())->radius_;
-		debugWorldTransform_.transform_.scale.z = static_cast<Capsule*>(static_cast<EnemyStateDashSwingDown*>(enemy_->GetEnemyState())->GetCollider())->radius_;
+	if (player_->GetCurrentStateNo() == kPlayerStateAttack) {
+		debugWorldTransform_.transform_.translate = static_cast<Capsule*>(static_cast<PlayerStateAttack*>(player_->GetPlayerState())->GetCollider())->segment_.origin_;
+		debugWorldTransform_.transform_.scale.x = static_cast<Capsule*>(static_cast<PlayerStateAttack*>(player_->GetPlayerState())->GetCollider())->radius_;
+		debugWorldTransform_.transform_.scale.y = static_cast<Capsule*>(static_cast<PlayerStateAttack*>(player_->GetPlayerState())->GetCollider())->radius_;
+		debugWorldTransform_.transform_.scale.z = static_cast<Capsule*>(static_cast<PlayerStateAttack*>(player_->GetPlayerState())->GetCollider())->radius_;
 		debugWorldTransform_.UpdateMatrix();
 	}
 
