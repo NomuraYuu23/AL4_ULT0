@@ -273,11 +273,15 @@ void GameScene::GoToTheTitle()
 void GameScene::CollisonUpdate()
 {
 
+	// リストクリア
 	collisionManager_->ListClear();
+	
+	// プレイヤー
 	std::array<ColliderShape, PlayerColliderIndex::kPlayerColliderIndexOfCount> playerCollider = player_->GetCollider();
 	for (uint32_t i = 0; i < playerCollider.size(); ++i) {
 		collisionManager_->ListRegister(playerCollider[i]);
 	}
+
 	// プレイヤーの攻撃
 	if (player_->GetCurrentStateNo() == kPlayerStateAttack) {
 		if (static_cast<PlayerStateAttack*>(player_->GetPlayerState())->GetIsAttackJudgment()) {
@@ -285,10 +289,12 @@ void GameScene::CollisonUpdate()
 		}
 	}
 
+	// エネミー
 	std::array<ColliderShape, EnemyColliderIndex::kEnemyColliderIndexOfCount> enemyCollider = enemy_->GetCollider();
 	for (uint32_t i = 0; i < enemyCollider.size(); ++i) {
 		collisionManager_->ListRegister(enemyCollider[i]);
 	}	
+
 	// エネミーの攻撃
 	if (enemy_->GetCurrentStateNo() == kEnemyStateDashSwingDown) {
 		if (static_cast<EnemyStateDashSwingDown*>(enemy_->GetEnemyState())->GetIsAttackJudgment()) {
@@ -296,6 +302,7 @@ void GameScene::CollisonUpdate()
 		}
 	}
 
+	// 確認
 	collisionManager_->CheakAllCollision();
 
 }

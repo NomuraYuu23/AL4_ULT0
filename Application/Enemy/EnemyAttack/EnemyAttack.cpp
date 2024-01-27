@@ -24,6 +24,11 @@ void EnemyAttack::OnCollisionPlayer(ColliderParentObject colliderPartner, const 
 	Player* player = std::get<Player*>(colliderPartner);
 	uint32_t serialNumber = player->GetSerialNumber();
 
+	// プレイヤーが回避か
+	if (player->GetCurrentStateNo() == kPlayerStateAvoidance) {
+		return;
+	}
+
 	// 履歴確認
 	if (contactRecord_.ConfirmHistory(serialNumber)) {
 		return;
