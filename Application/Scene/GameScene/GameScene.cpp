@@ -93,6 +93,10 @@ void GameScene::Initialize() {
 	enemy_->Initialize(EnemyModels, enemyWeaponModel_.get());
 	enemy_->SetPlayer(player_.get());
 
+	// UI
+	UIManager_ = std::make_unique<UIManager>();
+	UIManager_->Initialize(UITextureHandles_);
+
 }
 
 /// <summary>
@@ -215,7 +219,7 @@ void GameScene::Draw() {
 	//背景
 	//前景スプライト描画
 	pause_->Draw();
-
+	UIManager_->Draw();
 
 	// 前景スプライト描画後処理
 	Sprite::PostDraw();
@@ -382,6 +386,12 @@ void GameScene::TextureLoad()
 		TextureManager::Load("Resources/default/pause/pausing.png", dxCommon_, textureHandleManager_.get()),
 		TextureManager::Load("Resources/default/pause/goToTitle.png", dxCommon_, textureHandleManager_.get()),
 		TextureManager::Load("Resources/default/pause/returnToGame.png", dxCommon_, textureHandleManager_.get()),
+	};
+
+	// UI
+	UITextureHandles_ = {
+		TextureManager::Load("Resources/UI/attack.png", dxCommon_, textureHandleManager_.get()),
+		TextureManager::Load("Resources/UI/rolling.png", dxCommon_, textureHandleManager_.get()),
 	};
 
 }

@@ -17,6 +17,8 @@
 #include "../../Ground/Ground.h"
 // エネミー
 #include "../../Enemy/Enemy.h"
+// UI
+#include "../../UIManager/UIManager.h"
 
 class GameScene : public IScene
 {
@@ -129,4 +131,9 @@ private:
 	// エネミーモデル
 	std::array<std::unique_ptr<Model>, EnemyPartIndex::kEnemyPartIndexOfCount> enemyModels_;
 	std::unique_ptr<Model> enemyWeaponModel_;
+
+	// UI
+	std::unique_ptr<UIManager> UIManager_;
+	std::array<uint32_t, UIIndex::kUIIndexOfCount> UITextureHandles_;
+
 };

@@ -126,6 +126,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Scene\TitleScene\TitleScene.cpp" />
     <ClCompile Include="Application\Enemy\Enemy.cpp" />
     <ClCompile Include="Application\Enemy\EnemyState\EnemyStateDashSwingDown\EnemyStateDashSwingDown.cpp" />
+    <ClCompile Include="Application\UIManager\UIManager.cpp" />
     <ClCompile Include="Engine\2D\ImGuiManager.cpp" />
     <ClCompile Include="Engine\Animation\AnimationFile.cpp" />
     <ClCompile Include="Engine\Animation\IBone.cpp" />
@@ -220,6 +221,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Scene\SelectScene\SelectScene.h" />
     <ClInclude Include="Application\Scene\TitleScene\TitleScene.h" />
     <ClInclude Include="Application\Enemy\Enemy.h" />
+    <ClInclude Include="Application\UIManager\UIManager.h" />
     <ClInclude Include="Engine\2D\ImGuiManager.h" />
     <ClInclude Include="Engine\Animation\AnimationFile.h" />
     <ClInclude Include="Engine\Animation\BoneData.h" />
