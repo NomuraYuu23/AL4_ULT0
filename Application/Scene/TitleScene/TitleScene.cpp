@@ -1,4 +1,6 @@
 #include "TitleScene.h"
+#include "../../../Engine/base/TextureManager.h"
+#include "../../../Engine/Math/Ease.h"
 
 void TitleScene::Initialize()
 {
@@ -9,15 +11,40 @@ void TitleScene::Initialize()
 	MaterialCreate();
 	TextureLoad();
 
+	titleSprite_.reset(Sprite::Create(titleTextureHandle_, { 640.0f, 360.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }));
+	buttonSprite_.reset(Sprite::Create(buttonTextureHandle_, { 640.0f, 400.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }));
+	buttonAlphaT_ = 0.0f;
+	buttonAlphaTSpeed_ = 0.01f;
+	buttonItIncreaseAlphaT_ = true;
+	buttonColor_ = { 1.0f, 1.0f, 1.0f, 1.0f };
+
 }
 
 void TitleScene::Update()
 {
 
-	if (input_->TriggerKey(DIK_SPACE)) {
+	if (input_->TriggerJoystick(JoystickButton::kJoystickButtonA)) {
 		// 行きたいシーンへ
 		requestSceneNo = kGame;
 	}
+
+	// ボタンスプライト
+	if (buttonItIncreaseAlphaT_) {
+		buttonAlphaT_ += buttonAlphaTSpeed_;
+		if (buttonAlphaT_ >= 1.0f) {
+			buttonAlphaT_ = 1.0f;
+			buttonItIncreaseAlphaT_ = false;
+		}
+	}
+	else {
+		buttonAlphaT_ -= buttonAlphaTSpeed_;
+		if (buttonAlphaT_ <= 0.0f) {
+			buttonAlphaT_ = 0.0f;
+			buttonItIncreaseAlphaT_ = true;
+		}
+	}
+	buttonColor_.w = Ease::Easing(Ease::EaseName::Lerp, 0.0f, 1.0f, buttonAlphaT_);
+	buttonSprite_->SetColor(buttonColor_);
 
 }
 
@@ -49,6 +76,8 @@ void TitleScene::Draw()
 
 	//背景
 	//前景スプライト描画
+	titleSprite_->Draw();
+	buttonSprite_->Draw();
 
 	// 前景スプライト描画後処理
 	Sprite::PostDraw();
@@ -67,4 +96,8 @@ void TitleScene::MaterialCreate()
 
 void TitleScene::TextureLoad()
 {
+
+	titleTextureHandle_ = TextureManager::Load("Resources/OutGame/title.png", dxCommon_, textureHandleManager_.get());
+	buttonTextureHandle_ = TextureManager::Load("Resources/OutGame/button.png", dxCommon_, textureHandleManager_.get());
+
 }
