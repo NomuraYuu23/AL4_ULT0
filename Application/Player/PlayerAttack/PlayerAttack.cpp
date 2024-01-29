@@ -32,5 +32,7 @@ void PlayerAttack::OnCollisionEnemy(ColliderParentObject colliderPartner, const 
 	contactRecord_.AddHistory(serialNumber);
 
 	// 衝突処理
+	enemy->Damage(damage_);
+
 
 }

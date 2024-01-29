@@ -99,6 +99,12 @@ void GameScene::Initialize() {
 /// 更新処理
 /// </summary>
 void GameScene::Update() {
+
+	// タイトルへ
+	if (enemy_->GetIsDead()) {
+		requestSceneNo = kTitle;
+	}
+
 	ImguiDraw();
 	//光源
 	directionalLight_->Update(directionalLightData_);

@@ -248,6 +248,20 @@ private: // エネミーデータ
 	// プレイヤー
 	Player* player_ = nullptr;
 
+	//hp
+	int32_t hp_;
+
+	// 死んだか
+	bool isDead_;
+
+public:
+
+	/// <summary>
+	/// ダメージ処理
+	/// </summary>
+	/// <param name="damage"></param>
+	void Damage(uint32_t damage);
+
 private: // 衝突処理
 
 	void OnCollisionPlayerAttack(ColliderParentObject colliderPartner, const CollisionData& collisionData);
@@ -275,6 +289,8 @@ public: // アクセッサ
 	uint32_t GetSerialNumber() { return serialNumber_; }
 
 	IBone* GetPart(uint32_t num) { return parts_[num].get(); }
+
+	bool GetIsDead() { return isDead_; }
 
 };
 

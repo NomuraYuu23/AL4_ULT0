@@ -41,6 +41,11 @@ void Enemy::Initialize(const std::array<Model*, EnemyPartIndex::kEnemyPartIndexO
 	weaponWorldTransfrom_.transform_.rotate.z = 1.57f;
 	weaponWorldTransfrom_.UpdateMatrix();
 
+	// hp
+	hp_ = 10;
+
+	isDead_ = false;
+
 }
 
 void Enemy::Update()
@@ -377,6 +382,17 @@ void Enemy::ColliderUpdate()
 	static_cast<Capsule*>(colliders_[kEnemyColliderRightShin].get())->segment_ = segment;
 	static_cast<Capsule*>(colliders_[kEnemyColliderRightShin].get())->radius_ = colliderRadiuses_[kEnemyColliderRightShin];
 	static_cast<Capsule*>(colliders_[kEnemyColliderRightShin].get())->worldTransformUpdate();
+
+}
+
+void Enemy::Damage(uint32_t damage)
+{
+
+	hp_ -= damage;
+
+	if (hp_ <= 0) {
+		isDead_ = true;
+	}
 
 }
 
