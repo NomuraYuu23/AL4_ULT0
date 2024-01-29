@@ -51,8 +51,8 @@ void FollowCamera::Update() {
 	float limit = 3.14f / 4.0f;
 	destinationAngle_.x = std::clamp(destinationAngle_.x, 0.0f, limit);
 	if (input->TriggerJoystick(9)) {
-		destinationAngle_.y = target_->transform_.rotate.y;
-		destinationAngle_.x = 0.2f;
+		//destinationAngle_.y = target_->transform_.rotate.y;
+		//destinationAngle_.x = 0.2f;
 	}
 
 	//追従対象がいれば
