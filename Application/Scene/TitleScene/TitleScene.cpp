@@ -12,7 +12,7 @@ void TitleScene::Initialize()
 	TextureLoad();
 
 	titleSprite_.reset(Sprite::Create(titleTextureHandle_, { 640.0f, 360.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }));
-	buttonSprite_.reset(Sprite::Create(buttonTextureHandle_, { 640.0f, 400.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }));
+	buttonSprite_.reset(Sprite::Create(buttonTextureHandle_, { 640.0f, 500.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }));
 	buttonAlphaT_ = 0.0f;
 	buttonAlphaTSpeed_ = 0.01f;
 	buttonItIncreaseAlphaT_ = true;

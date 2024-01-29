@@ -102,7 +102,7 @@ void GameScene::Update() {
 
 	// タイトルへ
 	if (enemy_->GetIsDead()) {
-		requestSceneNo = kTitle;
+		requestSceneNo = kClear;
 	}
 	if (player_->GetIsDead()) {
 		requestSceneNo = kTitle;
