@@ -88,9 +88,7 @@ void MyFramework::Update()
 
 	//入力デバイス
 	input->Update();
-	if (input->PushKey(DIK_SPACE)) {
-		input->JoystickConnected(win->GetHwnd());
-	}
+	input->JoystickConnected(win->GetHwnd());
 
 	//ゲームの処理 
 	//ImGui

@@ -46,7 +46,7 @@ void GameScene::Initialize() {
 	//particleManager_->MakeEmitter(emitter, 1, 0.5f, 300.0f, ParticleModelIndex::kCircle, 0, 0);
 
 	// デバッグカメラ
-	isDebugCameraActive_ = true;
+	isDebugCameraActive_ = false;
 
 	// オーディオマネージャー
 	audioManager_ = std::make_unique<GameAudioManager>();

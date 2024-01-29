@@ -42,7 +42,7 @@ void FollowCamera::Update() {
 
 	// スティック入力で角度を変更処理
 
-	const float RotateSpeed = 0.000001f;
+	const float RotateSpeed = 0.000003f;
 
 	destinationAngle_.y += input->GetRightAnalogstick().x * RotateSpeed;
 	destinationAngle_.x += input->GetRightAnalogstick().y * RotateSpeed;
