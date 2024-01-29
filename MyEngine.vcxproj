@@ -121,6 +121,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Player\PlayerState\PlayerStateRecovery\PlayerStateRecovery.cpp" />
     <ClCompile Include="Application\Player\PlayerState\PlayerStateRoot\PlayerStateRoot.cpp" />
     <ClCompile Include="Application\SampleBone\SampleBone.cpp" />
+    <ClCompile Include="Application\Scene\GameOverScene\GameOverScene.cpp" />
     <ClCompile Include="Application\Scene\SelectScene\SelectScene.cpp" />
     <ClCompile Include="Application\Scene\TitleScene\TitleScene.cpp" />
     <ClCompile Include="Application\Enemy\Enemy.cpp" />
@@ -214,6 +215,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Player\PlayerState\PlayerStateRecovery\PlayerStateRecovery.h" />
     <ClInclude Include="Application\Player\PlayerState\PlayerStateRoot\PlayerStateRoot.h" />
     <ClInclude Include="Application\SampleBone\SampleBone.h" />
+    <ClInclude Include="Application\Scene\GameOverScene\GameOverScene.h" />
     <ClInclude Include="Application\Scene\SceneName.h" />
     <ClInclude Include="Application\Scene\SelectScene\SelectScene.h" />
     <ClInclude Include="Application\Scene\TitleScene\TitleScene.h" />

@@ -105,7 +105,7 @@ void GameScene::Update() {
 		requestSceneNo = kClear;
 	}
 	if (player_->GetIsDead()) {
-		requestSceneNo = kTitle;
+		requestSceneNo = kGameOver;
 	}
 
 
