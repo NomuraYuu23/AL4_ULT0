@@ -260,6 +260,20 @@ private: // プレイヤーデータ
 	// カメラ
 	BaseCamera* camera_ = nullptr;
 
+	//hp
+	int32_t hp_;
+
+	// 死んだか
+	bool isDead_;
+
+public:
+
+	/// <summary>
+	/// ダメージ処理
+	/// </summary>
+	/// <param name="damage"></param>
+	void Damage(uint32_t damage);
+
 private: // 衝突処理
 
 	/// <summary>
@@ -290,5 +304,7 @@ public: // アクセッサ
 	uint32_t GetCurrentStateNo() { return currentStateNo_; }
 
 	uint32_t GetSerialNumber() { return serialNumber_; }
+
+	bool GetIsDead() { return isDead_; }
 
 };

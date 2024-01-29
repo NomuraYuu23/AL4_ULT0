@@ -104,6 +104,10 @@ void GameScene::Update() {
 	if (enemy_->GetIsDead()) {
 		requestSceneNo = kTitle;
 	}
+	if (player_->GetIsDead()) {
+		requestSceneNo = kTitle;
+	}
+
 
 	ImguiDraw();
 	//光源

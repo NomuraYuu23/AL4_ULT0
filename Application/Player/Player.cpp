@@ -33,6 +33,11 @@ void Player::Initialize(const std::array<Model*, PlayerPartIndex::kPlayerPartInd
 	// コライダー
 	ColliderInitialize();
 
+	// hp
+	hp_ = 3;
+
+	isDead_ = false;
+
 }
 
 void Player::Update()
@@ -419,6 +424,17 @@ void Player::OnCollisionEnemy(ColliderParentObject colliderPartner, const Collis
 	worldTransform_.transform_.translate = Vector3Calc::Add(enemyPosition, move);
 	worldTransform_.transform_.translate.y = height_;
 	worldTransform_.UpdateMatrix();
+
+}
+
+void Player::Damage(uint32_t damage)
+{
+
+	hp_ -= damage;
+
+	if (hp_ <= 0) {
+		isDead_ = true;
+	}
 
 }
 

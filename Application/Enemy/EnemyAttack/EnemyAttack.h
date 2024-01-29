@@ -40,5 +40,8 @@ private:
 	// 接触履歴
 	ContactRecord contactRecord_;
 
+	// ダメージ
+	uint32_t damage_ = 1;
+
 };
 
