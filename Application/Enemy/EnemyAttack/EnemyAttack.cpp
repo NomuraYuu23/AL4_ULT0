@@ -40,4 +40,7 @@ void EnemyAttack::OnCollisionPlayer(ColliderParentObject colliderPartner, const 
 	// 衝突処理
 	player->Damage(damage_);
 
+	TransformStructure transform = { { 5.0f, 5.0f, 5.0f },{ 0.0f, 0.0f, 0.0f}, player->GetWorldTransformAdress()->GetWorldPosition() };
+	ParticleManager::GetInstance()->MakeEmitter(transform, 3, 0.005f, 0.2f, ParticleModelIndex::kCircle, ParticleName::kBloadParticle, 0);
+
 }

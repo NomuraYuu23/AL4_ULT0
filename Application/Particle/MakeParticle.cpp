@@ -1,5 +1,6 @@
 #include "MakeParticle.h"
 #include <cassert>
+#include "Bload/BloadParticle.h"
 
 MakeParticle* MakeParticle::GetInstance()
 {
@@ -15,6 +16,10 @@ IParticle* MakeParticle::Run(uint32_t paeticleName, const Vector3& position, con
 	{
 	case kDefaultParticle:
 		particle = new IParticle();
+		particle->Initialize(position, size);
+		break;
+	case kBloadParticle:
+		particle = new BloadParticle();
 		particle->Initialize(position, size);
 		break;
 	case kCountOfParticleName:

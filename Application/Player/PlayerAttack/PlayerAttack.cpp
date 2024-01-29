@@ -1,5 +1,6 @@
 #include "PlayerAttack.h"
 #include "../../Enemy/Enemy.h"
+#include "../../../Engine/Particle/ParticleManager.h"
 
 void PlayerAttack::OnCollision(ColliderParentObject colliderPartner, const CollisionData& collisionData)
 {
@@ -34,5 +35,7 @@ void PlayerAttack::OnCollisionEnemy(ColliderParentObject colliderPartner, const 
 	// 衝突処理
 	enemy->Damage(damage_);
 
+	TransformStructure transform = { { 5.0f, 5.0f, 5.0f },{ 0.0f, 0.0f, 0.0f}, enemy->GetWorldTransformAdress()->GetWorldPosition() };
+	ParticleManager::GetInstance()->MakeEmitter(transform, 3, 0.005f, 0.1f, ParticleModelIndex::kCircle, ParticleName::kBloadParticle, 0);
 
 }
