@@ -106,10 +106,10 @@ void GameScene::Update() {
 
 	// タイトルへ
 	if (enemy_->GetIsDead()) {
-		//requestSceneNo = kClear;
+		requestSceneNo = kClear;
 	}
 	if (player_->GetIsDead()) {
-		//requestSceneNo = kGameOver;
+		requestSceneNo = kGameOver;
 	}
 
 
@@ -141,7 +141,7 @@ void GameScene::Update() {
 	player_->Update();
 
 	// エネミー
-	//enemy_->Update();
+	enemy_->Update();
 
 	// コリジョンマネージャー
 	CollisonUpdate();

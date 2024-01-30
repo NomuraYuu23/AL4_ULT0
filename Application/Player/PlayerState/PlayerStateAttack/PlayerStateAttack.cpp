@@ -64,8 +64,6 @@ void PlayerStateAttack::Initialize()
 
 	AttackInitialize();
 
-	playerAttack_->ClearContactRecord();
-
 	playerStateNo_ = PlayerState::kPlayerStateAttack;
 
 }
@@ -163,6 +161,7 @@ void PlayerStateAttack::AttackComboFinished()
 			comboIndex_ = 0;
 		}
 		AttackInitialize();
+		playerAttack_->ClearContactRecord();
 	}
 	else {
 		playerStateNo_ = PlayerState::kPlayerStateRoot;
