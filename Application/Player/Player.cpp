@@ -12,6 +12,8 @@ void Player::Initialize(const std::array<Model*, PlayerPartIndex::kPlayerPartInd
 	// ワールドトランスフォーム
 	worldTransform_.Initialize();
 	worldTransform_.transform_.translate.y = height_;
+	worldTransform_.transform_.translate.x = 10.0f;
+	worldTransform_.transform_.rotate.y = 0.1f;
 	worldTransform_.UpdateMatrix();
 
 	// コマンド

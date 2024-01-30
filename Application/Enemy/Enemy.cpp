@@ -13,6 +13,8 @@ void Enemy::Initialize(const std::array<Model*, EnemyPartIndex::kEnemyPartIndexO
 	// ワールドトランスフォーム
 	worldTransform_.Initialize();
 	worldTransform_.transform_.translate.y = height_;
+	worldTransform_.transform_.translate.z = 300.0f;
+	worldTransform_.transform_.rotate.y = 3.14f;
 	worldTransform_.UpdateMatrix();
 
 	// コマンド
