@@ -3,7 +3,7 @@
 #include "../../Engine/2D/ImguiManager.h"
 #include "../Enemy/Enemy.h"
 
-void Player::Initialize(const std::array<Model*, PlayerPartIndex::kPlayerPartIndexOfCount>& models)
+void Player::Initialize(const std::array<Model*, PlayerPartIndex::kPlayerPartIndexOfCount>& models, Model* weaponModel)
 {
 
 	// マテリアル
@@ -33,6 +33,15 @@ void Player::Initialize(const std::array<Model*, PlayerPartIndex::kPlayerPartInd
 	// コライダー
 	ColliderInitialize();
 
+	// 武器モデル
+	weaponModel_ = weaponModel;
+	weaponWorldTransfrom_.Initialize();
+	weaponWorldTransfrom_.parent_ = parts_[kEnemyPartRightHand]->GetWorldTransformAdress();
+	weaponWorldTransfrom_.transform_.rotate.x = 1.57f;
+	weaponWorldTransfrom_.transform_.rotate.z = 1.57f;
+	weaponWorldTransfrom_.transform_.translate.y = -2.0f;
+	weaponWorldTransfrom_.UpdateMatrix();
+
 	// hp
 	hp_ = 3;
 	initHp_ = 3;
@@ -60,6 +69,9 @@ void Player::Update()
 	// コライダー
 	ColliderUpdate();
 
+	// 武器
+	weaponWorldTransfrom_.UpdateMatrix();
+
 }
 
 void Player::Draw(BaseCamera& camera)
@@ -68,6 +80,8 @@ void Player::Draw(BaseCamera& camera)
 	for (uint32_t i = 0; i < PlayerPartIndex::kPlayerPartIndexOfCount; ++i) {
 		parts_[i]->Draw(camera, material_.get());
 	}
+
+	weaponModel_->Draw(weaponWorldTransfrom_, camera);
 
 }
 

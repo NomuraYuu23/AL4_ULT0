@@ -81,7 +81,7 @@ public: // ベースのメンバ関数
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize(const std::array<Model*, PlayerPartIndex::kPlayerPartIndexOfCount>& models);
+	void Initialize(const std::array<Model*, PlayerPartIndex::kPlayerPartIndexOfCount>& models, Model* weaponModel);
 
 	/// <summary>
 	/// 更新
@@ -210,6 +210,12 @@ private: // パーツ,アニメーション変数
 
 	// アニメーションカウント上限
 	uint32_t animationCountLimit_;
+
+	// 武器モデル
+	Model* weaponModel_ = nullptr;
+
+	// 武器ワールドトランスフォーム
+	WorldTransform weaponWorldTransfrom_;
 
 private:  // パーツ,アニメーション定数
 

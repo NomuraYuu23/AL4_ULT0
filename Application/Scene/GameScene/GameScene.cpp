@@ -68,7 +68,7 @@ void GameScene::Initialize() {
 	for (uint32_t i = 0; i < playerModels_.size(); ++i) {
 		playerModels[i] = playerModels_[i].get();
 	}
-	player_->Initialize(playerModels);
+	player_->Initialize(playerModels, playerWeaponModel_.get());
 
 	// 追従カメラ
 	followCamera_ = std::make_unique<FollowCamera>();
@@ -106,10 +106,10 @@ void GameScene::Update() {
 
 	// タイトルへ
 	if (enemy_->GetIsDead()) {
-		requestSceneNo = kClear;
+		//requestSceneNo = kClear;
 	}
 	if (player_->GetIsDead()) {
-		requestSceneNo = kGameOver;
+		//requestSceneNo = kGameOver;
 	}
 
 
@@ -141,7 +141,7 @@ void GameScene::Update() {
 	player_->Update();
 
 	// エネミー
-	enemy_->Update();
+	//enemy_->Update();
 
 	// コリジョンマネージャー
 	CollisonUpdate();
@@ -348,6 +348,7 @@ void GameScene::ModelCreate()
 	playerModels_[kPlayerPartRightThigh].reset(Model::Create("Resources/Player/", "PlayerRightThigh.obj", dxCommon_, textureHandleManager_.get()));
 	playerModels_[kPlayerPartRightShin].reset(Model::Create("Resources/Player/", "PlayerRightShin.obj", dxCommon_, textureHandleManager_.get()));
 	playerModels_[kPlayerPartRightAnkle].reset(Model::Create("Resources/Player/", "PlayerRightAnkle.obj", dxCommon_, textureHandleManager_.get()));
+	playerWeaponModel_.reset(Model::Create("Resources/PlayerWeapon/", "PlayerWeapon.obj", dxCommon_, textureHandleManager_.get()));
 
 	// スカイドーム
 	skyDomeModel_.reset(Model::Create("Resources/skydome/", "skydome.obj", dxCommon_, textureHandleManager_.get()));

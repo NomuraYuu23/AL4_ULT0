@@ -112,6 +112,7 @@ private:
 	std::unique_ptr<Player> player_;
 	// プレイヤーモデル
 	std::array<std::unique_ptr<Model>, PlayerPartIndex::kPlayerPartIndexOfCount> playerModels_;
+	std::unique_ptr<Model> playerWeaponModel_;
 
 	// 追加カメラ
 	std::unique_ptr<FollowCamera> followCamera_;

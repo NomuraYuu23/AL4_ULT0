@@ -64,6 +64,8 @@ void PlayerStateAttack::Initialize()
 
 	AttackInitialize();
 
+	playerAttack_->ClearContactRecord();
+
 	playerStateNo_ = PlayerState::kPlayerStateAttack;
 
 }
@@ -111,8 +113,6 @@ void PlayerStateAttack::AttackInitialize()
 	else {
 		playerMotionNo_ = kPlayerMotionAttack2nd;
 	}
-
-	playerAttack_->ClearContactRecord();
 
 }
 
