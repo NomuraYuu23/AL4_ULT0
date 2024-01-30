@@ -35,6 +35,7 @@ void Player::Initialize(const std::array<Model*, PlayerPartIndex::kPlayerPartInd
 
 	// hp
 	hp_ = 3;
+	initHp_ = 3;
 
 	isDead_ = false;
 
@@ -436,6 +437,13 @@ void Player::Damage(uint32_t damage)
 		isDead_ = true;
 	}
 
+}
+
+float Player::RatioHP()
+{
+	assert(initHp_ != 0);
+
+	return static_cast<float>(hp_) / static_cast<float>(initHp_);
 }
 
 std::array<ColliderShape, PlayerColliderIndex::kPlayerColliderIndexOfCount> Player::GetCollider()

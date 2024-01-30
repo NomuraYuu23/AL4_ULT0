@@ -2,6 +2,7 @@
 #include "../../Engine/Collider/Capsule/Capsule.h"
 #include "../../Engine/2D/ImguiManager.h"
 #include "../Player/Player.h"
+#include <cassert>
 
 void Enemy::Initialize(const std::array<Model*, EnemyPartIndex::kEnemyPartIndexOfCount>& models, Model* weaponModel)
 {
@@ -43,6 +44,7 @@ void Enemy::Initialize(const std::array<Model*, EnemyPartIndex::kEnemyPartIndexO
 
 	// hp
 	hp_ = 10;
+	initHp_ = 10;
 
 	isDead_ = false;
 
@@ -394,6 +396,14 @@ void Enemy::Damage(uint32_t damage)
 		isDead_ = true;
 	}
 
+}
+
+float Enemy::RatioHP()
+{
+
+	assert(initHp_ != 0);
+
+	return static_cast<float>(hp_) / static_cast<float>(initHp_);
 }
 
 void Enemy::OnCollisionPlayerAttack(ColliderParentObject colliderPartner, const CollisionData& collisionData)

@@ -146,6 +146,9 @@ void GameScene::Update() {
 	// コリジョンマネージャー
 	CollisonUpdate();
 
+	// UI
+	UIManager_->Update(player_->RatioHP(), enemy_->RatioHP());
+
 	// デバッグ
 	if (player_->GetCurrentStateNo() == kPlayerStateAttack) {
 		debugWorldTransform_.transform_.translate = static_cast<Capsule*>(static_cast<PlayerStateAttack*>(player_->GetPlayerState())->GetCollider())->segment_.origin_;
@@ -392,6 +395,7 @@ void GameScene::TextureLoad()
 	UITextureHandles_ = {
 		TextureManager::Load("Resources/UI/attack.png", dxCommon_, textureHandleManager_.get()),
 		TextureManager::Load("Resources/UI/rolling.png", dxCommon_, textureHandleManager_.get()),
+		TextureManager::Load("Resources/default/white2x2.png", dxCommon_, textureHandleManager_.get()),
 	};
 
 }

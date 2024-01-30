@@ -250,6 +250,7 @@ private: // エネミーデータ
 
 	//hp
 	int32_t hp_;
+	uint32_t initHp_;
 
 	// 死んだか
 	bool isDead_;
@@ -261,6 +262,12 @@ public:
 	/// </summary>
 	/// <param name="damage"></param>
 	void Damage(uint32_t damage);
+
+	/// <summary>
+	/// HPの割合
+	/// </summary>
+	/// <returns></returns>
+	float RatioHP();
 
 private: // 衝突処理
 
@@ -291,6 +298,10 @@ public: // アクセッサ
 	IBone* GetPart(uint32_t num) { return parts_[num].get(); }
 
 	bool GetIsDead() { return isDead_; }
+
+	int32_t GetHp() { return hp_; }
+
+	uint32_t GetInitHp() { return initHp_; }
 
 };
 

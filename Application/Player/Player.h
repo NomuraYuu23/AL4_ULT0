@@ -263,6 +263,9 @@ private: // プレイヤーデータ
 	//hp
 	int32_t hp_;
 
+	// 初期HP
+	uint32_t initHp_;
+
 	// 死んだか
 	bool isDead_;
 
@@ -273,6 +276,12 @@ public:
 	/// </summary>
 	/// <param name="damage"></param>
 	void Damage(uint32_t damage);
+
+	/// <summary>
+	/// HPの割合
+	/// </summary>
+	/// <returns></returns>
+	float RatioHP();
 
 private: // 衝突処理
 
@@ -306,5 +315,9 @@ public: // アクセッサ
 	uint32_t GetSerialNumber() { return serialNumber_; }
 
 	bool GetIsDead() { return isDead_; }
+
+	int32_t GetHp() { return hp_; }
+
+	uint32_t GetInitHp(){ return initHp_; }
 
 };
