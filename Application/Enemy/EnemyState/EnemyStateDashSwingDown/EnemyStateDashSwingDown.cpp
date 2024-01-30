@@ -102,7 +102,7 @@ void EnemyStateDashSwingDown::Attack()
 
 	// コライダー更新
 	if (inPhase_ == static_cast<uint32_t>(ComboPhase::kSwing) ||
-		(inPhase_ == static_cast<uint32_t>(ComboPhase::kRecovery) && parameter_ <= 0.4f) ) {
+		(inPhase_ == static_cast<uint32_t>(ComboPhase::kRecovery) && parameter_ <= 0.2f) ) {
 		attackWorldTransform_.parent_ = enemy_->GetPart(kEnemyPartRightHand)->GetWorldTransformAdress();
 		attackWorldTransform_.transform_.translate = attackLength_;
 		attackWorldTransform_.UpdateMatrix();
