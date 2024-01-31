@@ -46,6 +46,24 @@ void TitleScene::Update()
 	buttonColor_.w = Ease::Easing(Ease::EaseName::Lerp, 0.0f, 1.0f, buttonAlphaT_);
 	buttonSprite_->SetColor(buttonColor_);
 
+	// ボタンスプライト
+	if (buttonItIncreaseAlphaT_) {
+		buttonAlphaT_ += buttonAlphaTSpeed_;
+		if (buttonAlphaT_ >= 1.0f) {
+			buttonAlphaT_ = 1.0f;
+			buttonItIncreaseAlphaT_ = false;
+		}
+	}
+	else {
+		buttonAlphaT_ -= buttonAlphaTSpeed_;
+		if (buttonAlphaT_ <= 0.0f) {
+			buttonAlphaT_ = 0.0f;
+			buttonItIncreaseAlphaT_ = true;
+		}
+	}
+	buttonColor_.w = Ease::Easing(Ease::EaseName::Lerp, 0.0f, 1.0f, buttonAlphaT_);
+	buttonSprite_->SetColor(buttonColor_);
+
 }
 
 void TitleScene::Draw()
