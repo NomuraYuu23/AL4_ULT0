@@ -10,6 +10,7 @@ class Enemy;
 enum EnemyState {
 	kEnemyStateRoot, // 通常
 	kEnemyStateDashSwingDown, // ダッシュ振り下ろし
+	kEnemyStateMowingDown, // 薙ぎ払い
 	kEnemyStateOfCount // 数
 };
 

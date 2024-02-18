@@ -2,6 +2,7 @@
 #include <cassert>
 #include "EnemyStateRoot/EnemyStateRoot.h"
 #include "EnemyStateDashSwingDown/EnemyStateDashSwingDown.h"
+#include "EnemyStateMowingDown/EnemyStateMowingDown.h"
 
 EnemyStateFactory* EnemyStateFactory::GetInstance()
 {
@@ -21,6 +22,9 @@ IEnemyState* EnemyStateFactory::CreateEnemyState(uint32_t enemyStateName)
 		break;
 	case kEnemyStateDashSwingDown: // ダッシュ振り下ろし
 		newEnemyState = new EnemyStateDashSwingDown();
+		break;
+	case kEnemyStateMowingDown: // ダッシュ振り下ろし
+		newEnemyState = new EnemyStateMowingDown();
 		break;
 	case kEnemyStateOfCount: // 使用不可
 	default:

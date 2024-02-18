@@ -106,6 +106,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClCompile Include="Application\Enemy\EnemyAttack\EnemyAttack.cpp" />
     <ClCompile Include="Application\Enemy\EnemyCommand\EnemyCommand.cpp" />
     <ClCompile Include="Application\Enemy\EnemyState\EnemyStateFactory.cpp" />
+    <ClCompile Include="Application\Enemy\EnemyState\EnemyStateMowingDown\EnemyStateMowingDown.cpp" />
     <ClCompile Include="Application\Enemy\EnemyState\EnemyStateRoot\EnemyStateRoot.cpp" />
     <ClCompile Include="Application\Enemy\EnemyState\IEnemyState.cpp" />
     <ClCompile Include="Application\Ground\Ground.cpp" />
@@ -201,6 +202,7 @@ copy "$(WindowsSdkDir)bin\$(TargetPlatformVersion)\x64\dxil.dll" "$(TargetDir)dx
     <ClInclude Include="Application\Enemy\EnemyCommand\EnemyCommand.h" />
     <ClInclude Include="Application\Enemy\EnemyState\EnemyStateDashSwingDown\EnemyStateDashSwingDown.h" />
     <ClInclude Include="Application\Enemy\EnemyState\EnemyStateFactory.h" />
+    <ClInclude Include="Application\Enemy\EnemyState\EnemyStateMowingDown\EnemyStateMowingDown.h" />
     <ClInclude Include="Application\Enemy\EnemyState\EnemyStateRoot\EnemyStateRoot.h" />
     <ClInclude Include="Application\Enemy\EnemyState\IEnemyState.h" />
     <ClInclude Include="Application\Ground\Ground.h" />

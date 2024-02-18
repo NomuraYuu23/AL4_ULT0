@@ -12,5 +12,5 @@ void EnemyCommand::Initialize()
 
 uint32_t EnemyCommand::Command()
 {
-	return 1;
+	return 2;
 }
