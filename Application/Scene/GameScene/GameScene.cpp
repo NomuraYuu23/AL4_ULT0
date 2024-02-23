@@ -5,7 +5,7 @@
 #include "../../../Engine/base/D3DResourceLeakChecker.h"
 
 #include "../../Player/PlayerState/PlayerStateAttack/PlayerStateAttack.h"
-#include "../../Enemy/EnemyState/EnemyStateDashSwingDown/EnemyStateDashSwingDown.h"
+#include "../../Enemy/EnemyState/EnemyStateMowingDown/EnemyStateMowingDown.h"
 
 /// <summary>
 /// 初期化
@@ -150,11 +150,11 @@ void GameScene::Update() {
 	UIManager_->Update(player_->RatioHP(), enemy_->RatioHP());
 
 	// デバッグ
-	if (player_->GetCurrentStateNo() == kPlayerStateAttack) {
-		debugWorldTransform_.transform_.translate = static_cast<Capsule*>(static_cast<PlayerStateAttack*>(player_->GetPlayerState())->GetCollider())->segment_.origin_;
-		debugWorldTransform_.transform_.scale.x = static_cast<Capsule*>(static_cast<PlayerStateAttack*>(player_->GetPlayerState())->GetCollider())->radius_;
-		debugWorldTransform_.transform_.scale.y = static_cast<Capsule*>(static_cast<PlayerStateAttack*>(player_->GetPlayerState())->GetCollider())->radius_;
-		debugWorldTransform_.transform_.scale.z = static_cast<Capsule*>(static_cast<PlayerStateAttack*>(player_->GetPlayerState())->GetCollider())->radius_;
+	if (enemy_->GetCurrentStateNo() == kEnemyStateMowingDown) {
+		debugWorldTransform_.transform_.translate = static_cast<Capsule*>(static_cast<EnemyStateMowingDown*>(enemy_->GetEnemyState())->GetCollider())->segment_.origin_;
+		debugWorldTransform_.transform_.scale.x = static_cast<Capsule*>(static_cast<EnemyStateMowingDown*>(enemy_->GetEnemyState())->GetCollider())->radius_;
+		debugWorldTransform_.transform_.scale.y = static_cast<Capsule*>(static_cast<EnemyStateMowingDown*>(enemy_->GetEnemyState())->GetCollider())->radius_;
+		debugWorldTransform_.transform_.scale.z = static_cast<Capsule*>(static_cast<EnemyStateMowingDown*>(enemy_->GetEnemyState())->GetCollider())->radius_;
 		debugWorldTransform_.UpdateMatrix();
 	}
 
@@ -313,9 +313,14 @@ void GameScene::CollisonUpdate()
 	}	
 
 	// エネミーの攻撃
-	if (enemy_->GetCurrentStateNo() == kEnemyStateDashSwingDown) {
-		if (static_cast<EnemyStateDashSwingDown*>(enemy_->GetEnemyState())->GetIsAttackJudgment()) {
-			collisionManager_->ListRegister(static_cast<EnemyStateDashSwingDown*>(enemy_->GetEnemyState())->GetCollider());
+	//if (enemy_->GetCurrentStateNo() == kEnemyStateDashSwingDown) {
+	//	if (static_cast<EnemyStateDashSwingDown*>(enemy_->GetEnemyState())->GetIsAttackJudgment()) {
+	//		collisionManager_->ListRegister(static_cast<EnemyStateDashSwingDown*>(enemy_->GetEnemyState())->GetCollider());
+	//	}
+	//}
+	if (enemy_->GetCurrentStateNo() == kEnemyStateMowingDown) {
+		if (static_cast<EnemyStateMowingDown*>(enemy_->GetEnemyState())->GetIsAttackJudgment()) {
+			collisionManager_->ListRegister(static_cast<EnemyStateMowingDown*>(enemy_->GetEnemyState())->GetCollider());
 		}
 	}
 

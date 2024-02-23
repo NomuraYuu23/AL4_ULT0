@@ -205,7 +205,7 @@ void Enemy::PartUpdate()
 	if (animationCountLimit_ > 0) {
 		animationCount_ = (animationCount_ + 1) % (animationCountLimit_ + 1);
 		//でばっぐ
-		//animationCount_ = 70;
+		//animationCount_ = 30;
 	}
 
 }

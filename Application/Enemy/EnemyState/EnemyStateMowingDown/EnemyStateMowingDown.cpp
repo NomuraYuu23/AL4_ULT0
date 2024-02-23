@@ -4,7 +4,7 @@
 #include "../../../../Engine/Math/Ease.h"
 
 const EnemyStateMowingDown::ConstAttack EnemyStateMowingDown::kConstAttak = {
-		{ 10, 20, 30, 10 }, { 0.0f, 6.0f, 0.0f, 0.2f }
+		{ 30, 20, 10, 35 }, { 1.0f, 0.0f, 5.0f, 0.0f }
 };
 
 void EnemyStateMowingDown::Initialize()
@@ -97,6 +97,32 @@ void EnemyStateMowingDown::AttackInitialize()
 
 void EnemyStateMowingDown::Attack()
 {
+
+	Move();
+
+	// コライダー更新
+	if (inPhase_ == static_cast<uint32_t>(ComboPhase::kMowingDown) ||
+		(inPhase_ == static_cast<uint32_t>(ComboPhase::kRecovery) && parameter_ <= 0.2f)) {
+		attackWorldTransform_.parent_ = enemy_->GetPart(kEnemyPartRightHand)->GetWorldTransformAdress();
+		attackWorldTransform_.transform_.translate = attackLength_;
+		attackWorldTransform_.UpdateMatrix();
+		if (attackCenter_.x <= -10000.0f) {
+			prevAttackCenter_ = attackWorldTransform_.GetWorldPosition();
+		}
+		else {
+			prevAttackCenter_ = attackCenter_;
+		}
+		attackCenter_ = attackWorldTransform_.GetWorldPosition();
+		Segment segment;
+		segment.origin_ = attackCenter_;
+		segment.diff_ = v3Calc_->Subtract(prevAttackCenter_, attackCenter_);
+		attackCollider_->segment_ = segment;
+		attackCollider_->radius_ = attackRadius_;
+	}
+	else {
+		DontAttack();
+	}
+
 }
 
 void EnemyStateMowingDown::DontAttack()
