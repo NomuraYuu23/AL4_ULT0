@@ -8,9 +8,9 @@
 
 #pragma comment(lib, "dxcompiler.lib")
 
-#include "DirectionalLightData.h"
+#include "SpotLightData.h"
 
-class DirectionalLight
+class SpotLight
 {
 
 public:
@@ -25,7 +25,7 @@ public:
 	/// 光源生成
 	/// </summary>
 	/// <returns></returns>
-	static DirectionalLight* Create();
+	static SpotLight* Create();
 
 private:
 
@@ -44,18 +44,20 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	void Update(const DirectionalLightData& directionalLightData);
+	void Update(const SpotLightData& spotLightData);
 
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw(ID3D12GraphicsCommandList* cmdList);
+	void Draw(ID3D12GraphicsCommandList* cmdList, uint32_t rootParameterIndex);
 
 private:
 
-	Microsoft::WRL::ComPtr<ID3D12Resource> directionalLightBuff_;
+	Microsoft::WRL::ComPtr<ID3D12Resource> spotLightBuff_;
 
-	DirectionalLightData* directionalLightMap = nullptr;
+	SpotLightData* spotLightMap = nullptr;
 
 };
+
+
 

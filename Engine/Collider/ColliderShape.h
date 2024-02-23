@@ -7,4 +7,4 @@
 #include "../Collider/Triangle/Triangle.h"
 #include "../Collider/Capsule/Capsule.h"
 
-using ColliderShape = std::variant<AABB*, OBB*, Sphere*, Capsule*>;
+using ColliderShape = std::variant<AABB*, OBB*, Sphere*, Capsule* /*, Triangle*, Plane*, */>;

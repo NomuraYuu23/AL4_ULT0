@@ -8,7 +8,6 @@ void TitleScene::Initialize()
 	IScene::Initialize();
 
 	ModelCreate();
-	MaterialCreate();
 	TextureLoad();
 
 	titleSprite_.reset(Sprite::Create(titleTextureHandle_, { 640.0f, 360.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }));
@@ -105,10 +104,6 @@ void TitleScene::Draw()
 }
 
 void TitleScene::ModelCreate()
-{
-}
-
-void TitleScene::MaterialCreate()
 {
 }
 

@@ -5,11 +5,15 @@ void MyFramework::Initialize()
 
 	//ゲームウィンドウの作成
 	win = WinApp::GetInstance();
-	win->CreateGameWindow();
+	win->CreateGameWindow(L"NomuEngine");
 
 	//DirectX初期化
 	dxCommon = DirectXCommon::GetInstance();
 	dxCommon->Initialize(win);
+
+	// ディスクリプタヒープ
+	descriptorHerpManager = DescriptorHerpManager::GetInstance();
+	descriptorHerpManager->Initialize(dxCommon);
 
 	//入力デバイス
 	input = Input::GetInstance();
@@ -21,17 +25,19 @@ void MyFramework::Initialize()
 	TextureManager::GetInstance()->Initialize(dxCommon->GetDevice());
 
 	// スプライト静的初期化
-	Sprite::StaticInitialize(dxCommon->GetDevice(), GraphicsPipelineState::sRootSignature[GraphicsPipelineState::kSprite], GraphicsPipelineState::sPipelineState[GraphicsPipelineState::kSprite]);
+	Sprite::StaticInitialize(dxCommon->GetDevice(), GraphicsPipelineState::sRootSignature[GraphicsPipelineState::kPipelineStateNameSprite], GraphicsPipelineState::sPipelineState[GraphicsPipelineState::kPipelineStateNameSprite]);
 
 	// モデル静的初期化
-	std::array<ID3D12RootSignature*, GraphicsPipelineState::PipelineStateName::kCountOfPipelineStateName> rootSignature = { 
-		GraphicsPipelineState::sRootSignature[GraphicsPipelineState::kModel].Get(),
-		GraphicsPipelineState::sRootSignature[GraphicsPipelineState::kSprite].Get(),
-		GraphicsPipelineState::sRootSignature[GraphicsPipelineState::kParticle].Get()};
-	std::array<ID3D12PipelineState*, GraphicsPipelineState::PipelineStateName::kCountOfPipelineStateName> pipelineState = {
-	GraphicsPipelineState::sPipelineState[GraphicsPipelineState::kModel].Get(),
-	GraphicsPipelineState::sPipelineState[GraphicsPipelineState::kSprite].Get(),
-	GraphicsPipelineState::sPipelineState[GraphicsPipelineState::kParticle].Get() };
+	std::array<ID3D12RootSignature*, GraphicsPipelineState::PipelineStateName::kPipelineStateNameOfCount> rootSignature = {
+		GraphicsPipelineState::sRootSignature[GraphicsPipelineState::kPipelineStateNameModel].Get(),
+		GraphicsPipelineState::sRootSignature[GraphicsPipelineState::kPipelineStateNameSprite].Get(),
+		GraphicsPipelineState::sRootSignature[GraphicsPipelineState::kPipelineStateNameParticle].Get(),
+		GraphicsPipelineState::sRootSignature[GraphicsPipelineState::kPipelineStateNameOutLine].Get() };
+	std::array<ID3D12PipelineState*, GraphicsPipelineState::PipelineStateName::kPipelineStateNameOfCount> pipelineState = {
+	GraphicsPipelineState::sPipelineState[GraphicsPipelineState::kPipelineStateNameModel].Get(),
+	GraphicsPipelineState::sPipelineState[GraphicsPipelineState::kPipelineStateNameSprite].Get(),
+	GraphicsPipelineState::sPipelineState[GraphicsPipelineState::kPipelineStateNameParticle].Get(),
+	GraphicsPipelineState::sPipelineState[GraphicsPipelineState::kPipelineStateNameOutLine].Get() };
 	Model::StaticInitialize(dxCommon->GetDevice(), rootSignature, pipelineState);
 
 	// マテリアル静的初期化
@@ -39,6 +45,8 @@ void MyFramework::Initialize()
 
 	// 光源静的初期化
 	DirectionalLight::StaticInitialize(dxCommon->GetDevice());
+	PointLightManager::StaticInitialize(dxCommon->GetDevice());
+	SpotLightManager::StaticInitialize(dxCommon->GetDevice());
 
 	// パーティクル
 	ParticleManager::GetInstance()->Initialize();
@@ -49,7 +57,7 @@ void MyFramework::Initialize()
 
 	// ImGuiマネージャー
 	imGuiManager = ImGuiManager::GetInstance();
-	imGuiManager->Initialize(win, dxCommon, TextureManager::GetInstance());
+	imGuiManager->Initialize(win, dxCommon);
 
 	//グローバル変数ファイル読み込み
 	GlobalVariables::GetInstance()->LoadFiles();
@@ -88,7 +96,9 @@ void MyFramework::Update()
 
 	//入力デバイス
 	input->Update();
-	input->JoystickConnected(win->GetHwnd());
+	if (!input->GetJoystickConnected()) {
+		input->JoystickConnected(win->GetHwnd());
+	}
 
 	//ゲームの処理 
 	//ImGui

@@ -141,9 +141,6 @@
     <ClCompile Include="Engine\2D\Sprite.cpp">
       <Filter>Engine\2D</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\3D\DirectionalLight.cpp">
-      <Filter>Engine\3D</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\3D\Material.cpp">
       <Filter>Engine\3D</Filter>
     </ClCompile>
@@ -160,9 +157,6 @@
       <Filter>Engine\Base</Filter>
     </ClCompile>
     <ClCompile Include="Engine\base\DirectXCommon.cpp">
-      <Filter>Engine\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="Engine\base\GraphicsPipelineState.cpp">
       <Filter>Engine\Base</Filter>
     </ClCompile>
     <ClCompile Include="Engine\base\TextureManager.cpp">
@@ -388,6 +382,45 @@
     <ClCompile Include="Application\Enemy\EnemyState\EnemyStateMowingDown\EnemyStateMowingDown.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\3D\OutLineData.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Light\SpotLight\SpotLight.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Light\SpotLight\SpotLightManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Light\DirectionalLight\DirectionalLight.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Light\PointLight\PointLight.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Light\PointLight\PointLightManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\base\DescriptorHerpManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Math\Quaternion.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\base\GraphicsPipelineState\BlendStateManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\base\GraphicsPipelineState\GraphicsPipelineState.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\base\GraphicsPipelineState\InputLayoutManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\base\GraphicsPipelineState\RootParameterManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\base\GraphicsPipelineState\SamplerManager.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="externals\imgui\imgui.h">
@@ -416,12 +449,6 @@
     </ClInclude>
     <ClInclude Include="Engine\2D\ImGuiManager.h">
       <Filter>Engine\2D</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\DirectionalLight.h">
-      <Filter>Engine\3D</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\3D\DirectionalLightData.h">
-      <Filter>Engine\3D</Filter>
     </ClInclude>
     <ClInclude Include="Engine\3D\Material.h">
       <Filter>Engine\3D</Filter>
@@ -454,9 +481,6 @@
       <Filter>Engine\Base</Filter>
     </ClInclude>
     <ClInclude Include="Engine\base\DirectXCommon.h">
-      <Filter>Engine\Base</Filter>
-    </ClInclude>
-    <ClInclude Include="Engine\base\GraphicsPipelineState.h">
       <Filter>Engine\Base</Filter>
     </ClInclude>
     <ClInclude Include="Engine\base\SafeDelete.h">
@@ -727,6 +751,57 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Application\Enemy\EnemyState\EnemyStateMowingDown\EnemyStateMowingDown.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\3D\OutLineData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Light\SpotLight\SpotLightManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Light\SpotLight\SpotLight.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Light\SpotLight\SpotLightData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Light\DirectionalLight\DirectionalLight.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Light\DirectionalLight\DirectionalLightData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Light\PointLight\PointLight.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Light\PointLight\PointLightData.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Light\PointLight\PointLightManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\base\DescriptorHerpManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Math\RandomEngine.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\Math\Quaternion.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\base\GraphicsPipelineState\BlendStateManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\base\GraphicsPipelineState\GraphicsPipelineState.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\base\GraphicsPipelineState\InputLayoutManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\base\GraphicsPipelineState\RootParameterManager.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\base\GraphicsPipelineState\SamplerManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>

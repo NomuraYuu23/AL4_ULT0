@@ -19,6 +19,7 @@
 #include "../../Enemy/Enemy.h"
 // UI
 #include "../../UIManager/UIManager.h"
+#include "../../../Engine/Light/DirectionalLight/DirectionalLight.h"
 
 class GameScene : public IScene
 {
@@ -70,11 +71,6 @@ private: // メンバ関数
 	void ModelCreate() override;
 
 	/// <summary>
-	/// マテリアルクリエイト
-	/// </summary>
-	void MaterialCreate() override;
-
-	/// <summary>
 	/// テクスチャロード
 	/// </summary>
 	void TextureLoad() override;
@@ -100,6 +96,7 @@ private:
 	std::unique_ptr<Model> particleCircleModel_ = nullptr;
 
 	//ライトデータ
+	std::unique_ptr<DirectionalLight> directionalLight_;
 	DirectionalLightData directionalLightData_;
 
 	// オーディオマネージャー

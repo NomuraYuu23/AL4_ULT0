@@ -178,6 +178,8 @@ public: // アクセッサ(ワールドトランスフォーム)
 	// テクスチャ初期サイズ
 	Vector2 GetTextureInitSize() { return textureInitSize_; }
 
+	bool GetIsInvisible() { return isInvisible_; }
+
 private: // メンバ変数(ワールドトランスフォーム)
 
 	// 位置

@@ -283,7 +283,7 @@ bool Collision::IsCollision(const OBB& obb, const Sphere& sphere, Vector3& p1, V
 	obb.otientatuons_[0].x,obb.otientatuons_[1].x, obb.otientatuons_[2].x, 0,
 	obb.otientatuons_[0].y,obb.otientatuons_[1].y, obb.otientatuons_[2].y, 0,
 	obb.otientatuons_[0].z,obb.otientatuons_[1].z, obb.otientatuons_[2].z, 0,
-	obb.center_.x, obb.center_.y, obb.center_.y, 1 };
+	obb.center_.x, obb.center_.y, obb.center_.z, 1 };
 
 	Matrix4x4 obbWorldMatrixInverse = Matrix4x4Calc::Inverse(obbWorldMatrix);
 
@@ -421,7 +421,7 @@ bool Collision::IsCollision(const Capsule& capsule, const OBB& obb, Vector3& p1,
 	obb.otientatuons_[0].x,obb.otientatuons_[1].x, obb.otientatuons_[2].x, 0,
 	obb.otientatuons_[0].y,obb.otientatuons_[1].y, obb.otientatuons_[2].y, 0,
 	obb.otientatuons_[0].z,obb.otientatuons_[1].z, obb.otientatuons_[2].z, 0,
-	obb.center_.x, obb.center_.y, obb.center_.y, 1 };
+	obb.center_.x, obb.center_.y, obb.center_.z, 1 };
 
 	Matrix4x4 obbWorldMatrixInverse = Matrix4x4Calc::Inverse(obbWorldMatrix);
 

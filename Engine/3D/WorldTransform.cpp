@@ -25,7 +25,7 @@ void WorldTransform::Initialize() {
 	transformationMatrixMap_->World = matrix4x4Calc->MakeIdentity4x4();
 	transformationMatrixMap_->WVP = matrix4x4Calc->MakeIdentity4x4();
 	transformationMatrixMap_->WorldInverseTranspose = matrix4x4Calc->MakeIdentity4x4();
-
+	transformationMatrixMap_->ScaleInverse = matrix4x4Calc->MakeIdentity4x4();
 	UpdateMatrix();
 
 }
@@ -36,7 +36,6 @@ void WorldTransform::UpdateMatrix() {
 
 	//拡大縮小行列
 	Matrix4x4 scaleMatrix = matrix4x4Calc->MakeScaleMatrix(transform_.scale);
-
 	// どう回転行列作るか
 	if (usedDirection_) {
 		// 回転行列
@@ -102,5 +101,5 @@ void WorldTransform::Map(const Matrix4x4& viewProjectionMatrix)
 	transformationMatrixMap_->World = worldMatrix_;
 	transformationMatrixMap_->WVP = matrix4x4Calc->Multiply(worldMatrix_, viewProjectionMatrix);
 	transformationMatrixMap_->WorldInverseTranspose = matrix4x4Calc->Inverse(worldMatrix_);
-
+	transformationMatrixMap_->ScaleInverse = matrix4x4Calc->Inverse(matrix4x4Calc->MakeScaleMatrix(transform_.scale));
 }

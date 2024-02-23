@@ -16,7 +16,9 @@ public: // サブクラス
 
 	enum BillBoardNameIndex {
 		kBillBoardNameIndexAllAxis,	// 全軸
+		kBillBoardNameIndexXAxis,	// x軸
 		kBillBoardNameIndexYAxis,	// y軸
+		kBillBoardNameIndexZAxis,	// z軸
 		kBillBoardNameIndexOfCount
 	};
 

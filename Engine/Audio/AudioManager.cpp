@@ -16,7 +16,7 @@ Audio* AudioManager::audio_ = nullptr;
 void AudioManager::StaticInitialize()
 {
 	// マスター
-	masterVolume_ = 1.0f;
+	masterVolume_ = 0.1f;
 	// BGM
 	BGMVolume_ = 1.0f;
 	// SE
@@ -32,6 +32,7 @@ void AudioManager::Initialize()
 	for (uint32_t i = 0; i < kMaxPlayingSoundData; ++i) {
 		playingSoundDatas_[i].handle_ = audio_->kMaxSoundData;
 		playingSoundDatas_[i].pSourceVoice_ = nullptr;
+		playingSoundDatas_[i].volume_ = 0.0f;
 	}
 
 }
@@ -66,7 +67,9 @@ void AudioManager::StaticApplyGlobalVariables()
 
 void AudioManager::StopWave(uint32_t playingSoundDataHandle)
 {
-
+	if (!playingSoundDatas_[playingSoundDataHandle].pSourceVoice_) {
+		return;
+	}
 	playingSoundDatas_[playingSoundDataHandle].pSourceVoice_->DestroyVoice();
 	playingSoundDatas_[playingSoundDataHandle].pSourceVoice_ = nullptr;
 

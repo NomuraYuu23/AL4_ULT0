@@ -6,7 +6,6 @@ void SelectScene::Initialize()
 	IScene::Initialize();
 
 	ModelCreate();
-	MaterialCreate();
 	TextureLoad();
 
 }
@@ -58,10 +57,6 @@ void SelectScene::Draw()
 }
 
 void SelectScene::ModelCreate()
-{
-}
-
-void SelectScene::MaterialCreate()
 {
 }
 

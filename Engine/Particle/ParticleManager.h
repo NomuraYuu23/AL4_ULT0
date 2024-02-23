@@ -160,7 +160,9 @@ private: // メンバ変数
 
 	// ビルボード
 	Matrix4x4 billBoardMatrix_;
+	Matrix4x4 billBoardMatrixX_;
 	Matrix4x4 billBoardMatrixY_;
+	Matrix4x4 billBoardMatrixZ_;
 
 	// エミッタ
 	std::list<IEmitter*> emitters_;

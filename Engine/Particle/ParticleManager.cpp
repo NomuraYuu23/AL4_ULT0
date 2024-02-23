@@ -4,6 +4,7 @@
 #include "../3D/Model.h"
 #include "../Math/DeltaTime.h"
 #include "../../Application/Particle/MakeEmitter.h"
+#include "../base/DescriptorHerpManager.h"
 
 uint32_t ParticleManager::kNumInstanceMax_ = 32768;
 
@@ -33,7 +34,9 @@ void ParticleManager::Initialize()
 	SRVCreate();
 
 	billBoardMatrix_ = matrix4x4Calc->MakeIdentity4x4();
+	billBoardMatrixX_ = matrix4x4Calc->MakeIdentity4x4();
 	billBoardMatrixY_ = matrix4x4Calc->MakeIdentity4x4();
+	billBoardMatrixZ_ = matrix4x4Calc->MakeIdentity4x4();
 
 	for (size_t i = 0; i < particleDatas_.size(); i++) {
 		particleDatas_[i].instanceIndex_ = 0;
@@ -57,8 +60,9 @@ void ParticleManager::SRVCreate()
 	instancingSrvDesc.Buffer.Flags = D3D12_BUFFER_SRV_FLAG_NONE;
 	instancingSrvDesc.Buffer.NumElements = kNumInstanceMax_;
 	instancingSrvDesc.Buffer.StructureByteStride = sizeof(TransformationMatrix);
-	instancingSrvHandleCPU_ = TextureManager::GetInstance()->StaticGetCPUDescriptorHandle(1);
-	instancingSrvHandleGPU_ = TextureManager::GetInstance()->StaticGetGPUDescriptorHandle(1);
+	instancingSrvHandleCPU_ = DescriptorHerpManager::GetCPUDescriptorHandle();
+	instancingSrvHandleGPU_ = DescriptorHerpManager::GetGPUDescriptorHandle();
+	DescriptorHerpManager::NextIndexDescriptorHeapChange();
 	DirectXCommon::GetInstance()->GetDevice()->CreateShaderResourceView(particleForGPUBuff_.Get(), &instancingSrvDesc, instancingSrvHandleCPU_);
 
 }
@@ -110,11 +114,19 @@ void ParticleManager::Finalize()
 			delete particle;
 			return true;
 			});
+		particleDatas_[i].startInstanceIdMap_->num = 0;
 	}
 	emitters_.remove_if([](IEmitter* emitter) {
 		delete emitter;
 		return true;
 	});
+
+	Matrix4x4Calc* matrix4x4Calc = Matrix4x4Calc::GetInstance();
+	for (size_t i = 0; i < kNumInstanceMax_; i++) {
+		particleForGPUMap_[i].World = matrix4x4Calc->MakeIdentity4x4();
+		particleForGPUMap_[i].WVP = matrix4x4Calc->MakeIdentity4x4();
+		particleForGPUMap_[i].color = { 1.0f,1.0f,1.0f,1.0f };
+	}
 
 }
 
@@ -132,20 +144,42 @@ void ParticleManager::BillBoardUpdate(BaseCamera& camera)
 
 	Matrix4x4Calc* matrix4x4Calc = Matrix4x4Calc::GetInstance();
 
+	// 全軸
 	Matrix4x4 backToFrontMatrix = matrix4x4Calc->MakeRotateXYZMatrix({ 0.0f, 3.14f, 0.0f });
 	billBoardMatrix_ = matrix4x4Calc->Multiply(backToFrontMatrix, camera.GetTransformMatrix());
 	billBoardMatrix_.m[3][0] = 0.0f;
 	billBoardMatrix_.m[3][1] = 0.0f;
 	billBoardMatrix_.m[3][2] = 0.0f;
 
+	// X
 	Matrix4x4 cameraTransformMatrix = matrix4x4Calc->MakeAffineMatrix(
 		{ 1.0f, 1.0f, 1.0f },
-		{ 0.0f, camera.GetTransform().rotate.y, 0.0f},
-		camera.GetTransform().translate);
+		{ camera.GetRotate().x, 0.0f, 0.0f },
+		camera.GetTransform());
+	billBoardMatrixX_ = matrix4x4Calc->Multiply(backToFrontMatrix, cameraTransformMatrix);
+	billBoardMatrixX_.m[3][0] = 0.0f;
+	billBoardMatrixX_.m[3][1] = 0.0f;
+	billBoardMatrixX_.m[3][2] = 0.0f;
+
+	// Y
+	cameraTransformMatrix = matrix4x4Calc->MakeAffineMatrix(
+		{ 1.0f, 1.0f, 1.0f },
+		{ 0.0f, camera.GetRotate().y, 0.0f},
+		camera.GetTransform());
 	billBoardMatrixY_ = matrix4x4Calc->Multiply(backToFrontMatrix, cameraTransformMatrix);
 	billBoardMatrixY_.m[3][0] = 0.0f;
 	billBoardMatrixY_.m[3][1] = 0.0f;
 	billBoardMatrixY_.m[3][2] = 0.0f;
+
+	// Z
+	cameraTransformMatrix = matrix4x4Calc->MakeAffineMatrix(
+		{ 1.0f, 1.0f, 1.0f },
+		{ 0.0f, 0.0f, camera.GetRotate().z },
+		camera.GetTransform());
+	billBoardMatrixZ_ = matrix4x4Calc->Multiply(backToFrontMatrix, cameraTransformMatrix);
+	billBoardMatrixZ_.m[3][0] = 0.0f;
+	billBoardMatrixZ_.m[3][1] = 0.0f;
+	billBoardMatrixZ_.m[3][2] = 0.0f;
 
 }
 
@@ -189,8 +223,14 @@ void ParticleManager::ParticlesUpdate()
 			case IParticle::kBillBoardNameIndexAllAxis:
 				particle->Update(billBoardMatrix_);
 				break;
+			case IParticle::kBillBoardNameIndexXAxis:
+				particle->Update(billBoardMatrixX_);
+				break;
 			case IParticle::kBillBoardNameIndexYAxis:
 				particle->Update(billBoardMatrixY_);
+				break;
+			case IParticle::kBillBoardNameIndexZAxis:
+				particle->Update(billBoardMatrixZ_);
 				break;
 			default:
 				break;

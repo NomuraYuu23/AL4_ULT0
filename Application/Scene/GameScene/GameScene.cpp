@@ -15,10 +15,10 @@ void GameScene::Initialize() {
 	IScene::Initialize();
 
 	ModelCreate();
-	MaterialCreate();
 	TextureLoad();
 
 	// デバッグ描画
+	colliderMaterial_.reset(Material::Create());
 	colliderDebugDraw_ = std::make_unique<ColliderDebugDraw>();
 	std::vector<Model*> colliderModels = { colliderSphereModel_.get(),colliderBoxModel_.get(),colliderBoxModel_.get() };
 	colliderDebugDraw_->Initialize(colliderModels, colliderMaterial_.get());
@@ -96,6 +96,10 @@ void GameScene::Initialize() {
 	// UI
 	UIManager_ = std::make_unique<UIManager>();
 	UIManager_->Initialize(UITextureHandles_);
+
+	// 平行光源
+	directionalLight_ = std::make_unique<DirectionalLight>();
+	directionalLight_->Initialize();
 
 }
 
@@ -182,7 +186,7 @@ void GameScene::Draw() {
 	Model::PreDraw(dxCommon_->GetCommadList());
 
 	//光源
-	directionalLight_->Draw(dxCommon_->GetCommadList());
+	directionalLight_->Draw(dxCommon_->GetCommadList(), 3);
 
 	//3Dオブジェクトはここ
 	player_->Draw(camera_);
@@ -205,7 +209,7 @@ void GameScene::Draw() {
 	Model::PreParticleDraw(dxCommon_->GetCommadList(), camera_.GetViewProjectionMatrix());
 
 	//光源
-	directionalLight_->Draw(dxCommon_->GetCommadList());
+	directionalLight_->Draw(dxCommon_->GetCommadList(), 3);
 
 	// パーティクルはここ
 	particleManager_->Draw();
@@ -377,13 +381,6 @@ void GameScene::ModelCreate()
 	enemyModels_[kEnemyPartRightShin].reset(Model::Create("Resources/Enemy/", "EnemyRightShin.obj", dxCommon_, textureHandleManager_.get()));
 	enemyModels_[kEnemyPartRightAnkle].reset(Model::Create("Resources/Enemy/", "EnemyRightAnkle.obj", dxCommon_, textureHandleManager_.get()));
 	enemyWeaponModel_.reset(Model::Create("Resources/EnemyWeapon/", "EnemyWeapon.obj", dxCommon_, textureHandleManager_.get()));
-
-}
-
-void GameScene::MaterialCreate()
-{
-
-	colliderMaterial_.reset(Material::Create());
 
 }
 

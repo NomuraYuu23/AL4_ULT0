@@ -8,7 +8,6 @@ void GameOverScene::Initialize()
 	IScene::Initialize();
 
 	ModelCreate();
-	MaterialCreate();
 	TextureLoad();
 
 	gameOverSprite_.reset(Sprite::Create(gameOverTextureHandle_, { 640.0f, 360.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }));
@@ -87,10 +86,6 @@ void GameOverScene::Draw()
 }
 
 void GameOverScene::ModelCreate()
-{
-}
-
-void GameOverScene::MaterialCreate()
 {
 }
 

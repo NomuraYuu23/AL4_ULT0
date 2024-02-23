@@ -23,6 +23,7 @@ struct PlayingSoundData
 {
 	uint32_t handle_;
 	IXAudio2SourceVoice* pSourceVoice_;
+	float volume_;
 
 };
 
@@ -87,6 +88,11 @@ public: // メンバ関数
 	/// <param name="PlayingSoundDataHandle"></param>
 	void SetVolume(uint32_t playingSoundDataHandle, float volume);
 
+public: 
+
+	// 再生中のサウンドデータコンテナ最大数
+	static const uint32_t kMaxPlayingSoundData = 256;
+
 protected: // メンバ変数
 
 	// 音量
@@ -102,8 +108,11 @@ protected: // メンバ変数
 	// オーディオクラス
 	static Audio* audio_;
 
-	// 再生中のサウンドデータコンテナ最大数
-	static const uint32_t kMaxPlayingSoundData = 256;
+public: // アクセッサ
+
+	std::array<PlayingSoundData, kMaxPlayingSoundData> GetPlayingSoundDatas() { return playingSoundDatas_; }
+
+	void SetPlayingSoundDataVolume(uint32_t num, float volume) { playingSoundDatas_[num].volume_ = volume; }
 
 protected: // メンバ変数
 

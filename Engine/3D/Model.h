@@ -24,12 +24,15 @@
 
 #include <list>
 
-#include "../base/GraphicsPipelineState.h"
+#include "../base/GraphicsPipelineState/GraphicsPipelineState.h"
 #include "../Particle/ParticleManager.h"
 
 #include "../Camera/BaseCamera.h"
 
 #include "../base/ITextureHandleManager.h"
+#include "OutLineData.h"
+#include "../Light/PointLight/PointLightManager.h"
+#include "../Light/SpotLight/SpotLightManager.h"
 
 class Model
 {
@@ -52,20 +55,26 @@ public:
 	/// </summary>
 	/// <param name="device">デバイス</param>
 	static void StaticInitialize(ID3D12Device* device,
-		const std::array<ID3D12RootSignature*, GraphicsPipelineState::PipelineStateName::kCountOfPipelineStateName>& rootSignature,
-		const std::array<ID3D12PipelineState*, GraphicsPipelineState::PipelineStateName::kCountOfPipelineStateName>& pipelineState);
+		const std::array<ID3D12RootSignature*, GraphicsPipelineState::PipelineStateName::kPipelineStateNameOfCount>& rootSignature,
+		const std::array<ID3D12PipelineState*, GraphicsPipelineState::PipelineStateName::kPipelineStateNameOfCount>& pipelineState);
 
 	/// <summary>
 	/// 静的前処理
 	/// </summary>
 	/// <param name="cmdList">描画コマンドリスト</param>
-	static void PreDraw(ID3D12GraphicsCommandList* cmdList);
+	static void PreDraw(ID3D12GraphicsCommandList* cmdList, PointLightManager* pointLightManager = nullptr, SpotLightManager* spotLightManager = nullptr);
 
 	/// <summary>
 	/// 静的前処理
 	/// </summary>
 	/// <param name="cmdList">描画コマンドリスト</param>
 	static void PreParticleDraw(ID3D12GraphicsCommandList* cmdList, const Matrix4x4& viewProjectionMatrix);
+
+	/// <summary>
+	/// 静的前処理
+	/// </summary>
+	/// <param name="cmdList">描画コマンドリスト</param>
+	static void PreDrawOutLine(ID3D12GraphicsCommandList* cmdList);
 
 	/// <summary>
 	/// 描画後処理
@@ -87,9 +96,9 @@ private:
 	// コマンドリスト
 	static ID3D12GraphicsCommandList* sCommandList;
 	// ルートシグネチャ
-	static ID3D12RootSignature* sRootSignature[GraphicsPipelineState::PipelineStateName::kCountOfPipelineStateName];
+	static ID3D12RootSignature* sRootSignature[GraphicsPipelineState::PipelineStateName::kPipelineStateNameOfCount];
 	// パイプラインステートオブジェクト
-	static ID3D12PipelineState* sPipelineState[GraphicsPipelineState::PipelineStateName::kCountOfPipelineStateName];
+	static ID3D12PipelineState* sPipelineState[GraphicsPipelineState::PipelineStateName::kPipelineStateNameOfCount];
 	//計算
 	static Matrix4x4Calc* matrix4x4Calc;
 
@@ -110,7 +119,9 @@ public:
 	/// </summary>
 	void Draw(WorldTransform& worldTransform, BaseCamera& camera);
 	void Draw(WorldTransform& worldTransform, BaseCamera& camera, Material* material);
+	void Draw(WorldTransform& worldTransform, BaseCamera& camera, Material* material,uint32_t texureHandle);
 	void ParticleDraw();
+	void OutLineDraw(WorldTransform& worldTransform, BaseCamera& camera,OutLineData& outLineData);
 
 	/// <summary>
 	/// メッシュデータ生成
@@ -149,5 +160,10 @@ private:
 
 	// デフォルトマテリアル
 	std::unique_ptr<Material> defaultMaterial_;
+
+	// ポイントライトマネージャ
+	static PointLightManager* pointLightManager_;
+	//	スポットライトマネージャ
+	static SpotLightManager* spotLightManager_;
 
 };

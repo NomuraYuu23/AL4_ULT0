@@ -8,7 +8,6 @@ void ClearScene::Initialize()
 	IScene::Initialize();
 
 	ModelCreate();
-	MaterialCreate();
 	TextureLoad();
 
 	clearSprite_.reset(Sprite::Create(clearTextureHandle_, { 640.0f, 360.0f }, { 1.0f, 1.0f, 1.0f, 1.0f }));
@@ -87,10 +86,6 @@ void ClearScene::Draw()
 }
 
 void ClearScene::ModelCreate()
-{
-}
-
-void ClearScene::MaterialCreate()
 {
 }
 
