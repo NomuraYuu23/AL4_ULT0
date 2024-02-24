@@ -100,6 +100,61 @@ void GameScene::Initialize() {
 	// 平行光源
 	directionalLight_ = std::make_unique<DirectionalLight>();
 	directionalLight_->Initialize();
+	directionalLightData_.color = { 0.1f,0.1f,0.1f,1.0f };
+	directionalLightData_.direction = { 0.0f, -1.0f, 0.0f };
+	directionalLightData_.intencity = 1.0f;
+	directionalLight_->Update(directionalLightData_);
+
+	// 点光源
+	pointLightManager_ = std::make_unique<PointLightManager>();
+	pointLightManager_->Initialize();
+	for (size_t i = 0; i < pointLightDatas_.size(); ++i) {
+		pointLightDatas_[i].color = { 1.0f,1.0f,1.0f,1.0f };
+		pointLightDatas_[i].position = { 100.0f * i, 5.0f, 0.0f };
+		pointLightDatas_[i].intencity = 1.0f;
+		pointLightDatas_[i].radius = 100.0f;
+		pointLightDatas_[i].decay = 2.0f;
+		pointLightDatas_[i].used = false;
+	}
+
+	pointLightDatas_[0].used = true;
+	pointLightDatas_[1].color = { 0.8f,0.0f,0.1f,1.0f };
+	pointLightDatas_[1].used = true;
+
+	// スポットライト
+	spotLightManager_ = std::make_unique<SpotLightManager>();
+	spotLightManager_->Initialize();
+	for (size_t i = 0; i < spotLightDatas_.size(); ++i) {
+	//	spotLightDatas_[i].color = { 1.0f,1.0f,1.0f,1.0f };
+	//	spotLightDatas_[i].position = { 100.0f * i, 5.0f, 0.0f };
+		spotLightDatas_[i].intencity = 10.0f;
+	//	spotLightDatas_[i].direction = { -1.0f, 0.0f, 0.0f };
+		spotLightDatas_[i].distance = 100.0f;
+		spotLightDatas_[i].decay = 2.0f;
+		spotLightDatas_[i].cosAngle = 0.5f;
+		spotLightDatas_[i].cosFalloffStart = 1.0f;
+	//	spotLightDatas_[i].used = false;
+	}
+
+	spotLightDatas_[0].color = { 0.8f,0.0f,0.0f,1.0f };
+	spotLightDatas_[0].position = { 40.0f, 5.0f, 0.0f };
+	spotLightDatas_[0].direction = { -1.0f, 0.0f, 0.0f };
+	spotLightDatas_[0].used = true;
+
+	spotLightDatas_[1].color = { 0.0f,0.8f,0.0f,1.0f };
+	spotLightDatas_[1].position = { 0.0f, 5.0f, 40.0f };
+	spotLightDatas_[1].direction = { 0.0f, 0.0f, -1.0f };
+	spotLightDatas_[1].used = true;
+
+	spotLightDatas_[2].color = { 0.0f,0.0f,0.8f,1.0f };
+	spotLightDatas_[2].position = { -40.0f , 5.0f, 0.0f };
+	spotLightDatas_[2].direction = { 1.0f, 0.0f, 0.0f };
+	spotLightDatas_[2].used = true;
+
+	spotLightDatas_[3].color = { 1.0f,1.0f,1.0f,1.0f };
+	spotLightDatas_[3].position = { 100.0f, 5.0f, 0.0f };
+	spotLightDatas_[3].direction = { -1.0f, 0.0f, 0.0f };
+	spotLightDatas_[3].used = false;
 
 }
 
@@ -120,6 +175,10 @@ void GameScene::Update() {
 	ImguiDraw();
 	//光源
 	directionalLight_->Update(directionalLightData_);
+	pointLightDatas_[0].position = player_->GetWorldTransformAdress()->GetWorldPosition();
+	pointLightDatas_[1].position = enemy_->GetWorldTransformAdress()->GetWorldPosition();
+	pointLightManager_->Update(pointLightDatas_);
+	spotLightManager_->Update(spotLightDatas_);
 
 	// 追従カメラ
 	followCamera_->Update();
@@ -183,7 +242,7 @@ void GameScene::Draw() {
 
 #pragma endregion
 
-	Model::PreDraw(dxCommon_->GetCommadList());
+	Model::PreDraw(dxCommon_->GetCommadList(), pointLightManager_.get(), spotLightManager_.get());
 
 	//光源
 	directionalLight_->Draw(dxCommon_->GetCommadList(), 3);
@@ -239,8 +298,30 @@ void GameScene::ImguiDraw() {
 #ifdef _DEBUG
 
 	ImGui::Begin("Light");
-	ImGui::DragFloat3("direction", &directionalLightData_.direction.x, 0.1f);
-	ImGui::DragFloat("i", &directionalLightData_.intencity, 0.01f);
+	ImGui::DragFloat3("SpotPosition0", &spotLightDatas_[0].position.x, 0.1f);
+	ImGui::DragFloat("SpotIntencity0", &spotLightDatas_[0].intencity, 0.01f);
+	ImGui::DragFloat3("SpotDirection0", &spotLightDatas_[0].direction.x, 0.1f);
+	ImGui::DragFloat("SpotDistance0", &spotLightDatas_[0].distance, 0.01f);
+	ImGui::DragFloat("SpotDecay0", &spotLightDatas_[0].decay, 0.01f);
+	ImGui::DragFloat("SpotCosAngle0", &spotLightDatas_[0].cosAngle, 0.01f);
+	ImGui::DragFloat("SpotCosFalloffStart0", &spotLightDatas_[0].cosFalloffStart, 0.01f);
+
+	ImGui::DragFloat3("SpotPosition1", &spotLightDatas_[1].position.x, 0.1f);
+	ImGui::DragFloat("SpotIntencity1", &spotLightDatas_[1].intencity, 0.01f);
+	ImGui::DragFloat3("SpotDirection1", &spotLightDatas_[1].direction.x, 0.1f);
+	ImGui::DragFloat("SpotDistance1", &spotLightDatas_[1].distance, 0.01f);
+	ImGui::DragFloat("SpotDecay1", &spotLightDatas_[1].decay, 0.01f);
+	ImGui::DragFloat("SpotCosAngle1", &spotLightDatas_[1].cosAngle, 0.01f);
+	ImGui::DragFloat("SpotCosFalloffStart1", &spotLightDatas_[1].cosFalloffStart, 0.01f);
+
+	ImGui::DragFloat3("SpotPosition2", &spotLightDatas_[2].position.x, 0.1f);
+	ImGui::DragFloat("SpotIntencity2", &spotLightDatas_[2].intencity, 0.01f);
+	ImGui::DragFloat3("SpotDirection2", &spotLightDatas_[2].direction.x, 0.1f);
+	ImGui::DragFloat("SpotDistance2", &spotLightDatas_[2].distance, 0.01f);
+	ImGui::DragFloat("SpotDecay2", &spotLightDatas_[2].decay, 0.01f);
+	ImGui::DragFloat("SpotCosAngle2", &spotLightDatas_[2].cosAngle, 0.01f);
+	ImGui::DragFloat("SpotCosFalloffStart2", &spotLightDatas_[2].cosFalloffStart, 0.01f);
+
 	ImGui::End();
 
 	ImGui::Begin("FPS");

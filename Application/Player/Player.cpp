@@ -8,6 +8,7 @@ void Player::Initialize(const std::array<Model*, PlayerPartIndex::kPlayerPartInd
 
 	// マテリアル
 	material_.reset(Material::Create());
+	material_->SetEnableLighting(BlinnPhongReflection);
 
 	// ワールドトランスフォーム
 	worldTransform_.Initialize();
@@ -83,7 +84,7 @@ void Player::Draw(BaseCamera& camera)
 		parts_[i]->Draw(camera, material_.get());
 	}
 
-	weaponModel_->Draw(weaponWorldTransfrom_, camera);
+	weaponModel_->Draw(weaponWorldTransfrom_, camera, material_.get());
 
 }
 

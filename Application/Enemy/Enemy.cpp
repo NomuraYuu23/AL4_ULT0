@@ -9,6 +9,7 @@ void Enemy::Initialize(const std::array<Model*, EnemyPartIndex::kEnemyPartIndexO
 
 	// マテリアル
 	material_.reset(Material::Create());
+	material_->SetEnableLighting(BlinnPhongReflection);
 
 	// ワールドトランスフォーム
 	worldTransform_.Initialize();

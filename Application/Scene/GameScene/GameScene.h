@@ -20,6 +20,8 @@
 // UI
 #include "../../UIManager/UIManager.h"
 #include "../../../Engine/Light/DirectionalLight/DirectionalLight.h"
+#include "../../../Engine/Light/PointLight/PointLightManager.h"
+#include "../../../Engine/Light/SpotLight/SpotLightManager.h"
 
 class GameScene : public IScene
 {
@@ -133,5 +135,13 @@ private:
 	// UI
 	std::unique_ptr<UIManager> UIManager_;
 	std::array<uint32_t, UIIndex::kUIIndexOfCount> UITextureHandles_;
+
+	// 点光源
+	std::unique_ptr<PointLightManager> pointLightManager_;
+	std::array<PointLightData, PointLightManager::kNumInstanceMax_> pointLightDatas_;
+
+	// スポットライト
+	std::unique_ptr<SpotLightManager> spotLightManager_;
+	std::array<SpotLightData, SpotLightManager::kNumInstanceMax_> spotLightDatas_;
 
 };

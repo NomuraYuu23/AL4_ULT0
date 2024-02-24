@@ -9,6 +9,7 @@ void Ground::Initialize(Model* model)
 	model_ = model;
 
 	material_.reset(Material::Create());
+	material_->SetEnableLighting(BlinnPhongReflection);
 
 	// ワールド変換データの初期化
 	worldTransform_.Initialize();
@@ -28,6 +29,6 @@ void Ground::Update()
 void Ground::Draw(BaseCamera& camera)
 {
 
-	model_->Draw(worldTransform_, camera);
+	model_->Draw(worldTransform_, camera, material_.get());
 
 }
